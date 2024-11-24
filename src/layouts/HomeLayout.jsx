@@ -1,10 +1,8 @@
 // packages
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 const HomeLayout = () => {
-	// states
-	
 	return (
 		<div className='container'>
 			<Outlet />

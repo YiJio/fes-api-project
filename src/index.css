@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
-/**** ROOT VARIABLES ****/
+/****** ROOT VARIABLES ******/
 :root {
   
 	--color-white:#ffffff;
@@ -30,11 +30,12 @@
   --font-heading-2:24px 'Lato', sans-serif;
   --font-heading-1:32px 'Lato', sans-serif;
 }
+/**** END ROOT VARIABLES ****/
 
-/**** DEFAULT STYLES ****/
+/****** DEFAULT STYLES ******/
 * { padding:0; margin:0; outline:0; border:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { font-size:1rem; font-family:'Source Sans Pro', sans-serif; color:var(--color-text-primary); }
+body { font-size:1rem; font-family:'Lato', sans-serif; color:var(--color-text-primary); }
 a { display:inline-block; text-decoration:none; color:var(--color-text-link); transition:all 0.3s ease; }
 a:hover { color:var(--color-text-link); }
 :hover { transition:all 0.3s ease; }
@@ -46,14 +47,25 @@ input::placeholder { font-style:italic; }
 button { padding:16px 4px; height:40px; display:flex; align-items:center; gap:8px; border-radius:8px; color:var(--color-white); font-family:'Lato', sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
 button:hover { background:var(--color-gray-6); box-shadow:0 8px 12px 0 rgba(62,62,62,0.25); }
 button:active { background:var(--color-black); box-shadow:0 8px 12px 0 rgba(0,0,0,0.25); }
+/**** END DEFAULT STYLES ****/
 
-/**** STANDARD STYLES ****/
+/****** STANDARD STYLES ******/
 .container { min-height:100vh; }
-.wrapper { }
-.header {  }
+.wrapper { display:flex; flex-direction:column; height:100vh; }
+.main { display:flex; flex-direction:column; gap:20px; flex:1; height:calc(100vh - 60px); }
+.content { margin:0 auto; padding:20px 0; width:75%; max-width:1440px; }
+
+.header { display:flex; align-items:center; justify-content:center; height:60px; background:var(--color-gray-7); color:var(--color-white); }
+.header-title { display:flex; align-items:center; justify-content:center; gap:8px; font-size:24px; font-weight:700; }
+
 .footer { }
 
-/**** HOME STYLES ****/
+.station-code { display:flex; border:1px solid transparent; font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; }
+.station-code span { display:flex; align-items:center; padding:0 4px; border-top-left-radius:4px; border-bottom-left-radius:4px; border:2px solid transparent; }
+.station-code span:last-child { margin-left:-2px; border-radius:0; border-top-right-radius:4px; border-bottom-right-radius:4px; border:2px solid transparent; }
+/**** END STANDARD STYLES ****/
+
+/****** HOME STYLES ******/
 .home { display:flex; align-items:center; min-height:100vh; background:url('./assets/background.jpg') no-repeat; }
 .home-left { display:flex; align-items:center; justify-content:center; max-width:1200px; width:65%; height:100%; }
 .home-right { height:100%; display:flex; flex-direction:column; gap:32px; flex:1; }
@@ -73,11 +85,13 @@ button:active { background:var(--color-black); box-shadow:0 8px 12px 0 rgba(0,0,
 .home-overlay2 { background:linear-gradient(180deg, rgba(209,242,201,0) 0%, rgba(209,242,201,0.25) 75%, rgba(209,242,201,0.75) 100%); }
 
 .home-group { display:flex; flex-direction:column; gap:16px; }
-.home-title { font-size:48px; font-weight:900; }
+.home-title { display:flex; gap:8px; font-size:48px; font-weight:900; }
 .home-field { width:400px; height:56px; display:flex; align-items:center; gap:16px; border-radius:8px; background:rgba(255,255,255,0.5); cursor:pointer; transition:all 0.3s ease; }
 .home-field-svg { margin-left:16px; font-size:24px; color:var(--color-green); }
 .home-input { flex:1; padding:16px 0; background:transparent; border-radius:0; font-size:20px; cursor:pointer; }
-.home-field:focus-within { background:var(--color-white); }
+.home-input-fake { font-style:italic; font-family:'Lato', sans-serif; font-size:20px; color:var(--color-gray-3); }
+.home-input::placeholder { color:var(--color-gray-3); }
+.home-field:focus-within, .home-field.active { background:var(--color-white); }
 .home-button { padding:0; width:56px; height:56px; justify-content:center; background:var(--color-white); color:var(--color-text-link); transition:all 0.3s ease; }
 .home-button svg { font-size:24px; }
 .home-button:hover { background:var(--color-gray-0); box-shadow:none; }
@@ -87,6 +101,64 @@ button:active { background:var(--color-black); box-shadow:0 8px 12px 0 rgba(0,0,
 .home-selections-list { height:100%; overflow:auto; }
 .home-selections-item { display:block; padding:8px; font-size:14px; transition:all 0.3s ease; }
 .home-selections-item:hover { background:var(--color-gray-1); }
+/**** END HOME STYLES ****/
+
+/****** SEARCH STYLES ******/
+.search-input { margin:16px 0; padding:0 20px; width:100%; height:56px; font-size:20px; cursor:pointer; background:var(--color-gray-0); border:1px solid transparent; transition:all 0.3s ease; }
+.search-input:hover { outline:none; background:var(--color-white); border-color:rgba(36,131,163,0.25); transition:background 0.3s ease, border 0.3s ease, outline 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease; }
+.search-input:focus { background:var(--color-white); border-color:rgba(36,131,163,0.5); box-shadow:0 0 0 4px rgba(36,131,163,0.15); }
+
+.search-list { display:flex; flex-wrap:wrap; gap:20px; }
+.search-card { display:flex; flex-direction:column; justify-content:space-between; gap:16px; padding:24px; width:calc(100% / 5 - 16px); border:1px solid var(--color-gray-3); border-radius:16px; }
+.search-card-heading { display:flex; gap:8px; align-items:flex-start; justify-content:space-between; }
+.search-card-name { padding:2px 0; font-size:16px; font-weight:800; }
+.search-card-actions { display:flex; flex-direction:column; gap:8px; }
+.search-card-line { display:flex; align-items:center; gap:4px; font-size:14px; cursor:pointer; }
+.search-card-line:hover { font-weight:600; }
+.search-card-line svg { font-size:16px; }
+.search-card-button { display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; }
+/**** END SEARCH STYLES ****/
+
+/****** LINE STYLES ******/
+.line-title { padding:8px 16px; height:56px; display:flex; align-items:center; gap:16px; }
+.line-name { font-size:24px; font-weight:900; }
+.line-number { display:flex; align-items:center; justify-content:center; padding:0 12px; min-width:40px; height:40px; border-radius:32px; font-size:28px; font-weight:900; }
+
+/** route **/
+.route { position:relative; }
+.route-line { position:absolute; margin-top:24px; width:100%; height:12px; border-radius:8px; }
+.route-stations { padding:20px; display:flex; flex-wrap:wrap; gap:140px 16px; }
+.route-station { position:relative; display:flex; flex-direction:column; justify-content:flex-end; height:220px; cursor:pointer; }
+
+.route-station-name { position:absolute; top:140px; left:6px; width:100px; min-height:16px; transform:rotate(-25deg); font-size:12px; font-weight:600; white-space:nowrap; z-index:9; }
+.route-station.active .route-station-name { left:12px; }
+
+.route-station-code { position:relative; margin:6px 0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; }
+.route-station.active .route-station-code { margin:0; width:40px; height:40px; border:8px solid transparent; background:var(--color-white) !important; color:var(--color-black) !important; }
+
+.route-station-code-line { position:absolute; content:''; top:calc(50% - 6px); left:-8px; width:44px; height:12px; z-index:-1; }
+.route-station.active .route-station-code-line { left:-16px; width:56px; }
+.route-station-code-line:before { position:absolute; content:''; top:2px; left:-4px; border-top:4px solid transparent; border-bottom:4px solid transparent; border-left:4px solid var(--color-white); }
+.route-station-code-line:after { position:absolute; content:''; top:2px; left:0; border-top:4px solid transparent; border-bottom:4px solid transparent; border-left:4px solid var(--color-white); }
+.route-station-code-line.first { border-top-left-radius:8px; border-bottom-left-radius:8px; }
+.route-station-code-line.last { border-top-right-radius:8px; border-bottom-right-radius:8px; }
+.route-station-code-line.first:before, .route-station-code-line.first:after { border-color:transparent; }
+
+.route-station-transfers { position:absolute; top:230px; left:0; width:100%; max-height:200px; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.route-station-transfer { display:flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:var(--color-gray-1); font-size:10px; font-weight:500; overflow:hidden; }
+.route-station-transfer img { max-width:100%; max-height:100%; padding:4px; }
+
+.invert { filter:brightness(0) invert(1); }
+
+.route-test { height:200vh; position:relative; }
+.route-path { position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); width:200px; height:400px; }
+.path-line { stroke:#ccc; stroke-width:2; stroke-dasharray:5,5; }
+.path-circle { fill:transparent; stroke:#333; stroke-width:2; transition:fill 0.3s ease, stroke-width 0.3s ease; }
+.path-circle.active { fill:var(--color-blue); stroke-width:4; }
+
+/** station tip **/
+
+/**** END LINE STYLES ****/
 
 /*:root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

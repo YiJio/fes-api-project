@@ -14,9 +14,6 @@ import NotFoundPage from './pages/NotFoundPage';
 // css
 import './globals.css';
 
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-
 const router = createBrowserRouter([{
   element: <HomeLayout />,
   errorElement: <NotFoundPage />,

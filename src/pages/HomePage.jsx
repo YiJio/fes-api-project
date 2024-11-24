@@ -1,78 +1,42 @@
 // packages
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { RiArrowDownSLine, RiGitCommitLine, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
+import { RiArrowDownSLine, RiGitCommitFill, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
+// hooks
+import useDbData from '../hooks/useDbData';
+// utils
+import { getLineInfo } from '../utils/get';
 // assets
+import logoGZMTR from '../assets/Guangzhou_Metro_icon.svg';
 import imageCantonTower from '../assets/Canton_Tower.jpg';
 import imageYuyinShanfang from '../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../assets/Huadu_District.jpg';
 import imageHongshengshaStation from '../assets/Hongshengsha_Station_Construction.jpg';
-import { useRef } from 'react';
 
 // important variables
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const HomePage = () => {
 	// states
-	const [lines, setLines] = useState([]);
-	const [stations, setStations] = useState([]);
 	const [filteredStations, setFilteredStations] = useState([]);
 	const [isTypingLine, setIsTypingLine] = useState(false);
-	const [searchLine, setSearchLine] = useState('');
 	const [isTypingStation, setIsTypingStation] = useState(false);
 	const [searchStation, setSearchStation] = useState('');
 	// refs
 	const linesRef = useRef(null);
 	const stationsRef = useRef(null);
 	// hooks
+	const { lines, stations } = useDbData();
 	const navigate = useNavigate();
 
-	const fetchLines = async () => {
-		try {
-			const response = await fetch(`https://api.cantonprtapi.com/lines`, {
-				method: 'GET',
-				headers: { 'X-Api-Key': API_KEY, },
-			});
-			const data = await response.json();
-			localStorage.setItem('lines', JSON.stringify(data));
-			setLines(data);
-		} catch (error) {
-			console.error('Error fetching station data.', error);
-		}
+	const handleSearchStation = (e) => {
+		e.preventDefault();
+		navigate(`/search?q=${searchStation}`);
 	}
-
-	const fetchStations = async () => {
-		try {
-			const response = await fetch(`https://api.cantonprtapi.com/stations`, {
-				method: 'GET',
-				headers: { 'X-Api-Key': API_KEY, },
-			});
-			const data = await response.json();
-			localStorage.setItem('stations', JSON.stringify(data));
-			setStations(data);
-		} catch (error) {
-			console.error('Error fetching station data.', error);
-		}
-	}
-
-	const getLineName = (line) => {
-		let index = lines.findIndex(l => l._id === line);
-		return lines[index]?.name.en;
-	}
-
-	useEffect(() => {
-		// temporary
-		let theLines = localStorage.getItem('lines');
-		let theStations = localStorage.getItem('stations');
-		setLines(JSON.parse(theLines));
-		setStations(JSON.parse(theStations));
-		if (!theLines) fetchLines();
-		if (!theStations) fetchStations();
-	}, []);
 
 	useEffect(() => {
 		if (searchStation) {
-			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()));
+			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()) && station._service_id === 'gzmtr');
 			setFilteredStations(results);
 		}
 	}, [searchStation, stations]);
@@ -87,7 +51,8 @@ const HomePage = () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		}
 	}, [linesRef, stationsRef]);
-	
+
+	if(!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='home'>
@@ -116,13 +81,16 @@ const HomePage = () => {
 				</div>
 			</div>
 			<div className='home-right'>
-				<h1 className='home-title'>Guangzhou Metro</h1>
+				<h1 className='home-title'>
+					<img src={logoGZMTR} alt='Guangzhou Metro logo' style={{ width: '32px' }} />
+					Guangzhou Metro
+				</h1>
 				<div className='home-group'>
 					<div className='home-row'>
-						<div className='home-field'>
-							<RiGitCommitLine className='home-field-svg' />
-							<input className='home-input' type='text' value={searchLine} placeholder='Search line' onChange={(e) => setSearchLine(e.target.value)} onFocus={() => setIsTypingLine(true)} />
-							{searchLine !== '' || isTypingLine && (<div ref={linesRef} className='home-selections'>
+						<div className={'home-field' + (isTypingLine ? ' active' : '')}>
+							<RiGitCommitFill className='home-field-svg' />
+							<div className='home-input home-input-fake' onClick={() => setIsTypingLine(true)} >Search line</div>
+							{isTypingLine && (<div ref={linesRef} className='home-selections'>
 								<div className='home-selections-list'>
 									{lines.map((line) => (
 										<Link to={`/line/${line.code}`} className='home-selections-item' key={line._id}>{line.name.en}</Link>
@@ -134,19 +102,21 @@ const HomePage = () => {
 					</div>
 					<div className='home-row'><span>OR</span></div>
 					<div className='home-row'>
-						<div className='home-field'>
-							<RiMapPinFill className='home-field-svg' />
-							<input className='home-input' type='text' value={searchStation} placeholder='Search station' onChange={(e) => setSearchStation(e.target.value)} onFocus={() => setIsTypingStation(true)} />
-							{searchStation !== '' && isTypingStation && (<div ref={stationsRef} className='home-selections'>
-								<div className='home-selections-list'>
-									{filteredStations.length > 0 && filteredStations.map((station) => (
-										<Link to={`/station/${station.code}`} className='home-selections-item' key={station._id}>{station.name.en} ({getLineName(station.lines_served[0])})</Link>
-									))}
-									{filteredStations.length === 0 && <div className='home-empty'>No searchStation results.</div>}
-								</div>
-							</div>)}
-							<button className='home-button'><RiSearchLine /></button>
-						</div>
+						<form onSubmit={handleSearchStation}>
+							<div className='home-field'>
+								<RiMapPinFill className='home-field-svg' />
+								<input className='home-input' type='text' value={searchStation} placeholder='Search station' onChange={(e) => setSearchStation(e.target.value)} onFocus={() => setIsTypingStation(true)} />
+								{searchStation !== '' && isTypingStation && (<div ref={stationsRef} className='home-selections'>
+									<div className='home-selections-list'>
+										{filteredStations.length > 0 && filteredStations.map((station) => (
+											<Link to={`/station/${station.code}`} className='home-selections-item' key={station._id}>{station.name.en} ({getLineInfo(station.lines_served[0], 'name')})</Link>
+										))}
+										{filteredStations.length === 0 && <div className='home-empty'>No searchStation results.</div>}
+									</div>
+								</div>)}
+								<button className='home-button'><RiSearchLine /></button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
