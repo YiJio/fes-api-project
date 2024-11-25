@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 // hooks
 import useDbData from '../hooks/useDbData';
 // components
-import SearchCard from '../components/SearchCard';
+import { SearchCard } from '../components/SearchCard';
 import { useMemo } from 'react';
 //
 

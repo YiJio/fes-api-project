@@ -1,5 +1,5 @@
 // packages
-import React, { Suspense, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { RiLoader5Fill } from 'react-icons/ri';
@@ -46,7 +46,7 @@ const LinePage = () => {
 		if (isScrollingRef.current) return;
 		e.preventDefault();
 		isScrollingRef.current = true;
-		const scrollDelta = Math.sign(e.deltaY); // Detect scroll direction (-1 or 1)
+		const scrollDelta = Math.sign(e.deltaY); // detect scroll direction (-1 or 1)
 		const nextCircle = Math.min(Math.max(ui_activeCircle + scrollDelta, 0), db_lineStations.stations.length - 1);
 		if (nextCircle !== ui_activeCircle) {
 			setUiActiveCircle(nextCircle);
@@ -63,13 +63,14 @@ const LinePage = () => {
 		}
 	}
 
-	useEffect(() => {
+	// having errors when deployed, for now void it
+	/*useEffect(() => {
 		const ref = routeRef.current;
 		if (ref) ref.addEventListener('wheel', handleScroll, { passive: false });
 		return () => {
 			if (ref) ref.removeEventListener('wheel', handleScroll);
 		};
-	}, [routeRef.current, ui_activeCircle]);
+	}, [routeRef.current, ui_activeCircle]);*/
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -84,7 +85,7 @@ const LinePage = () => {
 			setUiIsLoading(true);
 			setUiLighterColor('');
 			setUiActiveCircle(-1);
-			routeRef.current = true;
+			//routeRef.current = true;
 			setTimeout(() => { console.log('loading') }, 2000);
 			let index = lines.findIndex(l => l._id == line);
 			if (index === -1) { navigate('/not-found'); return; }

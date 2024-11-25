@@ -1,3 +1,5 @@
+// these are functions that should (recommended) be used when there are only a few results to work with!!! not advisable for more than 10 results
+
 const CACHE_KEY = 'dbData';
 
 export function getLineInfo(line, what) {

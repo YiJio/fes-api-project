@@ -34,6 +34,7 @@ const HomePage = () => {
 	useEffect(() => {
 		if (searchStation) {
 			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()) && (station._service_id !== 'cr' && station._service_id !== 'prdir'));
+			results = results.sort((a,b) => a.name.en.localeCompare(b.name.en))
 			setFilteredStations(results);
 		}
 	}, [searchStation, stations]);
@@ -91,7 +92,7 @@ const HomePage = () => {
 								<div className='home-input home-input-fake' onClick={() => setIsTypingLine(true)} >Search line</div>
 								{isTypingLine && (<div ref={linesRef} className='home-selections'>
 									<div className='home-selections-list'>
-										{lines.map((line) => (
+										{lines.sort((a,b) => a.name.en.localeCompare(b.name.en)).map((line) => (
 											<Link to={`/line/${line.code}`} className='home-selections-item' key={line._id}>{line.name.en}</Link>
 										))}
 									</div>
@@ -109,7 +110,7 @@ const HomePage = () => {
 										<div className='home-selections-list'>
 											{filteredStations.length > 0 && filteredStations.map((station) => (
 												<Link to={`/station/${station.code}`} className='home-selections-item' key={station._id}>
-													{station.name.en}
+													{station.name.en}&nbsp;
 													(Line: {station.lines_served[0].toUpperCase().split('-')[1]}{/*getLineInfo(station.lines_served[0], 'name')*/})
 												</Link>
 											))}

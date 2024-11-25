@@ -1,12 +1,20 @@
 // packages
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 import { RiGitMergeFill } from 'react-icons/ri';
 // utils
 import { getLineInfo } from '../utils/get';
 import { getContrastingTextColor } from '../utils/color';
 // components
 import StationCode from './StationCode';
+
+const SearchCardSkeleton = () => {
+	return (
+		// mostly make sense if the page is not autocomplete but rendering results upon submit
+		<Skeleton className='search-card' count={1} height='120px' />
+	);
+}
 
 const SearchCard = ({ code, stationCode, name, line, status }) => {
 	// hooks
@@ -18,7 +26,7 @@ const SearchCard = ({ code, stationCode, name, line, status }) => {
 	let lineName = getLineInfo(line, 'name');
 
 	return (
-		<div key={code} className='search-card' style={{ borderStyle: style, borderColor: color }}>
+		<div className='search-card' style={{ borderStyle: style, borderColor: color }}>
 			<div className='search-card-heading'>
 				<div className='search-card-name'>{name}</div>
 				<StationCode code={stationCode} line={line} status={status} />
@@ -33,4 +41,4 @@ const SearchCard = ({ code, stationCode, name, line, status }) => {
 	);
 }
 
-export default SearchCard;
+export { SearchCard, SearchCardSkeleton };

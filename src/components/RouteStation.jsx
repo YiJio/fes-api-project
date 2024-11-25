@@ -29,7 +29,7 @@ const RouteStation = ({ line, station, index, activeCircle, setActiveCircle, len
 	}, []);*/
 
 	return (
-		<div key={station.code} className={'route-station' + (activeCircle === index ? ' active' : '')}>
+		<div className={'route-station' + (activeCircle === index ? ' active' : '')}>
 			<div className='route-station-name' style={{ color: activeCircle === index ? line?.color : 'var(--color-black)' }} onClick={() => setActiveCircle(index)}>{station.name.en}</div>
 			<RouteCircle index={index} length={length} isActive={activeCircle === index} setActiveCircle={setActiveCircle} sequence={station.sequence} mainColor={line?.color} lighterColor={lighterColor} />
 			<Popover isOpen={activeCircle === index} positions={['bottom', 'top']} align='center' content={<div>
