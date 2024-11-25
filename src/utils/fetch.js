@@ -7,6 +7,7 @@ export const fetchLines = async () => {
 			method: 'GET',
 			headers: { 'X-Api-Key': API_KEY, },
 		});
+		if(!response.ok) throw new Error('Lines not found.');
 		const data = await response.json();
 		return data;
 	} catch (error) {
@@ -20,6 +21,7 @@ export const fetchStations = async () => {
 			method: 'GET',
 			headers: { 'X-Api-Key': API_KEY, },
 		});
+		if(!response.ok) throw new Error('Stations not found.');
 		const data = await response.json();
 		return data;
 	} catch (error) {
@@ -33,6 +35,7 @@ export const fetchLine = async (id) => {
 			method: 'GET',
 			headers: { 'X-Api-Key': API_KEY, },
 		});
+		if(!response.ok) throw new Error('Line not found.');
 		const data = await response.json();
 		return data;
 	} catch (error) {
@@ -46,9 +49,24 @@ export const fetchLineStations = async (id) => {
 			method: 'GET',
 			headers: { 'X-Api-Key': API_KEY, },
 		});
+		if(!response.ok) throw new Error('Line not found.');
 		const data = await response.json();
 		return data;
 	} catch (error) {
 		console.error('Error fetching line data.', error);
+	}
+}
+
+export const fetchStation = async (id) => {
+	try {
+		const response = await fetch(`https://api.cantonprtapi.com/stations/code/${id}`, {
+			method: 'GET',
+			headers: { 'X-Api-Key': API_KEY, },
+		});
+		if(!response.ok) throw new Error('Station not found.');
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching station data.', error);
 	}
 }

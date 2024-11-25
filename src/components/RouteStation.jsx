@@ -1,47 +1,22 @@
 // packages
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Popover } from 'react-tiny-popover';
+import { RiExchange2Line } from 'react-icons/ri';
 // utils
 import { getStationInfo } from '../utils/get';
-import { getContrastingTextColor } from '../utils/color';
-// assets
-import logoCR from '../assets/China_Railway_icon.svg';
-import logoPRDIR from '../assets/PRDIR_icon.svg';
-import imageTram from '../assets/tram.png';
+// components
+import StationTransfer from './StationTransfer';
+import StationTip from './StationTip';
+import { RouteCircle, RouteCircleMobile } from './RouteCircle';
 
 const RouteStation = ({ line, station, index, activeCircle, setActiveCircle, length, lighterColor }) => {
 	// states
-	const [ui_isPopoverOpen, setUiIsPopoverOpen] = useState(false);
 	// refs
 	const popoverRef = useRef(null);
 
-	function getActiveColor(color, index, what) {
-		if (activeCircle === index) {
-			if (what === 'background') { return 'var(color-white)'; }
-			else if (what === 'color') { return 'var(color-black)'; }
-			else { return `8px solid ${color}`; }
-		} else {
-			if (what === 'background') { return color; }
-			else if (what === 'color') { return getContrastingTextColor(color); }
-			else { return 'none'; }
-		}
-	}
-
-	function getTransferBackground(transfer) {
-		if (transfer?._service_id === 'cr') { return '#e60012'; }
-		else if (transfer?._service_id === 'prdir') { return '#009543'; }
-		else if (transfer?._service_id === 'gztram') { return '#e60012'; }
-		else { return getStationInfo(transfer?._id, 'color'); }
-	}
-
-	function getTransferText(transfer) {
-		if (transfer?._service_id === 'cr') { return <img className='invert' src={logoCR} alt='China Railway logo' />; }
-		else if (transfer?._service_id === 'prdir') { return <img className='invert' src={logoPRDIR} alt='PRDIR logo' />; }
-		else if (transfer?._service_id === 'gztram') { return <img className='invert' src={imageTram} alt='Tram icon' />; }
-		else { return getStationInfo(transfer?._id, 'lineNumber'); }
-	}
-
-	useEffect(() => {
+	// popover should be opened by default, so this is unnecessary
+	/*useEffect(() => {
 		const handleClickOutside = (e) => {
 			if (popoverRef.current && !popoverRef.current.contains(e.target)) {
 				setUiIsPopoverOpen(false);
@@ -51,28 +26,44 @@ const RouteStation = ({ line, station, index, activeCircle, setActiveCircle, len
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, []);
+	}, []);*/
 
 	return (
-		<div key={station.code} className={'route-station' + (activeCircle === index ? ' active' : '')} onClick={() => setActiveCircle(index)}>
-
-			<Popover isOpen={ui_isPopoverOpen} positions={['bottom']} align='center' content={<div className='station-tip' ref={popoverRef}>
-				To be done
+		<div key={station.code} className={'route-station' + (activeCircle === index ? ' active' : '')}>
+			<div className='route-station-name' style={{ color: activeCircle === index ? line?.color : 'var(--color-black)' }} onClick={() => setActiveCircle(index)}>{station.name.en}</div>
+			<RouteCircle index={index} length={length} isActive={activeCircle === index} setActiveCircle={setActiveCircle} sequence={station.sequence} mainColor={line?.color} lighterColor={lighterColor} />
+			<Popover isOpen={activeCircle === index} positions={['bottom', 'top']} align='center' content={<div>
+				<StationTip stationId={station.code} lighterColor={lighterColor} />
 			</div>}>
-				<div className='route-station-code' style={{ background: getActiveColor(lighterColor, index, 'background'), color: getActiveColor(lighterColor, index, 'color'), border: getActiveColor(line?.color, index, 'border') }} onClick={() => setUiIsPopoverOpen(!ui_isPopoverOpen)}>
-					<span>{station.sequence}</span>
-					<div className={'route-station-code-line' + (index === 0 ? ' first' : index === length ? ' last' : '')} style={{ background: lighterColor }} />
-				</div>
+				<div className='route-station-trigger' />
 			</Popover>
-
-			<div className='route-station-name' style={{ color: activeCircle === index ? line?.color : 'var(--color-black)' }}>{station.name.en}</div>
 			{station.transfers.length !== 0 && (<div className='route-station-transfers'>
-				{station.transfers.map((transfer, index) => (<div key={index} className='route-station-transfer' style={{ background: getTransferBackground(transfer.transfer_to), color: getContrastingTextColor(getStationInfo(transfer.transfer_to?._id, 'color')) }}>
-					{getTransferText(transfer.transfer_to)}
-				</div>))}
+				{station.transfers.filter((transfer) => getStationInfo(transfer?.transfer_to._id, 'id')).map((transfer, index) => (
+					<StationTransfer key={index} transfer={transfer.transfer_to} />
+				))}
 			</div>)}
 		</div>
 	);
 }
 
-export default RouteStation;
+const RouteStationMobile = ({ line, station, index, length, lighterColor }) => {
+
+	return (
+		<div className='route-station-mobile'>
+			<div className='route-line' style={{ background: lighterColor }}>
+				<RouteCircleMobile index={index} length={length} sequence={station.sequence} mainColor={line?.color} lighterColor={lighterColor} />
+			</div>
+			<div>
+				<Link to={`/station/${station._id}`} className='route-station-name'>{station.name.en}</Link>
+				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
+				{station.transfers.length !== 0 ? (<div className='route-station-transfers'>
+					{station.transfers.filter((transfer) => getStationInfo(transfer?.transfer_to._id, 'id')).map((transfer, index) => (
+						<StationTransfer key={index} transfer={transfer.transfer_to} />
+					))}
+				</div>) : <code>N/A</code>}
+			</div>
+		</div>
+	);
+}
+
+export { RouteStation, RouteStationMobile };

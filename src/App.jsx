@@ -1,6 +1,8 @@
 // packages
 import { useState } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+// css
+import './screens.css';
 // layouts
 import HomeLayout from './layouts/HomeLayout';
 import RootLayout from './layouts/RootLayout';
@@ -11,8 +13,6 @@ import LinePage from './pages/LinePage';
 import StationPage from './pages/StationPage';
 import CreditsPage from './pages/CreditsPage';
 import NotFoundPage from './pages/NotFoundPage';
-// css
-import './globals.css';
 
 const router = createBrowserRouter([{
   element: <HomeLayout />,

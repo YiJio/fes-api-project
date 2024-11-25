@@ -26,3 +26,11 @@ export function getLighterColor(hex, percentage) {
   const toHex = (value) => value.toString(16).padStart(2, "0").toUpperCase();
   return `#${toHex(newR)}${toHex(newG)}${toHex(newB)}`;
 }
+
+export function getColorWithAlpha(hex, alpha) {
+	if (!/^#([A-Fa-f0-9]{6})$/.test(hex)) {
+    throw new Error("Invalid hex color format. Please use #RRGGBB.");
+  }
+	let rgb = hexToRgb(hex);
+  return `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha}%)`;
+}

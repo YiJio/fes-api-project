@@ -18,6 +18,7 @@ export function getStationInfo(station, what) {
 	let index = stations.findIndex(s => s._id === station);
 	let lineId = stations[index]?.lines_served[0];
 	switch(what) {
+		case 'id': return stations[index]?._id;
 		case 'name': return stations[index]?.name.en;
 		case 'line': return lineId;
 		case 'lineNumber': return getLineInfo(lineId, 'number');

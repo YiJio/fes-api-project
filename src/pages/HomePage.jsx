@@ -13,9 +13,6 @@ import imageYuyinShanfang from '../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../assets/Huadu_District.jpg';
 import imageHongshengshaStation from '../assets/Hongshengsha_Station_Construction.jpg';
 
-// important variables
-const API_KEY = import.meta.env.VITE_API_KEY;
-
 const HomePage = () => {
 	// states
 	const [filteredStations, setFilteredStations] = useState([]);
@@ -36,15 +33,15 @@ const HomePage = () => {
 
 	useEffect(() => {
 		if (searchStation) {
-			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()) && station._service_id === 'gzmtr');
+			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()) && (station._service_id !== 'cr' && station._service_id !== 'prdir'));
 			setFilteredStations(results);
 		}
 	}, [searchStation, stations]);
 
 	useEffect(() => {
 		const handleClickOutside = (e) => {
-			if(linesRef.current && !linesRef.current.contains(e.target)) { setIsTypingLine(false); }
-			if(stationsRef.current && !stationsRef.current.contains(e.target)) { setIsTypingStation(false); }
+			if (linesRef.current && !linesRef.current.contains(e.target)) { setIsTypingLine(false); }
+			if (stationsRef.current && !stationsRef.current.contains(e.target)) { setIsTypingStation(false); }
 		}
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
@@ -52,10 +49,11 @@ const HomePage = () => {
 		}
 	}, [linesRef, stationsRef]);
 
-	if(!lines || !stations) { return <>Loading...</>; }
+	if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='home'>
+			<div className='home-full-overlay' />
 			<div className='home-left'>
 				<div className='home-images'>
 					<div className='home-col'>
@@ -81,42 +79,47 @@ const HomePage = () => {
 				</div>
 			</div>
 			<div className='home-right'>
-				<h1 className='home-title'>
-					<img src={logoGZMTR} alt='Guangzhou Metro logo' style={{ width: '32px' }} />
-					Guangzhou Metro
-				</h1>
-				<div className='home-group'>
-					<div className='home-row'>
-						<div className={'home-field' + (isTypingLine ? ' active' : '')}>
-							<RiGitCommitFill className='home-field-svg' />
-							<div className='home-input home-input-fake' onClick={() => setIsTypingLine(true)} >Search line</div>
-							{isTypingLine && (<div ref={linesRef} className='home-selections'>
-								<div className='home-selections-list'>
-									{lines.map((line) => (
-										<Link to={`/line/${line.code}`} className='home-selections-item' key={line._id}>{line.name.en}</Link>
-									))}
-								</div>
-							</div>)}
-							<button className='home-button' onClick={() => setIsTypingLine(true)}><RiArrowDownSLine /></button>
-						</div>
-					</div>
-					<div className='home-row'><span>OR</span></div>
-					<div className='home-row'>
-						<form onSubmit={handleSearchStation}>
-							<div className='home-field'>
-								<RiMapPinFill className='home-field-svg' />
-								<input className='home-input' type='text' value={searchStation} placeholder='Search station' onChange={(e) => setSearchStation(e.target.value)} onFocus={() => setIsTypingStation(true)} />
-								{searchStation !== '' && isTypingStation && (<div ref={stationsRef} className='home-selections'>
+				<div className='home-text'>
+					<h1 className='home-title'>
+						<img src={logoGZMTR} alt='Guangzhou Metro logo' style={{ width: '32px' }} />
+						Guangzhou Metro
+					</h1>
+					<div className='home-group'>
+						<div className='home-row'>
+							<div className={'home-field' + (isTypingLine ? ' active' : '')}>
+								<RiGitCommitFill className='home-field-svg' />
+								<div className='home-input home-input-fake' onClick={() => setIsTypingLine(true)} >Search line</div>
+								{isTypingLine && (<div ref={linesRef} className='home-selections'>
 									<div className='home-selections-list'>
-										{filteredStations.length > 0 && filteredStations.map((station) => (
-											<Link to={`/station/${station.code}`} className='home-selections-item' key={station._id}>{station.name.en} ({getLineInfo(station.lines_served[0], 'name')})</Link>
+										{lines.map((line) => (
+											<Link to={`/line/${line.code}`} className='home-selections-item' key={line._id}>{line.name.en}</Link>
 										))}
-										{filteredStations.length === 0 && <div className='home-empty'>No searchStation results.</div>}
 									</div>
 								</div>)}
-								<button className='home-button'><RiSearchLine /></button>
+								<button className='home-button' onClick={() => setIsTypingLine(true)}><RiArrowDownSLine /></button>
 							</div>
-						</form>
+						</div>
+						<div className='home-row'><span>OR</span></div>
+						<div className='home-row'>
+							<form onSubmit={handleSearchStation}>
+								<div className='home-field'>
+									<RiMapPinFill className='home-field-svg' />
+									<input className='home-input' type='text' value={searchStation} placeholder='Search station' onChange={(e) => { setSearchStation(e.target.value); setIsTypingStation(true) }} onFocus={() => setIsTypingStation(true)} />
+									{searchStation !== '' && isTypingStation && (<div ref={stationsRef} className='home-selections'>
+										<div className='home-selections-list'>
+											{filteredStations.length > 0 && filteredStations.map((station) => (
+												<Link to={`/station/${station.code}`} className='home-selections-item' key={station._id}>
+													{station.name.en}
+													(Line: {station.lines_served[0].toUpperCase().split('-')[1]}{/*getLineInfo(station.lines_served[0], 'name')*/})
+												</Link>
+											))}
+											{filteredStations.length === 0 && <div className='home-empty'>No search results.</div>}
+										</div>
+									</div>)}
+									<button className='home-button'><RiSearchLine /></button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>

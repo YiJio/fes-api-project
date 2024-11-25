@@ -23,7 +23,8 @@ function useDbData() {
 			]);
 			const cachedData = {
 				lines: linesData,
-				stations: stationsData.filter((station) => station._service_id === 'gzmtr' || station._service_id === 'guangfometro'),
+				//stations: stationsData.filter((station) => station._service_id === 'gzmtr' || station._service_id === 'guangfometro'),
+				stations: stationsData,
 				timestamp: Date.now(),
 			}
 			localStorage.setItem(CACHE_KEY, JSON.stringify(cachedData));
