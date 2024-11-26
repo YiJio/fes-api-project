@@ -3,7 +3,7 @@ import React from 'react';
 
 const RouteFork = ({ color }) => {
 	return (
-		<svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.09 76.64" style={{ height:'76.64px' }}>
+		<svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.09 76.64" style={{ height:'76px' }}>
 			<g data-name="Layer 1">
 				<g>
 					<polygon points="33.87 53.28 0 30.7 0 0 40 0 40 9.3 56.06 20 33.87 53.28" style={{ fill: color }} />

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RiArrowGoBackFill, RiLoader5Fill, RiShuffleLine } from 'react-icons/ri';
 // utils
-import { getContrastingTextColor, getLighterColor } from '../utils/color';
+import { getContrastingTextColor } from '../utils/color';
 // components
 import { RouteStation, RouteStationMobile } from '../components/RouteStation';
 import RouteFork from './RouteFork';
@@ -121,12 +121,6 @@ const Route = ({ line, lineStations, length, lighterColor, lightestColor }) => {
 }
 
 const RouteMobile = ({ line, lineStations, length, lighterColor, lightestColor }) => {
-
-	useEffect(() => {
-		const temp = lineStations.branches;
-		console.log(temp[0].code)
-	}, [lineStations])
-
 
 	return (
 		<div className='route'>

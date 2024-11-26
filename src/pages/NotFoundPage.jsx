@@ -1,49 +1,21 @@
 // packages
 import React from 'react';
-import Skeleton from 'react-loading-skeleton';
-// css
-import 'react-loading-skeleton/dist/skeleton.css'
+import { Link } from 'react-router-dom';
+import { RiEmotionUnhappyLine } from 'react-icons/ri';
 
 const NotFoundPage = () => {
 	return (
-		<div style={{ display: 'flex' }}>
-			<div className='station-tip'>
-				<div className='station-tip-info'>
-					<div className='station-tip-wrapper'>
-						<div style={{ display:'flex', flexDirection:'column', gap:'4px' }}>
-							<Skeleton count={1} height='24px' />
-							<Skeleton count={2} />
-							<Skeleton count={1} height='32px' />
-						</div>
-						<Skeleton count={3} height='14px' />
-						<Skeleton count={1} height='40px' />
-					</div>
-				</div>
+		<div className='not-found'>
+			<h1 className='not-found-heading'>
+				<span>4</span>
+				<span>0</span>
+				<span>4</span>
+			</h1>
+			<div className='not-found-paragraph'>
+				<RiEmotionUnhappyLine />
+				The page you are looking for does not exist!
 			</div>
-			<div className='station-tip'>
-				<div className='station-tip-info'>
-					<div className='station-tip-wrapper'>
-						<div className='station-tip-heading'>
-							<div className='station-tip-row station-tip-title'>
-								<div className='station-tip-name'>Xilang</div>
-							</div>
-							<div className='station-tip-row station-tip-location'>
-								<span>
-								1200 Independence Avenue SW, Washington, D.C., 20004
-								</span>
-							</div>
-							<div className='station-tip-row'>
-								<div className='station-tip-transfers'>
-									<div className='station-transfer' style={{ background:'black', color:'white' }}>1</div>
-								</div>
-							</div>
-						</div>
-						<div className='station-tip-description'>The station's south entrance is at the southwest corner of Independence Avenue and 12th Street, Southwest, the street elevator is at the northwest corner of the same intersection, and the north entrance is on the south side of the Mall near Jefferson Drive, Southwest.</div>
-						<button className='station-tip-button'>Read more</button>
-					</div>
-				</div>
-				<div className='station-tip-bg'></div>
-			</div>
+			<div className='not-found-paragraph'>Try <Link to='/search'>searching</Link> something.</div>
 		</div>
 	)
 }

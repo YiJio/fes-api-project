@@ -32,7 +32,7 @@ const HomePage = () => {
 	useEffect(() => {
 		if (searchStation) {
 			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()) && (station._service_id !== 'cr' && station._service_id !== 'prdir'));
-			results = results.sort((a,b) => a.name.en.localeCompare(b.name.en))
+			results = results.sort((a,b) => a.name.en.localeCompare(b.name.en, 'en', { numeric: true }));
 			setFilteredStations(results);
 		}
 	}, [searchStation, stations]);
@@ -90,7 +90,7 @@ const HomePage = () => {
 								<div className='home-input home-input-fake' onClick={() => setIsTypingLine(true)} >Search line</div>
 								{isTypingLine && (<div ref={linesRef} className='home-selections'>
 									<div className='home-selections-list'>
-										{lines.sort((a,b) => a.name.en.localeCompare(b.name.en)).map((line) => (
+										{lines.sort((a,b) => a.name.en.localeCompare(b.name.en, 'en', { numeric: true })).map((line) => (
 											<Link to={`/line/${line.code}`} className='home-selections-item' key={line._id}>{line.name.en}</Link>
 										))}
 									</div>

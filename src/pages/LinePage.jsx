@@ -52,11 +52,16 @@ const LinePage = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetch = async () => {
-			let stations = await fetchLineStations(line);
-			if (!stations) { navigate('/not-found'); return; }
-			setDbLineStations(stations);
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+		const fetch = async (index) => {
+			let lineStations = await fetchLineStations(line);
+			if (!lineStations) { navigate('/not-found'); return; }
+			console.log(lineStations)
+			if(lineStations.stations.length === 0) { navigate('/not-found'); return; }
+			setDbLineStations(lineStations);
+			setUiLighterColor(getLighterColor(lines[index]?.color, 20));
+			setTimeout(() => {
+				setUiIsLoading(false);
+			}, 1000);
 		}
 		if (line && lines) {
 			setDbLine(null);
@@ -66,11 +71,7 @@ const LinePage = () => {
 			let index = lines.findIndex(l => l._id == line);
 			if (index === -1) { navigate('/not-found'); return; }
 			setDbLine(lines[index]);
-			fetch();
-			setUiLighterColor(getLighterColor(lines[index]?.color, 20));
-			setTimeout(() => {
-				setUiIsLoading(false);
-			}, 1000);
+			fetch(index);
 		}
 	}, [line, lines]);
 

@@ -48,6 +48,8 @@
 	.home-right { padding:0; }
 	.home-text { padding:40px; width:100vw; }
 	.home-title { font-size:36px; }
+	.not-found-heading { font-size:96px; }
+	.not-found-paragraph { font-size:20px; }
 	.search-list { flex-direction:column; flex-wrap:none; }
 	.search-card { width:100%; }
 }

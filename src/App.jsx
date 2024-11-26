@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 // css
 import './screens.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 // hooks
 import useDbData from './hooks/useDbData';
 // layouts
@@ -15,6 +16,7 @@ import LinePage from './pages/LinePage';
 import StationPage from './pages/StationPage';
 import CreditsPage from './pages/CreditsPage';
 import NotFoundPage from './pages/NotFoundPage';
+import TestPage from './pages/TestPage';
 
 const router = createBrowserRouter([{
   element: <HomeLayout />,
