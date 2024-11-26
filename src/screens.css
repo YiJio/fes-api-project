@@ -20,6 +20,7 @@
 	.home-field { width:100%; background:rgba(0,0,0,0.5); }
 	.home-field:focus-within, .home-field.active, .home-selections, .home-button { background:var(--color-black); color:var(--color-white); }
 	.home-input { width:calc(100% - 56px); color:var(--color-white); }
+	.home-selections { width:100%; }
 	.home-selections a, .home-button { color:var(--color-gray-2); }
 	.home-selections a:hover, .home-button:hover { background:var(--color-gray-9); }
 	.home-full-overlay { opacity:1; }
@@ -39,8 +40,7 @@
 	.home-left { width:0%; }
 	.route { height:100%; scroll-snap-type:none; }
 	.route-line { margin:24px 0; width:100%; height:12px; border-radius:8px; }
-	.route-stations, .station-tip { display:none; }
-	.route-stations-mobile { display:flex; }
+	.station-tip { display:none; }
 }
 
 /** small smartphone size **/

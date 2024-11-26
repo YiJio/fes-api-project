@@ -7,9 +7,13 @@
 This project was done for the final API project for the FES Week 6 bootcamp. This is a continuation of the API project done in Week 4, but I chose to use another metro-related API this time. I used a public API that I created (links to <a href="https://github.com/YiJio/cantonprt/">repo</a> and <a href="https://cantonprtapi.com/">site</a>) to fetch services, lines, and stations data.
 
 ## Changelog
-**[1.1] - 2024/11/25**
+**[1.3] - 2024/11/26**
+* Fixed some stuff to improve performance.
+* Line page with branches finished, implement station page next.
+
+**[1.2] - 2024/11/25**
 * Did some mobile styling.
-* Line page basically finished, implement station page next.
+* Line page basically finished, still need branches.
 
 **[1.1] - 2024/11/24**
 * Line page finished 80%, implement station tip next.

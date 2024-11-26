@@ -8,8 +8,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 // hooks
 import useDbData from '../hooks/useDbData';
 // utils
-import { fetchStation } from '../utils/fetch';
-import { getLineInfo } from '../utils/get';
+//import { fetchStation } from '../utils/fetch';
+//import { getLineInfo } from '../utils/get';
 import { getColorWithAlpha, getContrastingTextColor } from '../utils/color';
 // components
 import StationCode from './StationCode';
@@ -37,10 +37,9 @@ const StationTipSkeleton = () => {
 	)
 }
 
-const StationTip = ({ stationId, lighterColor }) => {
+const StationTip = ({ stationId, lineNumber, mainColor, lighterColor }) => {
 	// states
 	const [db_station, setDbStation] = useState({});
-	const [ui_color, setUiColor] = useState('');
 	const [ui_isLoading, setUiIsLoading] = useState(true);
 	const [ui_background, setUiBackground] = useState('');
 	// hooks
@@ -48,25 +47,13 @@ const StationTip = ({ stationId, lighterColor }) => {
 	const navigate = useNavigate();
 
 	function getStyles(what) {
+		const alphaColor = getColorWithAlpha(mainColor, 25);
 		switch (what) {
-			case 'boxShadowTip': return `0 8px 8px 0 ${getColorWithAlpha(ui_color, 25)}`;
-			case 'boxShadowBtn': return `0 8px 12px 0 ${getColorWithAlpha(ui_color, 25)}`;
+			case 'boxShadowTip': return `0 8px 8px 0 ${alphaColor}`;
+			case 'boxShadowBtn': return `0 8px 12px 0 ${alphaColor}`;
 			case 'background': return `url('${ui_background}')`;
 		}
 	}
-
-	useEffect(() => {
-		const img = new Image();
-		const exit = db_station?.image?.exit;
-		const platform = db_station?.image?.platform;
-		let src = '';
-		if(exit && exit !== '') { src = exit; }
-		else { src = platform; }
-		img.src = src;
-		console.log(src);
-		img.onload = () => setUiBackground(src);
-	}, [db_station.image]);
-	
 
 	useEffect(() => {
 		// too many API calls, call from local storage for now, which doesn't really render the skeleton or loading state
@@ -84,12 +71,22 @@ const StationTip = ({ stationId, lighterColor }) => {
 			const index = stations.findIndex(station => station._id === stationId);
 			const station = stations[index];
 			setDbStation(station);
-			let color = getLineInfo(station.lines_served[0], 'color');
-			if (color === '') { color = '#d3d3d3'; }
-			setUiColor(color);
-			setUiIsLoading(false);
+			setTimeout(() => {
+				setUiIsLoading(false);
+			}, 500);
 		}
 	}, [stationId, stations]);
+	
+	useEffect(() => {
+		const img = new Image();
+		const exit = db_station?.image?.exit;
+		const platform = db_station?.image?.platform;
+		let src = '';
+		if(exit && exit !== '') { src = exit; }
+		else { src = platform; }
+		img.src = src;
+		img.onload = () => setUiBackground(src);
+	}, [db_station.image]);
 
 	/*useEffect(() => {
 		console.log(db_station, ui_color)
@@ -104,7 +101,7 @@ const StationTip = ({ stationId, lighterColor }) => {
 					<div className='station-tip-heading'>
 						<div className='station-tip-row station-tip-title'>
 							<div className='station-tip-name'>{db_station?.name?.en}</div>
-							<StationCode code={db_station?.station_code} line={db_station?.lines_served[0]} status={db_station?.status} />
+							<StationCode code={db_station?.station_code} color={mainColor} status={db_station?.status} />
 						</div>
 						<div className='station-tip-row station-tip-location'>
 							<RiMapPinFill />
@@ -120,8 +117,8 @@ const StationTip = ({ stationId, lighterColor }) => {
 						</div>
 						{db_station?.transfers.length !== 0 && (<div className='station-tip-row'>
 							<div className='station-tip-transfers'>
-								<div className='station-transfer' style={{ background: ui_color, color: getContrastingTextColor(ui_color) }}>
-									{getLineInfo(db_station?.lines_served[0], 'number')}
+								<div className='station-transfer' style={{ background: mainColor, color: getContrastingTextColor(mainColor) }}>
+									{lineNumber}
 								</div>
 								<span className='station-tip-transfer-icon'>
 									<RiExchange2Line />

@@ -1,16 +1,14 @@
 // packages
 import React from 'react';
-// utils
-import { getLineInfo } from '../utils/get';
 
-const StationCode = ({ code, line, status }) => {
+const StationCode = ({ code, color, status }) => {
 	// variables
 	let theCode = code.split('|');
 	if(theCode.length === 1) {
 		theCode[0] = '?';
 		theCode[1] = '?';
 	}
-	let bordercolor = getLineInfo(line, 'color');
+	let bordercolor = color;
 	if(bordercolor === '') { bordercolor = 'var(--color-gray-3)'; }
 	let bgColor = status === 'in operation' ? 'transparent' : 'var(--color-gray-0)';
 	let opacity = status === 'in operation' ? '1' : '0.5';

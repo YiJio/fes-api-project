@@ -1,19 +1,18 @@
 // packages
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Popover } from 'react-tiny-popover';
 import { RiExchange2Line } from 'react-icons/ri';
-// utils
-import { getStationInfo } from '../utils/get';
 // components
 import StationTransfer from './StationTransfer';
 import StationTip from './StationTip';
 import { RouteCircle, RouteCircleMobile } from './RouteCircle';
 
-const RouteStation = ({ line, station, index, activeCircle, setActiveCircle, length, lighterColor }) => {
-	// states
+const RouteStation = ({ line, station, index, route, activeRoute, setActiveRoute, activeCircle, setActiveCircle, length, lighterColor, lineBranches }) => {
+	// variables
+	let isActive = activeCircle === index && activeRoute === route;
 	// refs
-	const popoverRef = useRef(null);
+	const popoverRef = useRef(null);	
 
 	// popover should be opened by default, so this is unnecessary
 	/*useEffect(() => {
@@ -29,16 +28,19 @@ const RouteStation = ({ line, station, index, activeCircle, setActiveCircle, len
 	}, []);*/
 
 	return (
-		<div className={'route-station' + (activeCircle === index ? ' active' : '')}>
-			<div className='route-station-name' style={{ color: activeCircle === index ? line?.color : 'var(--color-black)' }} onClick={() => setActiveCircle(index)}>{station.name.en}</div>
-			<RouteCircle index={index} length={length} isActive={activeCircle === index} setActiveCircle={setActiveCircle} sequence={station.sequence} mainColor={line?.color} lighterColor={lighterColor} />
-			<Popover isOpen={activeCircle === index} positions={['bottom', 'top']} align='center' content={<div>
-				<StationTip stationId={station.code} lighterColor={lighterColor} />
+		<div className={'route-station' + (isActive ? ' active' : '')}>
+			<div className='route-station-name' style={{ color: isActive ? line?.color : 'var(--color-black)' }} onClick={() => setActiveCircle(index)}>
+				{station.name.en}
+			</div>
+			<RouteCircle index={index} length={length} setActiveRoute={setActiveRoute} isActive={isActive} setActiveCircle={setActiveCircle} sequence={station.sequence} mainColor={line?.color} lighterColor={lighterColor} branches={station.branches} lineBranches={lineBranches} />
+			<Popover isOpen={isActive} positions={['bottom', 'top']} align='center' content={<div>
+				<StationTip stationId={station.code} lineNumber={line?.prefix.real_prefix} mainColor={line?.color} lighterColor={lighterColor} />
 			</div>}>
 				<div className='route-station-trigger' />
 			</Popover>
 			{station.transfers.length !== 0 && (<div className='route-station-transfers'>
-				{station.transfers.filter((transfer) => getStationInfo(transfer?.transfer_to._id, 'id')).map((transfer, index) => (
+				<div className='route-station-transfer-line' />
+				{station.transfers.map((transfer, index) => (
 					<StationTransfer key={index} transfer={transfer.transfer_to} />
 				))}
 			</div>)}
@@ -53,11 +55,11 @@ const RouteStationMobile = ({ line, station, index, length, lighterColor }) => {
 			<div className='route-line' style={{ background: lighterColor }}>
 				<RouteCircleMobile index={index} length={length} sequence={station.sequence} mainColor={line?.color} lighterColor={lighterColor} />
 			</div>
-			<div>
+			<div className='route-station-info'>
 				<Link to={`/station/${station._id}`} className='route-station-name'>{station.name.en}</Link>
 				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
 				{station.transfers.length !== 0 ? (<div className='route-station-transfers'>
-					{station.transfers.filter((transfer) => getStationInfo(transfer?.transfer_to._id, 'id')).map((transfer, index) => (
+					{station.transfers.map((transfer, index) => (
 						<StationTransfer key={index} transfer={transfer.transfer_to} />
 					))}
 				</div>) : <code>N/A</code>}

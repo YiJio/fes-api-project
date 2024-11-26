@@ -24,20 +24,20 @@
   --color-text-secondary:var(--color-gray-7);
   --color-text-link:var(--color-blue);
 
-  --font-tiny:10px 'Lato', sans-serif;
-  --font-small:12px 'Lato', sans-serif;
-  --font-sub:14px 'Lato', sans-serif;
-  --font-body:16px 'Lato', sans-serif;
-  --font-heading-3:20px 'Lato', sans-serif;
-  --font-heading-2:24px 'Lato', sans-serif;
-  --font-heading-1:32px 'Lato', sans-serif;
+  --font-tiny:10px 'Inter', sans-serif;
+  --font-small:12px 'Inter', sans-serif;
+  --font-sub:14px 'Inter', sans-serif;
+  --font-body:16px 'Inter', sans-serif;
+  --font-heading-3:20px 'Inter', sans-serif;
+  --font-heading-2:24px 'Inter', sans-serif;
+  --font-heading-1:32px 'Inter', sans-serif;
 }
 /**** END ROOT VARIABLES ****/
 
 /****** DEFAULT STYLES ******/
 * { padding:0; margin:0; outline:0; border:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { font-size:1rem; font-family:'Lato', sans-serif; color:var(--color-text-primary); }
+body { font-size:1rem; font-family:'Inter', sans-serif; color:var(--color-text-primary); }
 p { margin:8px 0; }
 ul { margin:0; padding-left:24px; }
 li { margin:4px 0; }
@@ -48,9 +48,9 @@ a:hover { color:var(--color-text-link); }
 h1 { font:var(--font-heading-1); font-weight:700; }
 h2 { font:var(--font-heading-2); font-weight:600; }
 h3 { font:var(--font-heading-3); font-weight:500; }
-input { padding:8px; border-radius:8px; font-family:'Lato', sans-serif; }
+input { padding:8px; border-radius:8px; font-family:'Inter', sans-serif; }
 input::placeholder { font-style:italic; }
-button { padding:16px 4px; height:40px; display:flex; align-items:center; justify-content:center; gap:8px; border-radius:8px; color:var(--color-white); font-family:'Lato', sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
+button { padding:16px 4px; height:40px; display:flex; align-items:center; justify-content:center; gap:8px; border-radius:8px; color:var(--color-white); font-family:'Inter', sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
 /**** END DEFAULT STYLES ****/
 
 /****** STANDARD STYLES ******/
@@ -74,6 +74,18 @@ button { padding:16px 4px; height:40px; display:flex; align-items:center; justif
 
 .invert { filter:brightness(0) invert(1); }
 /**** END STANDARD STYLES ****/
+
+/******** OVERRIDES ********/
+.react-tiny-popover-container { z-index:9; }
+/****** END OVERRIDES ******/
+
+/****** ANIMATIONS ******/
+.loading-spinner { animation:rotate 600ms infinite linear; color:var(--color-gray-1); }
+@keyframes rotate {
+  0% { transform:rotate(0); }
+  100% { transform:rotate(360deg); }
+}
+/**** END ANIMATIONS ****/
 
 /*:root {
   font-family:Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

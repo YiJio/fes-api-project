@@ -4,8 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { RiArrowDownSLine, RiGitCommitFill, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
 // hooks
 import useDbData from '../hooks/useDbData';
-// utils
-import { getLineInfo } from '../utils/get';
 // assets
 import logoGZMTR from '../assets/Guangzhou_Metro_icon.svg';
 import imageCantonTower from '../assets/Canton_Tower.jpg';
@@ -110,8 +108,7 @@ const HomePage = () => {
 										<div className='home-selections-list'>
 											{filteredStations.length > 0 && filteredStations.map((station) => (
 												<Link to={`/station/${station.code}`} className='home-selections-item' key={station._id}>
-													{station.name.en}&nbsp;
-													(Line: {station.lines_served[0].toUpperCase().split('-')[1]}{/*getLineInfo(station.lines_served[0], 'name')*/})
+													{station.name.en} (Line: {station.lines_served[0].toUpperCase().split('-')[1]}{/*getLineInfo(station.lines_served[0], 'name')*/})
 												</Link>
 											))}
 											{filteredStations.length === 0 && <div className='home-empty'>No search results.</div>}

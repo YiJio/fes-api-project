@@ -1,31 +1,31 @@
 // packages
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 // hooks
 import useDbData from '../hooks/useDbData';
 // components
-import { SearchCard } from '../components/SearchCard';
-import { useMemo } from 'react';
+import { SearchCard, SearchCardSkeleton } from '../components/SearchCard';
 //
 
 const SearchPage = () => {
 	// hooks
 	const { lines, stations } = useDbData();
 	const _location = useLocation();
-	const navigate = useNavigate();
 	// variables
 	const _queryParams = new URLSearchParams(_location.search);
 	const _initialQuery = _queryParams.get('q') || '';
 	// states
+	const [ui_isLoading, setUiIsLoading] = useState(false);
 	const [ui_query, setUiQuery] = useState(_initialQuery);
 	const [ui_filterStatus, setUiFilterStatus] = useState({ inOperation: false, underConstruction: false, planning: false });
 	const [ui_filteredStations, setUiFilteredStations] = useState([]);
 
 	const handleQuery = (e) => {
+		setUiIsLoading(true);
 		const newQuery = e.target.value;
 		setUiQuery(newQuery);
-		if (newQuery && newQuery.length > 3) {
+		if (newQuery/* && newQuery.length > 3*/) {
 			const filtered = stations?.filter((station) => {
 				const matches = station.name.en.toLowerCase().includes(newQuery.toLowerCase());
 				const service = station._service_id === 'gzmtr' || station._service_id === 'guangfometro';
@@ -40,6 +40,9 @@ const SearchPage = () => {
 		} else {
 			setUiFilteredStations([]);
 		}*/
+		setTimeout(() => {
+			setUiIsLoading(false);
+		}, 200);
 	}
 
 	/*const handleFilters = (field, value) => {
@@ -64,7 +67,7 @@ const SearchPage = () => {
 	);*/
 
 	useEffect(() => {
-		if (ui_query !== '' && ui_query.length > 3) {
+		if (ui_query !== ''/* && ui_query.length > 2*/) {
 			//setUiFilteredStations(stations?.filter((station) => station.name.en.toLowerCase().includes(ui_query.toLowerCase()) && (station._service_id === 'gzmtr' || station._service_id === 'guangfometro')));
 			const filtered = stations?.filter((station) => {
 				const matches = station.name.en.toLowerCase().includes(ui_query.toLowerCase());
@@ -96,19 +99,26 @@ const SearchPage = () => {
 				</div>
 			</div>*/}
 			<div className='search-list'>
-				{ui_filteredStations?.length > 0 ? (
-					ui_filteredStations.map((station) => (
-						<SearchCard key={station._id} code={station._id} stationCode={station.station_code} name={station.name.en} line={station.lines_served[0]} status={station.status} />
-					))
-				) : ui_query === '' ? (<p>Type something to search.</p>)
-					: (<div>
-						<p>No results found. It could be one of the following reasons:</p>
-						<ul>
-							<li>either your search term is too short to return something specific, or</li>
-							<li>there is simply no search term, or</li>
-							<li>the search term does not match any station name.</li>
-						</ul>
-					</div>)}
+				{ui_isLoading ? <>
+					<SearchCardSkeleton />
+					<SearchCardSkeleton />
+					<SearchCardSkeleton />
+					<SearchCardSkeleton />
+				</> : (<>
+					{ui_filteredStations?.length > 0 ? (
+						ui_filteredStations.map((station) => (
+							<SearchCard key={station._id} lines={lines} code={station._id} stationCode={station.station_code} name={station.name.en} line={station.lines_served[0]} status={station.status} />
+						))
+					) : ui_query === '' ? (<p>Type something to search.</p>)
+						: (<div>
+							<p>No results found. It could be one of the following reasons:</p>
+							<ul>
+								<li>either your search term is too short to return something specific, or</li>
+								<li>there is simply no search term, or</li>
+								<li>the search term does not match any station name.</li>
+							</ul>
+						</div>)}
+				</>)}
 			</div>
 		</>
 	);

@@ -3,7 +3,7 @@ import React from 'react';
 // utils
 import { getContrastingTextColor } from '../utils/color';
 
-const RouteCircle = ({ index, length, isActive, setActiveCircle, sequence, mainColor, lighterColor }) => {
+const RouteCircle = ({ index, length, setActiveRoute, isActive, setActiveCircle, sequence, mainColor, lighterColor, branches, lineBranches }) => {
 	// variables
 	let background = isActive ? mainColor : 'var(--color-white)';
 	let border = isActive ? '2px solid var(--color-white)' : `4px solid ${lighterColor}`;
@@ -11,9 +11,18 @@ const RouteCircle = ({ index, length, isActive, setActiveCircle, sequence, mainC
 	let color = isActive ? getContrastingTextColor(mainColor) : 'var(--color-black)';
 
 	return (
-		<div className='route-station-code' style={{ background: background, color: color, outline: outline, border: border }} onClick={() => setActiveCircle(index)}>
-			<span>{sequence}</span>
-			<div className={'route-station-code-line' + (index === 0 ? ' first' : index === length ? ' last' : '')} style={{ background: lighterColor }} />
+		<div className='route-station-circle'>
+			<div className='route-station-code' style={{ background: background, color: color, outline: outline, border: border }} onClick={() => setActiveCircle(index)}>
+				<span>{sequence}</span>
+			</div>
+			<div className={'route-station-track' + (index === 0 ? ' first' : index === length ? ' last' : '')} style={{ background: lighterColor }} />
+			{branches?.length > 0 && <div className='route-station-fork' style={{ borderColor: lighterColor }}>
+				{branches.map((branch, index) => (<div key={index} style={{ display: 'flex' }}>
+					<div className='route-station-fork-branch' style={{ borderColor: lighterColor }} onClick={() => setActiveRoute(branch)}>
+						{lineBranches[lineBranches.findIndex(lb => lb.code === branch)].name.en}
+					</div>
+				</div>))}
+			</div>}
 		</div>
 	);
 }

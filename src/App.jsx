@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 // css
 import './screens.css';
+// hooks
+import useDbData from './hooks/useDbData';
 // layouts
 import HomeLayout from './layouts/HomeLayout';
 import RootLayout from './layouts/RootLayout';
@@ -32,6 +34,8 @@ const router = createBrowserRouter([{
 }]);
 
 function App() {
+  // force hook to cache data already regardless of where user is
+  const { lines, stations } = useDbData();
 
   return (
     <>

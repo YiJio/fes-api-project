@@ -1,6 +1,6 @@
 // packages
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { RiLoader5Fill } from 'react-icons/ri';
 // hooks
@@ -9,7 +9,7 @@ import useDbData from '../hooks/useDbData';
 import { fetchLineStations } from '../utils/fetch';
 import { getContrastingTextColor, getLighterColor } from '../utils/color';
 // components
-import { RouteStation, RouteStationMobile } from '../components/RouteStation';
+import { Route, RouteMobile } from '../components/Route';
 // assets
 
 const LinePageSkeleton = () => {
@@ -18,7 +18,9 @@ const LinePageSkeleton = () => {
 			<Skeleton className='line-title' count={1} height='56px' />
 			<div className='route'>
 				<Skeleton className='route-line' count={1} />
-				<div style={{ marginTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '100px' }}><RiLoader5Fill className='loading-spinner' strokeWidth={2} /></div>
+				<div style={{ marginTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '100px' }}>
+					<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
+				</div>
 			</div>
 		</>
 	);
@@ -35,42 +37,19 @@ const LinePage = () => {
 	// states
 	const [db_line, setDbLine] = useState({});
 	const [db_lineStations, setDbLineStations] = useState(null);
+	const [ui_isMobile, setUiIsMobile] = useState(true);
 	const [ui_isLoading, setUiIsLoading] = useState(true);
 	const [ui_lighterColor, setUiLighterColor] = useState('');
-	const [ui_activeCircle, setUiActiveCircle] = useState(0);
-	// refs
-	const routeRef = useRef(null);
-	const isScrollingRef = useRef(false);
 
-	const handleScroll = (e) => {
-		if (isScrollingRef.current) return;
-		e.preventDefault();
-		isScrollingRef.current = true;
-		const scrollDelta = Math.sign(e.deltaY); // detect scroll direction (-1 or 1)
-		const nextCircle = Math.min(Math.max(ui_activeCircle + scrollDelta, 0), db_lineStations.stations.length - 1);
-		if (nextCircle !== ui_activeCircle) {
-			setUiActiveCircle(nextCircle);
-			const circleHeight = window.innerHeight;
-			routeRef.current.scrollTo({
-				top: (nextCircle - 1) * circleHeight,
-				behavior: 'auto',
-			});
-			setTimeout(() => {
-				isScrollingRef.current = false;
-			}, 200);
-		} else {
-			isScrollingRef.current = false;
+	useEffect(() => {
+		const handleResize = () => {
+			const isMobile = window.innerWidth <= 600;
+			setUiIsMobile(isMobile);
 		}
-	}
-
-	// having errors when deployed, for now void it
-	/*useEffect(() => {
-		const ref = routeRef.current;
-		if (ref) ref.addEventListener('wheel', handleScroll, { passive: false });
-		return () => {
-			if (ref) ref.removeEventListener('wheel', handleScroll);
-		};
-	}, [routeRef.current, ui_activeCircle]);*/
+		window.addEventListener('resize', handleResize);
+		handleResize();
+		return () => { window.removeEventListener('resize', handleResize); }
+	}, []);
 
 	useEffect(() => {
 		const fetch = async () => {
@@ -84,9 +63,6 @@ const LinePage = () => {
 			setDbLineStations(null);
 			setUiIsLoading(true);
 			setUiLighterColor('');
-			setUiActiveCircle(-1);
-			//routeRef.current = true;
-			setTimeout(() => { console.log('loading') }, 2000);
 			let index = lines.findIndex(l => l._id == line);
 			if (index === -1) { navigate('/not-found'); return; }
 			setDbLine(lines[index]);
@@ -94,8 +70,7 @@ const LinePage = () => {
 			setUiLighterColor(getLighterColor(lines[index]?.color, 20));
 			setTimeout(() => {
 				setUiIsLoading(false);
-				setUiActiveCircle(0); // force this to make route ref not undefined
-			}, 2000);
+			}, 1000);
 		}
 	}, [line, lines]);
 
@@ -112,19 +87,11 @@ const LinePage = () => {
 				<div className='line-number' style={{ background: db_line?.color, color: getContrastingTextColor(db_line.color) }}>{db_line?.prefix.real_prefix}</div>
 				<div className='line-name'>{db_line?.name?.en}</div>
 			</div>
-			<div ref={routeRef} className='route'>
-				<div className='route-line' style={{ background: ui_lighterColor }} />
-				<div className='route-stations'>
-					{db_lineStations?.stations?.map((station, index) => (
-						<RouteStation key={station.code} line={db_line} station={station} index={index} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} length={db_lineStations.stations.length - 1} lighterColor={ui_lighterColor} />
-					))}
-				</div>
-				<div className='route-stations-mobile'>
-					{db_lineStations?.stations?.map((station, index) => (
-						<RouteStationMobile key={station.code} line={db_line} station={station} index={index} length={db_lineStations.stations.length - 1} lighterColor={ui_lighterColor} />
-					))}
-				</div>
-			</div>
+			{!ui_isMobile ? <>
+				<Route line={db_line} lineStations={db_lineStations} length={db_lineStations.stations.length - 1} lighterColor={ui_lighterColor} lightestColor={getLighterColor(db_line?.color, 50)} />
+			</> : <>
+				<RouteMobile line={db_line} lineStations={db_lineStations} length={db_lineStations.stations.length - 1} lighterColor={ui_lighterColor} lightestColor={getLighterColor(db_line?.color, 50)} />
+			</>}
 		</>
 	)
 }
