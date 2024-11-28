@@ -8,6 +8,11 @@ This project was done for the final API project for the FES Week 6 bootcamp. Thi
 
 ## Changelog
 **[1.3] - 2024/11/26**
+* Station page finished 80%.
+* Implemented some features to make it a bit user-friendly.
+* Structure and naming reorganization.
+
+**[1.3] - 2024/11/26**
 * Fixed some stuff to improve performance.
 * Line page with branches finished, implement station page next.
 

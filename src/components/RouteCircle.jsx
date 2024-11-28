@@ -1,23 +1,39 @@
 // packages
 import React from 'react';
 // utils
-import { getContrastingTextColor } from '../utils/color';
+import { getContrastingTextColor, getLighterColor } from '../utils/color';
 
-const RouteCircle = ({ index, length, setActiveRoute, isActive, setActiveCircle, sequence, mainColor, lighterColor, branches, lineBranches }) => {
+const RouteCircle = ({ stationIndex, numOfStations, activeRoute, setActiveRoute, isActive, setActiveCircle, status, sequence, lineColor, branches, lineBranches }) => {
 	// variables
-	let background = isActive ? mainColor : 'var(--color-white)';
-	let border = isActive ? '2px solid var(--color-white)' : `4px solid ${lighterColor}`;
-	let outline = isActive ? `4px solid ${mainColor}` : 'none';
-	let color = isActive ? getContrastingTextColor(mainColor) : 'var(--color-black)';
+	let firstLast = stationIndex === numOfStations ? 'last' : stationIndex === 0 ? 'first' : '';
+	// branches should have track before it regardless of first or last
+	if(activeRoute !== 'primary' && stationIndex === 0) { firstLast = 'first-branch'; }
+	// only 1 station in branch -> make it last and not first
+	if(activeRoute !== 'primary' && stationIndex === numOfStations) { firstLast = 'last'; }
+	let isNio = status !== 'in operation';
+	// variables: color
+	let lighterColor = getLighterColor(lineColor, 20);
+	let bgColor = isActive ? lineColor : 'var(--color-white)';
+	let borderColor = isActive ? '2px solid var(--color-white)' : `4px solid ${lighterColor}`;
+	let trackColor = lighterColor;
+	let outlineColor = isActive ? `4px solid ${lineColor}` : 'none';
+	let fontColor = isActive ? getContrastingTextColor(lineColor) : 'var(--color-black)';
+	if(isNio) {
+		bgColor = isActive ? 'var(--color-gray-3)' : 'var(--color-white)';
+		borderColor = isActive ? '2px solid var(--color-white)' : '4px solid var(--color-gray-2)';
+		trackColor = `repeating-linear-gradient(90deg, ${lighterColor}, ${lighterColor} 4px, rgb(255,255,255) 4px, rgb(255,255,255) 6px)`;
+		outlineColor = isActive ? `4px solid var(--color-gray-3)` : 'none';
+		fontColor = 'var(--color-black)';
+	}
 
 	return (
 		<div className='route-station-circle'>
-			<div className='route-station-code' style={{ background: background, color: color, outline: outline, border: border }} onClick={() => setActiveCircle(index)}>
+			<div className='route-station-code' style={{ background: bgColor, color: fontColor, outline: outlineColor, border: borderColor }} onClick={() => setActiveCircle(stationIndex)}>
 				<span>{sequence}</span>
 			</div>
-			<div className={'route-station-track' + (index === 0 ? ' first' : index === length ? ' last' : '')} style={{ background: lighterColor }} />
+			<div className={`route-station-track ${firstLast} ${status !== 'in operation' ? 'nio' : ''}`} style={{ background: trackColor }} />
 			{branches?.length > 0 && <div className='route-station-fork' style={{ borderColor: lighterColor }}>
-				{branches.map((branch, index) => (<div key={index} style={{ display: 'flex' }}>
+				{branches.map((branch, i) => (<div key={i} style={{ display: 'flex' }}>
 					<div className='route-station-fork-branch' style={{ borderColor: lighterColor }} onClick={() => setActiveRoute(branch)}>
 						{lineBranches[lineBranches.findIndex(lb => lb.code === branch)].name.en}
 					</div>
@@ -27,13 +43,11 @@ const RouteCircle = ({ index, length, setActiveRoute, isActive, setActiveCircle,
 	);
 }
 
-const RouteCircleMobile = ({ index, length, sequence, mainColor, lighterColor }) => {
-	// variables
+const RouteCircleMobile = ({ sequence, lineColor }) => {
 
 	return (
-		<div className='route-station-code' style={{ borderColor: mainColor }}>
+		<div className='route-station-code' style={{ borderColor: lineColor }}>
 			<span>{sequence}</span>
-			<div className={'route-station-code-line' + (index === 0 ? ' first' : index === length ? ' last' : '')} style={{ background: lighterColor }} />
 		</div>
 	);
 }

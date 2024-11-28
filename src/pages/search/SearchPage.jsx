@@ -2,10 +2,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import debounce from 'lodash.debounce';
+// css
+import './search.css';
 // hooks
-import useDbData from '../hooks/useDbData';
+import useDbData from '../../hooks/useDbData';
+// utils
+import { sortByStationNameAndLineName } from '../../utils/helper';
 // components
-import { SearchCard, SearchCardSkeleton } from '../components/SearchCard';
+import { SearchCard, SearchCardSkeleton } from '../../components/SearchCard';
 //
 
 const SearchPage = () => {
@@ -26,12 +30,12 @@ const SearchPage = () => {
 		const newQuery = e.target.value;
 		setUiQuery(newQuery);
 		if (newQuery/* && newQuery.length > 3*/) {
-			const filtered = stations?.filter((station) => {
+			let filtered = stations?.filter((station) => {
 				const matches = station.name.en.toLowerCase().includes(newQuery.toLowerCase());
 				const service = station._service_id === 'gzmtr' || station._service_id === 'guangfometro';
 				//const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
 				return matches && service;
-			});
+			}).sort((a,b) => sortByStationNameAndLineName(a, b, lines));
 			setUiFilteredStations(filtered);
 		} else { setUiFilteredStations([]); }
 		/*navigate(`/search?q=${encodeURIComponent(newQuery)}`, { replace: true });
@@ -69,12 +73,12 @@ const SearchPage = () => {
 	useEffect(() => {
 		if (ui_query !== ''/* && ui_query.length > 2*/) {
 			//setUiFilteredStations(stations?.filter((station) => station.name.en.toLowerCase().includes(ui_query.toLowerCase()) && (station._service_id === 'gzmtr' || station._service_id === 'guangfometro')));
-			const filtered = stations?.filter((station) => {
+			let filtered = stations?.filter((station) => {
 				const matches = station.name.en.toLowerCase().includes(ui_query.toLowerCase());
 				const service = station._service_id === 'gzmtr' || station._service_id === 'guangfometro';
 				//const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
 				return matches && service;
-			});
+			}).sort((a,b) => sortByStationNameAndLineName(a, b, lines));
 			setUiFilteredStations(filtered);
 		}
 	}, [stations]);

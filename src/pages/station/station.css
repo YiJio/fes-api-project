@@ -1,0 +1,97 @@
+/************ STATION STYLES ************/
+.station {  }
+.station-title { margin-bottom:8px; font-size:28px; font-weight:500; }
+.station-description { margin:20px 0; padding:40px 0; border-top:1px solid var(--color-gray-1); color:var(--color-gray-7); line-height:1.5; font-size:14px; }
+
+/****** IMAGES ******/
+.station-images { display:flex; gap:16px; flex-wrap:wrap; }
+.station-images-image { width:280px; height:160px; border-radius:8px; overflow:hidden; cursor:pointer; opacity:0.9; transition:all 0.3s ease; }
+.station-images-image:hover { opacity:1; }
+.station-images img { width:100%; height:100%; object-fit:cover; }
+/**** END IMAGES ****/
+
+/****** BOX ******/
+.station-box { width:100%; border-collapse:collapse; }
+.station-box td { padding:8px; vertical-align:top; border:1px solid var(--color-gray-3); font-size:12px; }
+.station-box strong { display:flex; gap:2px; margin-bottom:2px; text-transform:uppercase; font-size:10px; color:var(--color-gray-4); }
+.station-box strong svg { font-size:12px; }
+.station-box big { display:block; font-weight:700; font-size:16px; }
+.station-box img { width:100%; }
+.station-box-info { display:flex; flex-direction:column; gap:8px; }
+.station-box-field {  }
+
+/** transfers **/
+.station-transfer-list { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-gray-1); }
+.station-transfer-list-row { display:flex; border-bottom:1px solid var(--color-gray-1); }
+.station-transfer-list-icon, .station-transfer-list-lines { display:flex; align-items:center; justify-content:center; }
+.station-transfer-list-icon { width:36px; height:36px; border-right:1px solid var(--color-gray-1) }
+.station-transfer-list-row:last-child { border:none; }
+.station-transfer-list-lines { padding:0 8px; gap:8px; }
+/**** END BOX ****/
+
+/****** TIMETABLE ******/
+.station-hours { display:flex; font-size:12px; }
+.station-hours-label { padding:4px 6px; background:var(--color-gray-1); }
+.station-hours-time { display:flex; align-items:center; gap:4px; padding:4px 6px; background:var(--color-gray-0); }
+
+/** timings **/
+.station-timetable { margin:16px 0; display:flex; flex-direction:column; gap:16px; font-size:12px; }
+.station-time-row { display:flex; flex-direction:column; gap:8px; }
+.station-time-row a:hover { text-decoration:underline; }
+.station-time-line { display:flex; align-items:center; gap:4px; font-size:14px; font-weight:500; }
+.station-time-line a { color:inherit; }
+.station-time-item { display:flex; align-items:center; justify-content:space-between; padding:4px 8px; background:var(--color-gray-0); }
+.station-time-text a, .station-time-text span { color:var(--color-black); font-weight:500; }
+.station-time-text { display:flex; gap:4px; color:var(--color-gray-4); }
+.station-time-text strong { display:flex; align-items:center; padding:0 4px; border-radius:2px; font-size:8px; text-transform:uppercase; color:var(--color-white); }
+.station-time-text .first { background:#63d076; }
+.station-time-text .last { background:#f76454; }
+.station-time-dest {  }
+.station-time-times { display:flex; gap:16px; }
+.station-time-times span { width:40px; font-weight:400; }
+/**** END TIMETABLE ****/
+
+/****** SCREEN SIZES ******/
+
+/** large screen size **/
+@media (max-width:1280px) {
+
+}
+
+/** regular screen size **/
+@media (max-width:1024px) {
+	
+}
+
+/** tablet size **/
+@media (max-width:768px) {
+	
+}
+
+/** large smartphone size **/
+@media (max-width:600px) {
+	.station-description { font-size:16px; line-height:1.75; }
+	.station-box {  }
+	.station-box .station-code { transform-origin:0; transform:scale(1.5); }
+	.station-box big { font-size:20px; }
+	.station-box tr { display:flex; flex-direction:column-reverse; }
+	.station-box td { width:100%; border:none; font-size:16px; }
+	.station-box strong { margin-bottom:8px; font-size:12px; }
+	.station-box strong svg { font-size:14px; }
+	.station-box-info { gap:20px; }
+	.station-hours { font-size:16px; }
+	.station-timetable { gap:20px; font-size:16px; }
+	.station-time-line { font-size:20px; }
+	.station-time-text { width:100%; }
+	.station-time-item { flex-direction:column; align-items:stretch; padding:0; }
+	.station-time-dest { padding:8px 12px; width:100%; border-bottom:1px solid var(--color-gray-1); }
+	.station-time-times { padding:12px; }
+}
+
+/** small smartphone size **/
+@media (max-width:480px) {
+	
+}
+/**** END SCREEN SIZES ****/
+
+/********** END STATION STYLES **********/

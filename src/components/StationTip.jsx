@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { RiExchange2Line, RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
-// css
-import 'react-loading-skeleton/dist/skeleton.css'
 // hooks
 import useDbData from '../hooks/useDbData';
 // utils
 //import { fetchStation } from '../utils/fetch';
 //import { getLineInfo } from '../utils/get';
-import { getColorWithAlpha, getContrastingTextColor } from '../utils/color';
+import { getStatusCssName } from '../utils/helper';
+import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../utils/color';
 // components
 import StationCode from './StationCode';
+import { StationAddress } from '../pages/station/components/StationLocation';
 import StationTransfer from './StationTransfer';
 // assets
 
@@ -37,7 +37,7 @@ const StationTipSkeleton = () => {
 	)
 }
 
-const StationTip = ({ stationId, lineNumber, mainColor, lighterColor }) => {
+const StationTip = ({ stationId, lineNumber, lineColor }) => {
 	// states
 	const [db_station, setDbStation] = useState({});
 	const [ui_isLoading, setUiIsLoading] = useState(true);
@@ -45,9 +45,11 @@ const StationTip = ({ stationId, lineNumber, mainColor, lighterColor }) => {
 	// hooks
 	const { stations } = useDbData();
 	const navigate = useNavigate();
+	// variables
+	let lighterColor = getLighterColor(lineColor, 20);
 
 	function getStyles(what) {
-		const alphaColor = getColorWithAlpha(mainColor, 25);
+		const alphaColor = getColorWithAlpha(lineColor, 25);
 		switch (what) {
 			case 'boxShadowTip': return `0 8px 8px 0 ${alphaColor}`;
 			case 'boxShadowBtn': return `0 8px 12px 0 ${alphaColor}`;
@@ -76,16 +78,20 @@ const StationTip = ({ stationId, lineNumber, mainColor, lighterColor }) => {
 			}, 500);
 		}
 	}, [stationId, stations]);
-	
+
 	useEffect(() => {
 		const img = new Image();
 		const exit = db_station?.image?.exit;
 		const platform = db_station?.image?.platform;
 		let src = '';
-		if(exit && exit !== '') { src = exit; }
-		else { src = platform; }
-		img.src = src;
-		img.onload = () => setUiBackground(src);
+		if (exit && exit !== '') { src = exit; }
+		else if (platform !== '') { src = platform; }
+		if (src !== '') {
+			img.src = src;
+			img.onload = () => setUiBackground(src);
+		} else {
+			setUiBackground('Not Available');
+		}
 	}, [db_station.image]);
 
 	/*useEffect(() => {
@@ -98,38 +104,35 @@ const StationTip = ({ stationId, lineNumber, mainColor, lighterColor }) => {
 		<div className='station-tip' style={{ boxShadow: getStyles('boxShadowTip') }}>
 			<div className='station-tip-info'>
 				<div className='station-tip-wrapper'>
-					<div className='station-tip-heading'>
-						<div className='station-tip-row station-tip-title'>
-							<div className='station-tip-name'>{db_station?.name?.en}</div>
-							<StationCode code={db_station?.station_code} color={mainColor} status={db_station?.status} />
-						</div>
-						<div className='station-tip-row station-tip-location'>
-							<RiMapPinFill />
-							<span>
-								{db_station?.address?.town.en && <>{db_station?.address?.town.en}, </>}
-								{db_station?.address?.subdistrict.en && <>{db_station?.address?.subdistrict.en}, </>}
-								{db_station?.address?.county.en && <>{db_station?.address?.county.en}, </>}
-								{db_station?.address?.town.en && <>{db_station?.address?.town.en}, </>}
-								{db_station?.address?.district.en && <>{db_station?.address?.district.en}, </>}
-								{db_station?.address?.city.en && <>{db_station?.address?.city.en}, </>}
-								{db_station?.address?.province.en}
-							</span>
-						</div>
-						{db_station?.transfers.length !== 0 && (<div className='station-tip-row'>
-							<div className='station-tip-transfers'>
-								<div className='station-transfer' style={{ background: mainColor, color: getContrastingTextColor(mainColor) }}>
-									{lineNumber}
+					<div className='station-tip-intro'>
+						<div className='station-tip-basic'>
+							<div className='station-tip-heading'>
+								<div className='station-tip-title'>
+									<div className='station-tip-name'>{db_station?.name?.en}</div>
+									<div className={`station-tip-status ${getStatusCssName(db_station?.status)}`}>{db_station?.status}</div>
 								</div>
-								<span className='station-tip-transfer-icon'>
-									<RiExchange2Line />
-								</span>
-								{db_station?.transfers.map((transfer, index) => (
-									<StationTransfer key={index} transfer={transfer.transfer_to} />
-								))}
+								<StationCode code={db_station?.station_code} color={lineColor} status={db_station?.status} />
 							</div>
-						</div>)}
+							<div className='station-tip-location'>
+								<RiMapPinFill />
+								<StationAddress address={db_station?.address} />
+							</div>
+							{db_station?.transfers.length !== 0 && (<div className='station-tip-row'>
+								<div className='station-tip-transfers'>
+									<div className='station-transfer' style={{ background: lineColor, color: getContrastingTextColor(lineColor) }}>
+										{lineNumber}
+									</div>
+									<span className='station-transfer-icon'>
+										<RiExchange2Line />
+									</span>
+									{db_station?.transfers.map((transfer, index) => (
+										<StationTransfer key={index} transfer={transfer.transfer_to} />
+									))}
+								</div>
+							</div>)}
+						</div>
+						<div className='station-tip-description'>{db_station?.description && db_station?.description}</div>
 					</div>
-					<div className='station-tip-description'>{db_station?.description && db_station?.description}</div>
 					<button className='station-tip-button' style={{ boxShadow: getStyles('boxShadowBtn'), background: lighterColor, color: getContrastingTextColor(lighterColor) }} onClick={() => navigate(`/station/${stationId}`)}>Read more</button>
 				</div>
 			</div>

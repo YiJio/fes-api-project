@@ -15,7 +15,7 @@ const NotFoundPage = () => {
 				<RiEmotionUnhappyLine />
 				The page you are looking for does not exist!
 			</div>
-			<div className='not-found-paragraph'>Try <Link to='/search'>searching</Link> something.</div>
+			<div className='not-found-paragraph'>Try something else to <Link to='/search'>search</Link>.</div>
 		</div>
 	)
 }

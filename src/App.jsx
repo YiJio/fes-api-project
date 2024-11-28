@@ -2,34 +2,36 @@
 import { useState } from 'react';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 // css
-import './screens.css';
 import 'react-loading-skeleton/dist/skeleton.css'
 // hooks
 import useDbData from './hooks/useDbData';
 // layouts
-import HomeLayout from './layouts/HomeLayout';
 import RootLayout from './layouts/RootLayout';
+import MainLayout from './layouts/MainLayout';
 // pages
+import { LandingPage } from './pages/landing';
 import HomePage from './pages/HomePage';
-import SearchPage from './pages/SearchPage';
-import LinePage from './pages/LinePage';
-import StationPage from './pages/StationPage';
+import { SearchPage } from './pages/search';
+import { LinePage } from './pages/line';
+import { StationPage } from './pages/station';
 import CreditsPage from './pages/CreditsPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TestPage from './pages/TestPage';
 
 const router = createBrowserRouter([{
-  element: <HomeLayout />,
+  element: <RootLayout />,
   errorElement: <NotFoundPage />,
   children: [
-    { path: '/', element: <HomePage /> },
+    { path: '/', element: <LandingPage /> },
     {
-      element: <RootLayout />,
+      element: <MainLayout />,
       children: [
+        { path: '/home', element: <HomePage /> },
         { path: '/search', element: <SearchPage /> },
-        { path: '/line/:line', element: <LinePage /> },
-        { path: '/station/:station', element: <StationPage /> },
+        { path: '/line/:lineId', element: <LinePage /> },
+        { path: '/station/:stationId', element: <StationPage /> },
         { path: '/credits', element: <CreditsPage /> },
+        { path: '/test', element: <TestPage /> },
       ]
     }
   ]
