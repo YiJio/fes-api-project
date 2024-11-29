@@ -11,8 +11,8 @@ import useDbData from '../../hooks/useDbData';
 import { fetchLineStations } from '../../utils/fetch';
 import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
-import { Route, RouteMobile } from '../../components/Route';
 import { ControlsBox } from '../../components/ControlsBox';
+import { Route, RouteMobile } from './components/Route';
 // assets
 
 const LinePageSkeleton = () => {

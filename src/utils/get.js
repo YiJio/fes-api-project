@@ -17,12 +17,12 @@ export function getStationInfo(id) {
 	let lineId = stations[index]?.lines_served[0];
 	let { lineNumber, lineName, lineColor } = getLineInfo(lineId);
 	
-	let stationId = stations[index]?._id;
 	let stationName = stations[index]?.name.en;
+	let stationStatus = stations[index]?.status;
 	let stationLine = lineId;
 	let stationLineNumber = lineNumber;
 	let stationLineName = lineName;
 	let stationLineColor = lineColor;
 
-	return { stationId, stationName, stationLine, stationLineNumber, stationLineName, stationLineColor };
+	return { stationName, stationStatus, stationLine, stationLineNumber, stationLineName, stationLineColor };
 }

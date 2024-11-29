@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { RiGitMergeFill } from 'react-icons/ri';
 // utils
-import { getContrastingTextColor } from '../utils/color';
+import { getContrastingTextColor } from '../../../utils/color';
 // components
-import StationCode from './StationCode';
+import StationCode from '../../../components/StationCode';
 
 const SearchCardSkeleton = () => {
 	return (

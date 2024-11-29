@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { Popover } from 'react-tiny-popover';
 import { RiExchange2Line } from 'react-icons/ri';
 // utils
-import { getLighterColor } from '../utils/color';
+import { getLighterColor } from '../../../utils/color';
 // components
-import StationTransfer from './StationTransfer';
+import { StationTransfer } from '../../../components/StationTransfer';
 import StationTip from './StationTip';
 import { RouteCircle, RouteCircleMobile } from './RouteCircle';
 
@@ -17,17 +17,17 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 	const popoverRef = useRef(null);	
 
 	// popover should be opened by default, so this is unnecessary
-	/*useEffect(() => {
+	useEffect(() => {
 		const handleClickOutside = (e) => {
 			if (popoverRef.current && !popoverRef.current.contains(e.target)) {
-				setUiIsPopoverOpen(false);
+				setIsPopoverOpen(false);
 			}
 		};
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, []);*/
+	}, []);
 
 	const handlePopover = () => {
 		// if clicking on some other circle that is not currently active,
@@ -40,16 +40,16 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 
 	return (
 		<div className={'route-station' + (isActive ? ' active' : '')}>
-			<div className='route-station-name' style={{ color: isActive ? lineData?.color : 'var(--color-black)' }} onClick={() => setActiveCircle(stationIndex)}>
+			<div className='route-station-name' style={{ color: isActive ? lineData?.color : 'var(--color-black)' }} onClick={handlePopover}>
 				{stationData.name.en}
 			</div>
-			<RouteCircle stationIndex={stationIndex} numOfStations={numOfStations} activeRoute={activeRoute} setActiveRoute={setActiveRoute} isActive={isActive} setActiveCircle={setActiveCircle} status={stationData.status} sequence={stationData.sequence} lineColor={lineData?.color} branches={stationData.branches} lineBranches={lineBranches} />
+			<RouteCircle stationIndex={stationIndex} numOfStations={numOfStations} activeRoute={activeRoute} setActiveRoute={setActiveRoute} isActive={isActive} status={stationData.status} sequence={stationData.sequence} lineColor={lineData?.color} branches={stationData.branches} lineBranches={lineBranches} />
 			<Popover ref={popoverRef} isOpen={isPopoverOpen && isActive} positions={['bottom', 'top']} align='center' content={<div>
 				<StationTip stationId={stationData.code} lineNumber={lineData?.prefix.real_prefix} lineColor={lineData?.color} />
 			</div>}>
 				<div className='route-station-trigger' onClick={handlePopover} />
 			</Popover>
-			{stationData.transfers.length !== 0 && (<div className='route-station-transfers'>
+			{stationData.transfers.length !== 0 && (<div className='route-station-transfers transfer__list'>
 				<div className='route-station-transfer-line' />
 				{stationData.transfers.map((transfer, i) => (
 					<StationTransfer key={i} transfer={transfer.transfer_to} />
@@ -71,9 +71,9 @@ const RouteStationMobile = ({ lineData, stationData }) => {
 			<div className='route-station-info'>
 				<Link to={`/station/${stationData._id}`} className='route-station-name'>{stationData.name.en}</Link>
 				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
-				{stationData.transfers.length !== 0 ? (<div className='route-station-transfers'>
+				{stationData.transfers.length !== 0 ? (<div className='route-station-transfers transfer__list'>
 					{stationData.transfers.map((transfer, i) => (
-						<StationTransfer key={i} transfer={transfer.transfer_to} />
+						<StationTransfer key={i} transfer={transfer.transfer_to} position='bottom' />
 					))}
 				</div>) : <code>N/A</code>}
 			</div>

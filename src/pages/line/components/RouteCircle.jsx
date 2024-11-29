@@ -1,9 +1,9 @@
 // packages
 import React from 'react';
 // utils
-import { getContrastingTextColor, getLighterColor } from '../utils/color';
+import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
 
-const RouteCircle = ({ stationIndex, numOfStations, activeRoute, setActiveRoute, isActive, setActiveCircle, status, sequence, lineColor, branches, lineBranches }) => {
+const RouteCircle = ({ stationIndex, numOfStations, activeRoute, setActiveRoute, isActive, status, sequence, lineColor, branches, lineBranches }) => {
 	// variables
 	let firstLast = stationIndex === numOfStations ? 'last' : stationIndex === 0 ? 'first' : '';
 	// branches should have track before it regardless of first or last
@@ -28,7 +28,7 @@ const RouteCircle = ({ stationIndex, numOfStations, activeRoute, setActiveRoute,
 
 	return (
 		<div className='route-station-circle'>
-			<div className='route-station-code' style={{ background: bgColor, color: fontColor, outline: outlineColor, border: borderColor }} onClick={() => setActiveCircle(stationIndex)}>
+			<div className='route-station-code' style={{ background: bgColor, color: fontColor, outline: outlineColor, border: borderColor }}>
 				<span>{sequence}</span>
 			</div>
 			<div className={`route-station-track ${firstLast} ${status !== 'in operation' ? 'nio' : ''}`} style={{ background: trackColor }} />

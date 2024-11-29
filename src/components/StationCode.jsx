@@ -10,7 +10,6 @@ const StationCode = ({ code, color, status }) => {
 	}
 	let borderColor = color;
 	if(borderColor === '') { borderColor = 'var(--color-gray-3)'; }
-	console.log(color, borderColor)
 	let bgColor = status === 'in operation' ? 'transparent' : 'var(--color-gray-0)';
 	let opacity = status === 'in operation' ? '1' : '0.5';
 

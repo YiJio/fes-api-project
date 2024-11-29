@@ -2,11 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { RiArrowGoBackFill, RiLoader5Fill, RiShuffleLine } from 'react-icons/ri';
 // utils
-import { getContrastingTextColor, getLighterColor } from '../utils/color';
+import { getRouteLengths } from '../../../utils/helper';
+import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components
-import { RouteStation, RouteStationMobile } from '../components/RouteStation';
-import RouteForkSvg from './RouteForkSvg';
-import { getRouteLengths } from '../utils/helper';
+import RouteForkSvg from '../../../components/RouteForkSvg';
+import { RouteStation, RouteStationMobile } from './RouteStation';
 // assets
 
 const RouteSkeleton = () => {

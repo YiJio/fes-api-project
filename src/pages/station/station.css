@@ -1,23 +1,29 @@
 /************ STATION STYLES ************/
 .station {  }
 .station-title { margin-bottom:8px; font-size:28px; font-weight:500; }
-.station-description { margin:20px 0; padding:40px 0; border-top:1px solid var(--color-gray-1); color:var(--color-gray-7); line-height:1.5; font-size:14px; }
+.station-content { display:flex; }
+.station-description { width:50%; margin:20px 0; padding:20px; padding-left:0; border-top:1px solid var(--color-gray-1); color:var(--color-gray-7); line-height:24px; text-indent:2em; font-size:14px; }
 
 /****** IMAGES ******/
-.station-images { display:flex; gap:16px; flex-wrap:wrap; }
-.station-images-image { width:280px; height:160px; border-radius:8px; overflow:hidden; cursor:pointer; opacity:0.9; transition:all 0.3s ease; }
+.station-images-carousel { display:flex; gap:16px; margin-top:16px; }
+.station-images-actions { display:flex; align-items:center; justify-content:center; }
+.station-images-button { width:40px; height:40px; border-radius:50%; background:var(--color-gray-3); font-size:24px; transition:all 0.3s ease; }
+.station-images-button:hover { background:var(--color-gray-4); }
+.station-images-viewport { display:flex; overflow:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; max-width:calc(100% - 80px - 32px); width:100%; height:220px; }
+.station-images-page { flex:0 0 100%; display:flex; width:100%; scroll-snap-align:start; }
+.station-images-wrapper { display:flex; flex-direction:column; width:100%; height:100%; }
+.station-images-image { width:100%; height:200px; padding:8px; overflow:hidden; cursor:pointer; opacity:0.85; transition:all 0.3s ease; }
 .station-images-image:hover { opacity:1; }
-.station-images img { width:100%; height:100%; object-fit:cover; }
+.station-images-page img { width:100%; height:100%; object-fit:cover; border-radius:8px; }
+.station-images-caption { height:20px; font-size:12px; text-align:center; }
 /**** END IMAGES ****/
 
 /****** BOX ******/
-.station-box { width:100%; border-collapse:collapse; }
-.station-box td { padding:8px; vertical-align:top; border:1px solid var(--color-gray-3); font-size:12px; }
-.station-box strong { display:flex; gap:2px; margin-bottom:2px; text-transform:uppercase; font-size:10px; color:var(--color-gray-4); }
+.station-box { display:flex; flex-direction:column; gap:8px; padding:8px; border:1px solid var(--color-gray-3); font-size:12px; }
+.station-box strong { display:flex; gap:2px; margin-bottom:4px; text-transform:uppercase; font-size:10px; color:var(--color-gray-4); }
 .station-box strong svg { font-size:12px; }
 .station-box big { display:block; font-weight:700; font-size:16px; }
 .station-box img { width:100%; }
-.station-box-info { display:flex; flex-direction:column; gap:8px; }
 .station-box-field {  }
 
 /** transfers **/
@@ -31,7 +37,7 @@
 
 /****** TIMETABLE ******/
 .station-hours { display:flex; font-size:12px; }
-.station-hours-label { padding:4px 6px; background:var(--color-gray-1); }
+.station-hours-label { padding:8px; background:var(--color-gray-1); }
 .station-hours-time { display:flex; align-items:center; gap:4px; padding:4px 6px; background:var(--color-gray-0); }
 
 /** timings **/
@@ -65,27 +71,27 @@
 
 /** tablet size **/
 @media (max-width:768px) {
-	
-}
-
-/** large smartphone size **/
-@media (max-width:600px) {
-	.station-description { font-size:16px; line-height:1.75; }
-	.station-box {  }
-	.station-box .station-code { transform-origin:0; transform:scale(1.5); }
+	.station-content { display:flex; flex-direction:column-reverse; }
+	.station-description { padding:40px 0; width:100%; font-size:16px; line-height:1.75; }
+	.station-images-viewport { height:260px; }
+	.station-images-image { height:240px; }
+	.station-box { gap:20px; border:none; font-size:16px; }
+	.station-box .station-code span { padding:2px 8px; font-size:16px; }
 	.station-box big { font-size:20px; }
-	.station-box tr { display:flex; flex-direction:column-reverse; }
-	.station-box td { width:100%; border:none; font-size:16px; }
 	.station-box strong { margin-bottom:8px; font-size:12px; }
 	.station-box strong svg { font-size:14px; }
-	.station-box-info { gap:20px; }
-	.station-hours { font-size:16px; }
+	.station-hours { flex-direction:column; font-size:16px; }
+	.station-hours-label, .station-hours-time { padding:8px 12px; }
 	.station-timetable { gap:20px; font-size:16px; }
 	.station-time-line { font-size:20px; }
 	.station-time-text { width:100%; }
 	.station-time-item { flex-direction:column; align-items:stretch; padding:0; }
 	.station-time-dest { padding:8px 12px; width:100%; border-bottom:1px solid var(--color-gray-1); }
 	.station-time-times { padding:12px; }
+}
+
+/** large smartphone size **/
+@media (max-width:600px) {
 }
 
 /** small smartphone size **/

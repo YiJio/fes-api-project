@@ -9,7 +9,7 @@ import useDbData from '../../hooks/useDbData';
 // utils
 import { sortByStationNameAndLineName } from '../../utils/helper';
 // components
-import { SearchCard, SearchCardSkeleton } from '../../components/SearchCard';
+import { SearchCard, SearchCardSkeleton } from './components/SearchCard';
 //
 
 const SearchPage = () => {

@@ -4,16 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import { RiExchange2Line, RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
 // hooks
-import useDbData from '../hooks/useDbData';
+import useDbData from '../../../hooks/useDbData';
 // utils
 //import { fetchStation } from '../utils/fetch';
 //import { getLineInfo } from '../utils/get';
-import { getStatusCssName } from '../utils/helper';
-import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../utils/color';
+import { getStatusCssName } from '../../../utils/helper';
+import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components
-import StationCode from './StationCode';
-import { StationAddress } from '../pages/station/components/StationLocation';
-import StationTransfer from './StationTransfer';
+import StationCode from '../../../components/StationCode';
+import { StationAddress } from '../../../components/StationLocation';
+import { StationTransfer } from '../../../components/StationTransfer';
 // assets
 
 const StationTipSkeleton = () => {
@@ -109,7 +109,7 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 							<div className='station-tip-heading'>
 								<div className='station-tip-title'>
 									<div className='station-tip-name'>{db_station?.name?.en}</div>
-									<div className={`station-tip-status ${getStatusCssName(db_station?.status)}`}>{db_station?.status}</div>
+									<div className={`status ${getStatusCssName(db_station?.status)}`}>{db_station?.status}</div>
 								</div>
 								<StationCode code={db_station?.station_code} color={lineColor} status={db_station?.status} />
 							</div>
@@ -118,11 +118,11 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 								<StationAddress address={db_station?.address} />
 							</div>
 							{db_station?.transfers.length !== 0 && (<div className='station-tip-row'>
-								<div className='station-tip-transfers'>
-									<div className='station-transfer' style={{ background: lineColor, color: getContrastingTextColor(lineColor) }}>
+								<div className='station-tip-transfers transfer__list'>
+									<div className='transfer__item--circle' style={{ background: lineColor, color: getContrastingTextColor(lineColor) }}>
 										{lineNumber}
 									</div>
-									<span className='station-transfer-icon'>
+									<span className='transfer__icon'>
 										<RiExchange2Line />
 									</span>
 									{db_station?.transfers.map((transfer, index) => (
