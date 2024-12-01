@@ -42,30 +42,22 @@ export function getRouteLengths(activeRoute, lineStations) {
 	return length;
 }
 
-export function isServiceAccessible(line, service) {
-	const test = line ? true : false;
+export function isServiceAccessible(lineId, service) {
+	let test = lineId ? true : false;
+	// disable tram lines
+	if(lineId && lineId.split('-')[1] === 'tl') { test = false; }
 	switch (service) {
 		case 'cr': return false;
 		case 'prdir': return false;
-		case 'gztram': return false;
 		case 'gzmtr': return test;
 		case 'guangfometro': return test;
 		case 'fmetro': return test;
 	}
 }
 
-export function getTransferBackground(lineColor, transfer) {
-	switch (transfer?._service_id) {
-		case 'cr': return '#e60012';
-		case 'prdir': return '#009543';
-		case 'gztram': return '#e60012';
-		default: return lineColor;
-	}
-}
-
 export function getStatusCssName(status) {
 	let temp = status.split(' ');
-	let name = 'status-';
+	let name = 'status--';
 	temp.forEach((word) => name += word[0]);
 	return name;
 }

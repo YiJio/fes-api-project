@@ -102,7 +102,6 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	useEffect(() => {
 		// having errors when deployed, for now void it
 		// try just doing the window instead of ref
-		console.log(ui_activeCircle)
 		window.addEventListener('wheel', handleScroll, { passive: false });
 		document.addEventListener('keyup', handleKeyUp);
 		return () => {
@@ -115,31 +114,29 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 
 	return (
 		<div ref={routeRef} className='route'>
-			<div className='route-separator' style={{ background: lighterColor }} />
-			{ui_activeRoute === 'primary' && <div className='route-stations'>
-				{lineStations?.stations?.map((station, stationIndex) => (
-					<RouteStation key={station.code} lineData={lineData} stationData={station} numOfStations={numOfStations} lineBranches={lineStations?.branches} stationIndex={stationIndex} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
+			<div className='route__separator' style={{ background: lighterColor }} />
+			{ui_activeRoute === 'primary' && <div className='route__list'>
+				{lineStations?.stations?.map((station, index) => (
+					<RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} lineBranches={lineStations?.branches} stationIndex={index} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
 				))}
 			</div>}
-			{lineStations?.branches?.map((branch) => (
-				<div key={branch.code}>
-					{ui_activeRoute === branch.code && <div className='route-branch'>
-						<div className='route-branch-name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
-							<RiShuffleLine strokeWidth={1} />
-							Branch: {branch.name.en}
-						</div>
-						<div className='route-branch-back' style={{ outlineColor: lineData.color, color: lineData.color }} onClick={() => handleRouteChange('primary')}>
-							<RiArrowGoBackFill />
-							<span>Back to route</span>
-						</div>
-						<div className='route-stations'>
-							{branch.stations.map((station, branchStationIndex) => (
-								<RouteStation key={station.code} lineData={lineData} stationData={station} numOfStations={branch.stations.length - 1} stationIndex={branchStationIndex} route={branch.code} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
-							))}
-						</div>
-					</div>}
-				</div>
-			))}
+			{lineStations?.branches?.map((branch) => (<React.Fragment key={branch.code}>
+				{ui_activeRoute === branch.code && <div className='route-branch'>
+					<div className='route-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
+						<RiShuffleLine strokeWidth={1} />
+						Branch: {branch.name.en}
+					</div>
+					<div className='route-branch__back' style={{ outlineColor: lineData.color, color: lineData.color }} onClick={() => handleRouteChange('primary')}>
+						<RiArrowGoBackFill />
+						<span>Back to route</span>
+					</div>
+					<div className='route__list'>
+						{branch.stations.map((station, index) => (
+							<RouteStation key={station.code} lineData={lineData} stationData={station} numOfStations={branch.stations.length - 1} stationIndex={index} route={branch.code} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
+						))}
+					</div>
+				</div>}
+			</React.Fragment>))}
 		</div>
 	);
 }
@@ -151,26 +148,26 @@ const RouteMobile = ({ lineData, lineStations }) => {
 
 	return (
 		<div className='route'>
-			<div className='route-separator' style={{ background: lighterColor }} />
-			<div className='route-stations-mobile'>
-				{lineStations?.stations?.map((station) => (<React.Fragment key={station.code}>
-					<RouteStationMobile key={station.code} lineData={lineData} stationData={station} />
+			<div className='route__separator' style={{ background: lighterColor }} />
+			<div className='route__list route__list--mobile'>
+				{lineStations?.stations?.map((station) => (<React.Fragment key={station._id}>
+					<RouteStationMobile lineData={lineData} stationData={station} />
 					{station.branches.length > 0 && <>
 						{lineStations?.branches?.filter((branch) => station.branches.includes(branch.code)).map((branch) => (<div key={branch.code} className='route-branch'>
-							<div className='route-branch-title'>
-								<div className='route-branch-line' style={{ background: lighterColor }} />
-								<div className='route-branch-name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
+							<div className='route-branch__title'>
+								<div className='route-branch__line' style={{ background: lighterColor }} />
+								<div className='route-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
 									<RiShuffleLine />
 									{branch.name.en}
 								</div>
 							</div>
-							<div className='route-branch-stations'>
-								<div className='route-branch-line' style={{ background: `linear-gradient(180deg, ${lightestColor} 50%, ${lighterColor} 100%)` }}>
+							<div className='route-branch__stations'>
+								<div className='route-branch__line' style={{ background: `linear-gradient(180deg, ${lightestColor} 50%, ${lighterColor} 100%)` }}>
 									<RouteForkSvg color={lighterColor} />
 								</div>
-								<div className='route-stations-mobile'>
+								<div className='route__list route__list--mobile'>
 									{branch.stations?.map((station) => (
-										<RouteStationMobile key={station.code} lineData={lineData} stationData={station} />
+										<RouteStationMobile key={station._id} lineData={lineData} stationData={station} />
 									))}
 								</div>
 							</div>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { TbArrowGuide, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbDoorExit, TbStairs } from 'react-icons/tb';
 // utils
 import { getStationInfo } from '../utils/get';
-import { getTransferBackground, isServiceAccessible } from '../utils/helper';
+import { isServiceAccessible } from '../utils/helper';
 import { getContrastingTextColor, getLighterColor } from '../utils/color';
 // components
 import Tooltip from './Tooltip';
@@ -14,6 +14,7 @@ import logoPRDIR from '../assets/PRDIR_icon.svg';
 import iconTram from '../assets/tram.svg';
 
 // constants
+const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
 const TRANSFER_METHODS = [
 	{ name: 'platform', icon: <TbArrowsDoubleSwNe /> },
 	{ name: 'concourse', icon: <TbStairs /> },
@@ -23,42 +24,61 @@ const TRANSFER_METHODS = [
 	{ name: 'exit', icon: <TbDoorExit />}
 ];
 
-function getTransferText(toStation, stationName, stationLineName, transfer) {
-	switch (transfer?._service_id) {
-		case 'cr': return `Transfer to ${toStation ? stationName : 'China Railway'}`;
-		case 'prdir': return `Transfer to ${toStation ? stationName : 'Pearl River Delta Intercity Rail'}`;
-		case 'gztram': return `Transfer to ${toStation ? stationName : 'Guangzhou Tram'}`;
-		case 'fmetro': return `Transfer to ${toStation ? `${stationName} on` : 'Foshan Metro'} ${stationLineName}`;
-		case 'guangfometro': `Transfer to ${toStation ? `${stationName} on` : 'Guangfo Metro'} ${stationLineName}`;
-		default: return `Transfer to ${toStation ? `${stationName} on` : ''} ${stationLineName}`;
+function getNumberOrIcon(lineId, lineNumber, service) {
+	switch (service) {
+		case 'cr': return <img className='transfer__img invert' src={logoCR} alt='China Railway logo' />;
+		case 'prdir': return <img className='transfer__img invert' src={logoPRDIR} alt='PRDIR logo' />;
+		case 'gztram': return <img className='transfer__img invert' src={iconTram} alt='Tram icon' />;
+		case 'fmetro': {
+			if(lineId.split('-')[1] === 'tl') { return <img className='transfer__img invert' src={iconTram} alt='Tram icon' />; }
+			return lineNumber;
+		}
+		default: return lineNumber;
 	}
 }
 
-const StationTransfer = ({ transfer, toStation = false, position = 'right' }) => {
+function getBgColor(lineId, lineColor, service) {
+	let color = lineColor !== '' ? lineColor : '#c3c3c3';
+	switch (service) {
+		case 'cr': return '#e60012';
+		case 'prdir': return '#009543';
+		case 'gztram': return '#e60012';
+		case 'fmetro': {
+			if(lineId.split('-')[1] === 'tl') { return '#cd171c'; }
+			return color;
+		}
+		default: return color;
+	}
+}
+
+function getTooltipText(toStation, lineId, stationName, stationLineName, service) {
+	if(service === 'fmetro' && lineId.split('-')[1] === 'tl') { return 'Transfer to Foshan Metro tram line'; }
+	switch (service) {
+		case 'cr': return <>Transfer to {toStation ? <u>{stationName} Railway Station</u> : 'China Railway'}</>;
+		case 'prdir': return <>Transfer to {toStation ? <u>{stationName} Railway Station</u> : 'Pearl River Delta Intercity Railway'}</>;
+		case 'gztram': return <>Transfer to {toStation ? <><u>{stationName}</u> on tram line</> : 'Guangzhou Tram'}</>;
+		case 'fmetro': {
+			if(lineId.split('-')[1] === 'tl') { return <>Transfer to {toStation ? <><u>{stationName}</u> on</> : 'Foshan Metro'} tram line</>; }
+			return <>Transfer to {toStation ? <><u>{stationName}</u> on</> : ''} {stationLineName}</>;
+		}
+		default: return <>Transfer to {toStation ? <><u>{stationName}</u> on</> : ''} {stationLineName}</>;
+	}
+}
+
+const StationTransfer = ({ transfer, currentStationService = 'gzmtr', toStation = false, position = 'top' }) => {
 	// variables
-	let { stationName, stationStatus, stationService, stationLine, stationLineNumber, stationLineName, stationLineColor } = getStationInfo(transfer?._id);
+	let { stationName, stationStatus, stationService, stationLine, stationLineNumber, stationLineName, stationLineColor } = getStationInfo(transfer?._station_id);
 	let isNio = stationStatus !== 'in operation';
-	let color = getTransferBackground(stationLineColor, transfer);
-	if (color === '') { color = '#c3c3c3'; }
+	let color = getBgColor(stationLine, stationLineColor, transfer?._service_id);
 	let outlineColor = isNio ? `2px dashed ${color}` : 'none';
-	let bgColor = getTransferBackground(color, transfer);
-	if (isNio && stationService !== 'cr' && stationService !== 'prdir') bgColor = getLighterColor(color, 40);
+	let bgColor = isNio ? getLighterColor(color, 40) : color;
 	let fontColor = getContrastingTextColor(color);
 	let opacity = isNio ? '0.5' : '1';
-	let number = getTransferNumber(transfer);
-
-	function getTransferNumber(transfer) {
-		switch (transfer?._service_id) {
-			case 'cr': return <img className='transfer__img invert' src={logoCR} alt='China Railway logo' />;
-			case 'prdir': return <img className='transfer__imginvert' src={logoPRDIR} alt='PRDIR logo' />;
-			case 'gztram': return <img className='transfer__imginvert' src={iconTram} alt='Tram icon' />;
-			default: return stationLineNumber;
-		}
-	}
+	let number = getNumberOrIcon(stationLine, stationLineNumber, transfer?._service_id);
 
 	return (
-		<Tooltip position={position} text={getTransferText(toStation, stationName, stationLineName, transfer)}>
-			{isServiceAccessible(stationLine, transfer?._service_id) ? <Link to={toStation ? `/station/${transfer?._id}` : `/line/${stationLine}`} className='transfer__item--circle' style={{ outline: outlineColor, background: bgColor, color: fontColor, opacity: opacity }}>
+		<Tooltip position={position} text={getTooltipText(toStation, stationLine, stationName, stationLineName, transfer?._service_id)}>
+			{isServiceAccessible(stationLine, transfer?._service_id) ? <Link to={toStation ? `/station/${transfer?._station_id}` : `/line/${stationLine}`} className='transfer__item--circle' style={{ outline: outlineColor, background: bgColor, color: fontColor, opacity: opacity }}>
 				{number}
 			</Link> : <div className='transfer__item--circle' style={{ outline: outlineColor, background: bgColor, color: fontColor, opacity: opacity, cursor: 'help' }}>
 				{number}
@@ -69,12 +89,12 @@ const StationTransfer = ({ transfer, toStation = false, position = 'right' }) =>
 
 const StationTransferMethod = ({ toStation = true, transfer }) => {
 	// variables
-	let { stationName, stationStatus, stationService, stationLine, stationLineNumber, stationLineName, stationLineColor } = getStationInfo(transfer?.transfer_to?._id);
+	let { stationName, stationStatus, stationService, stationLine, stationLineNumber, stationLineName, stationLineColor } = getStationInfo(transfer?._station_id);
 	let isNio = stationStatus !== 'in operation';
 
 	return (
 		<div className='transfer__group'>
-			<Tooltip position='top' text={getTransferText(toStation, stationName, stationLineName, transfer.transfer_to)}>
+			<Tooltip position='top' text={getTooltipText(toStation, stationLine, stationName, stationLineName, transfer?._service_id)}>
 				<div className='transfer__item'>{stationLineNumber}</div>
 			</Tooltip>
 			<Tooltip position='bottom' text={'asd'}>

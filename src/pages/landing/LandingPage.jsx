@@ -15,12 +15,16 @@ import imageYuyinShanfang from '../../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../../assets/Huadu_District.jpg';
 import imageHongshengshaStation from '../../assets/Hongshengsha_Station_Construction.jpg';
 
+// constants
+const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
+
 const LandingPage = () => {
 	// states
-	const [filteredStations, setFilteredStations] = useState([]);
-	const [isTypingLine, setIsTypingLine] = useState(false);
-	const [isTypingStation, setIsTypingStation] = useState(false);
-	const [searchStation, setSearchStation] = useState('');
+	const [ui_lines, setUiLines] = useState([]);
+	const [ui_filteredStations, setUiFilteredStations] = useState([]);
+	const [ui_isTypingLine, setUiIsTypingLine] = useState(false);
+	const [ui_isTypingStation, setUiIsTypingStation] = useState(false);
+	const [ui_searchStation, setUiSearchStation] = useState('');
 	// refs
 	const linesRef = useRef(null);
 	const stationsRef = useRef(null);
@@ -30,20 +34,35 @@ const LandingPage = () => {
 
 	const handleSearchStation = (e) => {
 		e.preventDefault();
-		navigate(`/search?q=${searchStation}`);
+		navigate(`/search?q=${ui_searchStation}`);
+	}
+
+	const filterStations = (search) => {
+		let results = [];
+		if (search === '') {
+			results = stations.filter((station) => SHOW_SERVICES.includes(station._service_id)).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
+		} else {
+			results = stations.filter((station) => station.name.en.toLowerCase().includes(search.toLocaleLowerCase()) && SHOW_SERVICES.includes(station._service_id)).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
+		}
+		setUiFilteredStations(results);
 	}
 
 	useEffect(() => {
-		if (searchStation) {
-			let results = stations.filter((station) => station.name.en.toLowerCase().includes(searchStation.toLocaleLowerCase()) && (station._service_id !== 'cr' && station._service_id !== 'prdir' && station._service_id !== 'fmetro')).sort((a,b) => sortByStationNameAndLineName(a, b, lines));
-			setFilteredStations(results);
+		document.title = 'Guangzhou Metro';
+	}, []);
+
+	useEffect(() => {
+		if (lines) {
+			let results = lines.filter((line) => SHOW_SERVICES.includes(line._service_id)).sort((a, b) => a.name.en.localeCompare(b.name.en, 'en', { numeric: true }));
+			setUiLines(results);
 		}
-	}, [searchStation, stations]);
+		if (stations) { filterStations(''); }
+	}, [stations, lines]);
 
 	useEffect(() => {
 		const handleClickOutside = (e) => {
-			if (linesRef.current && !linesRef.current.contains(e.target)) { setIsTypingLine(false); }
-			if (stationsRef.current && !stationsRef.current.contains(e.target)) { setIsTypingStation(false); }
+			if (linesRef.current && !linesRef.current.contains(e.target)) { setUiIsTypingLine(false); }
+			if (stationsRef.current && !stationsRef.current.contains(e.target)) { setUiIsTypingStation(false); }
 		}
 		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
@@ -51,73 +70,77 @@ const LandingPage = () => {
 		}
 	}, [linesRef, stationsRef]);
 
+	useEffect(() => {
+		if (ui_searchStation) { filterStations(ui_searchStation); }
+	}, [ui_searchStation]);
+
 	if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='landing'>
-			<div className='landing-full-overlay' />
-			<div className='landing-left'>
+			<div className='landing__full-overlay' />
+			<div className='landing__left'>
 				<div className='landing-images'>
-					<div className='landing-col'>
-						<div className='landing-image landing-mask1'>
-							<img src={imageCantonTower} alt='Canton Tower' style={{ transform: 'scale(1.95)', top: '80px', left: '0' }} />
-							<div className='landing-overlay landing-overlay1' />
+					<div className='col'>
+						<div className='landing-images__wrapper landing-images__mask--1'>
+							<img src={imageCantonTower} alt='Canton Tower' className='landing-images__image' style={{ transform: 'scale(1.95)', top: '80px', left: '0' }} />
+							<div className='landing-images__overlay landing-images__overlay--1' />
 						</div>
-						<div className='landing-image landing-mask2'>
-							<img src={imageYuyinShanfang} alt='Yuyin Shanfang' style={{ transform: 'scale(1.75)', top: '70px', left: '150px' }} />
-							<div className='landing-overlay landing-overlay1' />
+						<div className='landing-images__wrapper landing-images__mask--2'>
+							<img src={imageYuyinShanfang} alt='Yuyin Shanfang' className='landing-images__image' style={{ transform: 'scale(1.75)', top: '70px', left: '150px' }} />
+							<div className='landing-images__overlay landing-images__overlay--1' />
 						</div>
 					</div>
-					<div className='landing-col'>
-						<div className='landing-image landing-mask2'>
-							<img src={imageHuaduDistrict} alt='Huadu District' style={{ transform: 'scale(1.875)', top: '90px', left: '10px' }} />
-							<div className='landing-overlay landing-overlay2' />
+					<div className='col'>
+						<div className='landing-images__wrapper landing-images__mask--2'>
+							<img src={imageHuaduDistrict} alt='Huadu District' className='landing-images__image' style={{ transform: 'scale(1.875)', top: '90px', left: '10px' }} />
+							<div className='landing-images__overlay landing-images__overlay--2' />
 						</div>
-						<div className='landing-image landing-mask1'>
-							<img src={imageHongshengshaStation} alt='Hongshengsha Station construction' style={{ transform: 'scale(1.975)', top: '120px', left: '-15px' }} />
-							<div className='landing-overlay landing-overlay2' />
+						<div className='landing-images__wrapper landing-images__mask--1'>
+							<img src={imageHongshengshaStation} alt='Hongshengsha Station construction' className='landing-images__image' style={{ transform: 'scale(1.975)', top: '120px', left: '-15px' }} />
+							<div className='landing-images__overlay landing-images__overlay--2' />
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className='landing-right'>
-				<div className='landing-text'>
-					<h1 className='landing-title'>
+			<div className='landing__right'>
+				<div className='landing-intro'>
+					<Link to='/home' className='landing-intro__title'>
 						<img src={logoGZMTR} alt='Guangzhou Metro logo' style={{ width: '32px' }} />
 						Guangzhou Metro
-					</h1>
-					<div className='landing-group'>
-						<div className='landing-row'>
-							<div className={'landing-field' + (isTypingLine ? ' active' : '')}>
-								<RiGitCommitFill className='landing-field-svg' />
-								<div className='landing-input landing-input-fake' onClick={() => setIsTypingLine(true)} >Search line</div>
-								{isTypingLine && (<div ref={linesRef} className='landing-selections'>
-									<div className='landing-selections-list'>
-										{lines.sort((a,b) => a.name.en.localeCompare(b.name.en, 'en', { numeric: true })).map((line) => (
-											<Link to={`/line/${line.code}`} className='landing-selections-item' key={line._id}>{line.name.en}</Link>
+					</Link>
+					<div className='landing-intro__group'>
+						<div className='row'>
+							<div className={'landing-intro__field' + (ui_isTypingLine ? ' active' : '')}>
+								<RiGitCommitFill />
+								<div className='landing-intro__input landing-intro__input--fake' onClick={() => setUiIsTypingLine(true)} >Search line</div>
+								{ui_isTypingLine && (<div ref={linesRef} className='landing-selections'>
+									<div className='landing-selections__list'>
+										{ui_lines.map((line) => (
+											<Link to={`/line/${line._id}`} className='landing-selections__item' key={line._id}>{line.name.en}</Link>
 										))}
 									</div>
 								</div>)}
-								<button className='landing-button' onClick={() => setIsTypingLine(true)}><RiArrowDownSLine /></button>
+								<button className='landing-intro__button' onClick={() => setUiIsTypingLine(true)}><RiArrowDownSLine /></button>
 							</div>
 						</div>
-						<div className='landing-row'><span>OR</span></div>
-						<div className='landing-row'>
+						<div className='row'><span>OR</span></div>
+						<div className='row'>
 							<form onSubmit={handleSearchStation}>
-								<div className='landing-field'>
-									<RiMapPinFill className='landing-field-svg' />
-									<input className='landing-input' type='text' value={searchStation} placeholder='Search station' onChange={(e) => { setSearchStation(e.target.value); setIsTypingStation(true) }} onFocus={() => setIsTypingStation(true)} />
-									{searchStation !== '' && isTypingStation && (<div ref={stationsRef} className='landing-selections'>
-										<div className='landing-selections-list'>
-											{filteredStations.length > 0 && filteredStations.map((station) => (
-												<Link to={`/station/${station.code}`} className='landing-selections-item' key={station._id}>
-													{station.name.en} (Line: {station.lines_served[0].toUpperCase().split('-')[1]})
+								<div className='landing-intro__field'>
+									<RiMapPinFill />
+									<input className='landing-intro__input' type='text' value={ui_searchStation} placeholder='Search station' onChange={(e) => { setUiSearchStation(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
+									{ui_searchStation !== '' && ui_isTypingStation && (<div ref={stationsRef} className='landing-selections'>
+										<div className='landing-selections__list'>
+											{ui_filteredStations.length > 0 && ui_filteredStations.map((station) => (
+												<Link to={`/station/${station._id}`} className='landing-selections__item' key={station._id}>
+													{station.name.en} (Line: {station.lines_served[0].toUpperCase().split('-')[2]})
 												</Link>
 											))}
-											{filteredStations.length === 0 && <div className='landing-empty'>No search results.</div>}
+											{ui_filteredStations.length === 0 && <div className='landing__empty'>No search results.</div>}
 										</div>
 									</div>)}
-									<button className='landing-button'><RiSearchLine /></button>
+									<button className='landing-intro__button'><RiSearchLine /></button>
 								</div>
 							</form>
 						</div>

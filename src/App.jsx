@@ -10,7 +10,7 @@ import RootLayout from './layouts/RootLayout';
 import MainLayout from './layouts/MainLayout';
 // pages
 import { LandingPage } from './pages/landing';
-import HomePage from './pages/HomePage';
+import { HomePage } from './pages/home';
 import { SearchPage } from './pages/search';
 import { LinePage } from './pages/line';
 import { StationPage } from './pages/station';

@@ -3,25 +3,25 @@ import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri';
 
-const StationImagesPages = ({ isMobile, images }) => {
-	let inc = isMobile ? 1 : 2;
+const StationImagesPages = ({ windowWidth, images }) => {
+	let inc = windowWidth <= 1280 ? 1 : 2;
 	let output = [];
 	for (let i = 0; i < images.length; i += inc) {
-		output.push(<div className='station-images-page'>
-			<div className='station-images-wrapper'>
-				<div className='station-images-image'><img src={images[i].image} /></div>
-				<div className='station-images-caption'>{images[i].caption}</div>
+		output.push(<div key={i} className='station-images__page'>
+			<div className='station-images__wrapper'>
+				<div className='station-images__image'><img src={images[i].image} /></div>
+				<div className='station-images__caption'>{images[i].caption}</div>
 			</div>
-			{!isMobile && i + 1 < images.length ? <div className='station-images-wrapper'>
-				<div className='station-images-image'><img src={images[i + 1].image} /></div>
-				<div className='station-images-caption'>{images[i + 1].caption}</div>
-			</div> : !isMobile ? <div className='station-images-wrapper'></div> : ''}
+			{windowWidth > 1280 && i + 1 < images.length ? <div key={i + 1} className='station-images__wrapper'>
+				<div className='station-images__image'><img src={images[i + 1].image} /></div>
+				<div className='station-images__caption'>{images[i + 1].caption}</div>
+			</div> : windowWidth > 1280 ? <div className='station-images__wrapper'></div> : ''}
 		</div>);
 	}
 	return output;
 }
 
-export const StationImages = ({ isMobile, setIsMobile, images }) => {
+export const StationImages = ({ windowWidth, images }) => {
 	// states
 	const [page, setPage] = useState(0);
 	const [numOfPages, setNumOfPages] = useState(1);
@@ -48,38 +48,37 @@ export const StationImages = ({ isMobile, setIsMobile, images }) => {
 
 	useEffect(() => {
 		if (images) {
-			let temp = [];
-			if (images.exterior && images.exterior !== '') { temp.push({ image: images.exterior, caption: 'Exterior view of the station.' }); }
-			if (images.exit && images.exit !== '') { temp.push({ image: images.exit, caption: 'One of the exits of the station.' }); }
-			if (images.concourse && images.concourse !== '') { temp.push({ image: images.concourse, caption: 'Concourse for the current line.' }); }
-			if (images.platform && images.platform !== '') { temp.push({ image: images.platform, caption: 'Platform for the current line.' }); }
-			setImagesArray([...temp]);
-			if (setIsMobile) {
-				console.log(isMobile, 'changed')
-				let num = isMobile ? temp.length - 1 : Math.ceil(temp.length / 2) - 1;
+			let tempImages = [];
+			if (images.exterior && images.exterior !== '') { tempImages.push({ image: images.exterior, caption: 'Exterior view of the station.' }); }
+			if (images.exit && images.exit !== '') { tempImages.push({ image: images.exit, caption: 'One of the exits of the station.' }); }
+			if (images.concourse && images.concourse !== '') { tempImages.push({ image: images.concourse, caption: 'Concourse for the current line.' }); }
+			if (images.platform && images.platform !== '') { tempImages.push({ image: images.platform, caption: 'Platform for the current line.' }); }
+			setImagesArray([...tempImages]);
+			if (windowWidth) {
+				let num = windowWidth <= 1280 ? tempImages.length - 1 : Math.ceil(tempImages.length / 2) - 1;
+				if(tempImages.length === 0) { num = 0; }
 				setPage(0);
 				setNumOfPages(num);
 			}
 		}
-	}, [images, isMobile, setIsMobile]);
+	}, [images, windowWidth]);
 
 	useEffect(() => {
-		console.log('currpage', page)
 		scrollToViewport();
 	}, [page, numOfPages]);
 
 	if (!images) { return <>Loading...</>; }
 
 	return (
-		<div className='station-images-carousel'>
-			<div className='station-images-actions'>
-				<button className={`station-images-button ${page === 0 ? 'none' : ''}`} onClick={handlePrev}><RiArrowLeftSLine strokeWidth='1px' /></button>
+		<div className='station-images'>
+			<div className='station-images__actions'>
+				<button className={`station-images__button ${page === 0 ? 'none' : ''}`} onClick={handlePrev}><RiArrowLeftSLine strokeWidth='1px' /></button>
 			</div>
-			<div ref={scrollRef} className='station-images-viewport'>
-				<StationImagesPages isMobile={isMobile} images={imagesArray} />
+			<div ref={scrollRef} className='station-images__viewport'>
+				<StationImagesPages windowWidth={windowWidth} images={imagesArray} />
 			</div>
-			<div className='station-images-actions'>
-				<button className={`station-images-button ${page === numOfPages ? 'none' : ''}`} onClick={handleNext}><RiArrowRightSLine strokeWidth='1px' /></button>
+			<div className='station-images__actions'>
+				<button className={`station-images__button ${page === numOfPages ? 'none' : ''}`} onClick={handleNext}><RiArrowRightSLine strokeWidth='1px' /></button>
 			</div>
 		</div>
 	);

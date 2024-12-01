@@ -27,14 +27,14 @@ const RouteCircle = ({ stationIndex, numOfStations, activeRoute, setActiveRoute,
 	}
 
 	return (
-		<div className='route-station-circle'>
-			<div className='route-station-code' style={{ background: bgColor, color: fontColor, outline: outlineColor, border: borderColor }}>
+		<div className='route-station__circle'>
+			<div className='route-station__code' style={{ background: bgColor, color: fontColor, outline: outlineColor, border: borderColor }}>
 				<span>{sequence}</span>
 			</div>
-			<div className={`route-station-track ${firstLast} ${status !== 'in operation' ? 'nio' : ''}`} style={{ background: trackColor }} />
-			{branches?.length > 0 && <div className='route-station-fork' style={{ borderColor: lighterColor }}>
+			<div className={`route-station__track ${firstLast} ${status !== 'in operation' ? 'nio' : ''}`} style={{ background: trackColor }} />
+			{branches?.length > 0 && <div className='route-station__fork' style={{ borderColor: lighterColor }}>
 				{branches.map((branch, i) => (<div key={i} style={{ display: 'flex' }}>
-					<div className='route-station-fork-branch' style={{ borderColor: lighterColor }} onClick={() => setActiveRoute(branch)}>
+					<div className='route-station__fork-branch' style={{ borderColor: lighterColor }} onClick={() => setActiveRoute(branch)}>
 						{lineBranches[lineBranches.findIndex(lb => lb.code === branch)].name.en}
 					</div>
 				</div>))}
@@ -46,7 +46,7 @@ const RouteCircle = ({ stationIndex, numOfStations, activeRoute, setActiveRoute,
 const RouteCircleMobile = ({ sequence, lineColor }) => {
 
 	return (
-		<div className='route-station-code' style={{ borderColor: lineColor }}>
+		<div className='route-station__code' style={{ borderColor: lineColor }}>
 			<span>{sequence}</span>
 		</div>
 	);

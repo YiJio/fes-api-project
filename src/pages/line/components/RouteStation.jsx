@@ -40,19 +40,19 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 
 	return (
 		<div className={'route-station' + (isActive ? ' active' : '')}>
-			<div className='route-station-name' style={{ color: isActive ? lineData?.color : 'var(--color-black)' }} onClick={handlePopover}>
+			<div className='route-station__name' style={{ color: isActive ? lineData?.color : 'var(--color-black)' }} onClick={handlePopover}>
 				{stationData.name.en}
 			</div>
 			<RouteCircle stationIndex={stationIndex} numOfStations={numOfStations} activeRoute={activeRoute} setActiveRoute={setActiveRoute} isActive={isActive} status={stationData.status} sequence={stationData.sequence} lineColor={lineData?.color} branches={stationData.branches} lineBranches={lineBranches} />
-			<Popover ref={popoverRef} isOpen={isPopoverOpen && isActive} positions={['bottom', 'top']} align='center' content={<div>
-				<StationTip stationId={stationData.code} lineNumber={lineData?.prefix.real_prefix} lineColor={lineData?.color} />
+			<Popover isOpen={isPopoverOpen && isActive} positions={['bottom', 'top']} align='center' content={<div ref={popoverRef} className='popover-content'>
+				<StationTip stationId={stationData._id} lineNumber={lineData?.prefix.real_prefix} lineColor={lineData?.color} />
 			</div>}>
-				<div className='route-station-trigger' onClick={handlePopover} />
+				<div className='route-station__trigger' onClick={handlePopover} />
 			</Popover>
-			{stationData.transfers.length !== 0 && (<div className='route-station-transfers transfer__list'>
-				<div className='route-station-transfer-line' />
-				{stationData.transfers.map((transfer, i) => (
-					<StationTransfer key={i} transfer={transfer.transfer_to} />
+			{stationData.transfers.length !== 0 && (<div className='route-station__transfers transfer__list'>
+				<div className='route-station__transfer-line' />
+				{stationData.transfers.map((transfer, index) => (
+					<StationTransfer key={index} transfer={transfer} position='right' />
 				))}
 			</div>)}
 		</div>
@@ -64,16 +64,16 @@ const RouteStationMobile = ({ lineData, stationData }) => {
 	let lighterColor = getLighterColor(lineData?.color, 20);
 
 	return (
-		<div className='route-station-mobile'>
-			<div className='route-line' style={{ background: lighterColor }}>
+		<div className='route-station route-station--mobile'>
+			<div className='route__line' style={{ background: lighterColor }}>
 				<RouteCircleMobile sequence={stationData.sequence} lineColor={lineData?.color} />
 			</div>
-			<div className='route-station-info'>
-				<Link to={`/station/${stationData._id}`} className='route-station-name'>{stationData.name.en}</Link>
+			<div className='route-station__info'>
+				<Link to={`/station/${stationData._id}`} className='route-station__name'>{stationData.name.en}</Link>
 				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
-				{stationData.transfers.length !== 0 ? (<div className='route-station-transfers transfer__list'>
-					{stationData.transfers.map((transfer, i) => (
-						<StationTransfer key={i} transfer={transfer.transfer_to} position='bottom' />
+				{stationData.transfers.length !== 0 ? (<div className='route-station__transfers transfer__list'>
+					{stationData.transfers.map((transfer, index) => (
+						<StationTransfer key={index} transfer={transfer} position='bottom' />
 					))}
 				</div>) : <code>N/A</code>}
 			</div>

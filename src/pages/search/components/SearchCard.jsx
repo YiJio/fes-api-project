@@ -15,27 +15,27 @@ const SearchCardSkeleton = () => {
 	);
 }
 
-const SearchCard = ({ lines, code, stationCode, name, line, status }) => {
+const SearchCard = ({ lines, stationId, stationCode, stationName, lineId, stationStatus }) => {
 	// hooks
 	const navigate = useNavigate();
 	// variables
-	let index = lines.findIndex(l => l._id === line);
+	let index = lines.findIndex(l => l._id === lineId);
 	let lineName = lines[index]?.name?.en || 'Line';
-	let style = status === 'under construction' ? 'dashed' : 'solid';
-	let color = lines[index]?.color || '#d3d3d3';
-	if (color === '') { color = '#d3d3d3'; }
+	let style = stationStatus === 'under construction' ? 'dashed' : 'solid';
+	let color = lines[index]?.color || '#c3c3c3';
+	if (color === '') { color = '#c3c3c3'; }
 
 	return (
 		<div className='search-card' style={{ borderStyle: style, borderColor: color }}>
-			<div className='search-card-heading'>
-				<div className='search-card-name'>{name}</div>
-				<StationCode code={stationCode} color={color} status={status} />
+			<div className='search-card__heading'>
+				<div className='search-card__name'>{stationName}</div>
+				<StationCode code={stationCode} color={color} status={stationStatus} />
 			</div>
-			<div className='search-card-actions'>
-				<Link to={`/line/${line}`} className='search-card-line' style={{ color: color }}>
+			<div className='search-card__actions'>
+				<Link to={`/line/${lineId}`} className='search-card__line' style={{ color: color }}>
 					<RiGitMergeFill /> Routes on {lineName}
 				</Link>
-				<button className='search-card-button' style={{ background: color, color: getContrastingTextColor(color) }} onClick={() => navigate(`/station/${code}`)}>More information</button>
+				<button className='search-card__button' style={{ background: color, color: getContrastingTextColor(color) }} onClick={() => navigate(`/station/${stationId}`)}>More information</button>
 			</div>
 		</div>
 	);

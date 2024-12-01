@@ -1,9 +1,15 @@
-import React from 'react';
+// packages
+import React, { useEffect } from 'react';
 
 const CreditsPage = () => {
+
+	useEffect(() => {
+		document.title = 'Credits | Guangzhou Metro';
+	}, []);
+
 	return (
-		<div>
-			<a href="https://www.flaticon.com/free-icons/tramway" title="tramway icons">Tramway icons created by Freepik - Flaticon</a>
+		<div className='credits'>
+			<h2>Credits</h2>
 		</div>
 	)
 }

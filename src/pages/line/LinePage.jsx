@@ -73,12 +73,13 @@ const LinePage = () => {
 			let index = lines.findIndex(l => l._id == lineId);
 			if (index === -1) { navigate('/not-found'); return; }
 			setDbLine(lines[index]);
+			document.title = `${lines[index].fullname.en} | Guangzhou Metro`;
 			fetch(index);
 		}
 	}, [lineId, lines]);
 
 	useEffect(() => {
-		console.log(db_lineStations)
+		//console.log(db_lineStations)
 	}, [db_lineStations]);
 
 	if (!lines || !stations) { return <LinePageSkeleton />; }
@@ -88,8 +89,8 @@ const LinePage = () => {
 		<div className='line'>
 			<ControlsBox />
 			<div className='line-title' style={{ background: ui_lighterColor, color: getContrastingTextColor(ui_lighterColor) }}>
-				<div className='line-number' style={{ background: db_line?.color, color: getContrastingTextColor(db_line?.color) }}>{db_line?.prefix.real_prefix}</div>
-				<div className='line-name'>{db_line?.name?.en}</div>
+				<div className='line-title__number' style={{ background: db_line?.color, color: getContrastingTextColor(db_line?.color) }}>{db_line?.prefix.real_prefix}</div>
+				<div className='line-title__name'>{db_line?.name?.en}</div>
 			</div>
 			{!ui_isMobile ? <>
 				<Route lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />

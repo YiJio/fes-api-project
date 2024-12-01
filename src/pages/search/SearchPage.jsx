@@ -12,6 +12,9 @@ import { sortByStationNameAndLineName } from '../../utils/helper';
 import { SearchCard, SearchCardSkeleton } from './components/SearchCard';
 //
 
+// constants
+const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
+
 const SearchPage = () => {
 	// hooks
 	const { lines, stations } = useDbData();
@@ -25,25 +28,22 @@ const SearchPage = () => {
 	const [ui_filterStatus, setUiFilterStatus] = useState({ inOperation: false, underConstruction: false, planning: false });
 	const [ui_filteredStations, setUiFilteredStations] = useState([]);
 
+	const filterStations = () => {
+		if (ui_query !== '') {
+			let filtered = stations?.filter((station) => {
+				const matches = station.name.en.toLowerCase().includes(ui_query.toLowerCase());
+				const service = SHOW_SERVICES.includes(station._service_id);
+				//const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
+				return matches && service;
+			}).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
+			setUiFilteredStations(filtered);
+		} else { setUiFilteredStations([]); }
+	}
+
 	const handleQuery = (e) => {
 		setUiIsLoading(true);
 		const newQuery = e.target.value;
 		setUiQuery(newQuery);
-		if (newQuery/* && newQuery.length > 3*/) {
-			let filtered = stations?.filter((station) => {
-				const matches = station.name.en.toLowerCase().includes(newQuery.toLowerCase());
-				const service = station._service_id === 'gzmtr' || station._service_id === 'guangfometro';
-				//const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
-				return matches && service;
-			}).sort((a,b) => sortByStationNameAndLineName(a, b, lines));
-			setUiFilteredStations(filtered);
-		} else { setUiFilteredStations([]); }
-		/*navigate(`/search?q=${encodeURIComponent(newQuery)}`, { replace: true });
-		if (newQuery) {
-			setUiFilteredStations(stations.filter((station) => station.name.en.toLowerCase().includes(newQuery.toLowerCase()) && (station._service_id === 'gzmtr' || station._service_id === 'guangfometro')));
-		} else {
-			setUiFilteredStations([]);
-		}*/
 		setTimeout(() => {
 			setUiIsLoading(false);
 		}, 200);
@@ -71,15 +71,21 @@ const SearchPage = () => {
 	);*/
 
 	useEffect(() => {
-		if (ui_query !== ''/* && ui_query.length > 2*/) {
-			//setUiFilteredStations(stations?.filter((station) => station.name.en.toLowerCase().includes(ui_query.toLowerCase()) && (station._service_id === 'gzmtr' || station._service_id === 'guangfometro')));
-			let filtered = stations?.filter((station) => {
-				const matches = station.name.en.toLowerCase().includes(ui_query.toLowerCase());
-				const service = station._service_id === 'gzmtr' || station._service_id === 'guangfometro';
-				//const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
-				return matches && service;
-			}).sort((a,b) => sortByStationNameAndLineName(a, b, lines));
-			setUiFilteredStations(filtered);
+		// if coming from search bar
+		setUiQuery(_initialQuery);
+		document.title = `${_initialQuery} | Guangzhou Metro`;
+	}, [_initialQuery]);
+
+	useEffect(() => {
+		// must do this after every query update
+		filterStations(ui_query);
+	}, [ui_query]);
+
+	useEffect(() => {
+		// must do this after stations are loaded
+		if (ui_query !== '') {
+			document.title = `${ui_query} | Guangzhou Metro`;
+			filterStations();
 		}
 	}, [stations]);
 
@@ -88,11 +94,10 @@ const SearchPage = () => {
 		else setUiFilteredStations([]);
 	}, [ui_query, debouncedFilter]);*/
 
-
 	if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
-		<>
+		<div className='search'>
 			<h2>Search station results for "{ui_query}"</h2>
 			<input className='search-input' type='text' value={ui_query} placeholder='Search station' onChange={handleQuery} />
 			{/*<div className='search-filters'>
@@ -102,7 +107,7 @@ const SearchPage = () => {
 					<div className={'search-filter-option' + ui_filterStatus.planning ? ' active' : ''} onClick={() => handleFilters('status', 'planning')}>Planning</div>
 				</div>
 			</div>*/}
-			<div className='search-list'>
+			<div className='search__list'>
 				{ui_isLoading ? <>
 					<SearchCardSkeleton />
 					<SearchCardSkeleton />
@@ -111,7 +116,7 @@ const SearchPage = () => {
 				</> : (<>
 					{ui_filteredStations?.length > 0 ? (
 						ui_filteredStations.map((station) => (
-							<SearchCard key={station._id} lines={lines} code={station._id} stationCode={station.station_code} name={station.name.en} line={station.lines_served[0]} status={station.status} />
+							<SearchCard key={station._id} lines={lines} stationId={station._id} stationCode={station.station_code} stationName={station.name.en} lineId={station.lines_served[0]} stationStatus={station.status} />
 						))
 					) : ui_query === '' ? (<p>Type something to search.</p>)
 						: (<div>
@@ -124,7 +129,7 @@ const SearchPage = () => {
 						</div>)}
 				</>)}
 			</div>
-		</>
+		</div>
 	);
 }
 
