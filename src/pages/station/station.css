@@ -5,8 +5,8 @@
 /** content **/
 .station-content { display:flex; margin-bottom:20px; }
 .station-content__item { margin-right:20px; width:70%; }
-.station-content__item:last-child { padding-left:20px; width:50%; border-left:1px solid var(--color-gray-3); }
-.station-content__item--desc { width:70%; margin:20px 0; padding:20px; padding-left:0; border-top:1px solid var(--color-gray-1); color:var(--color-gray-7); line-height:24px; text-indent:2em; font-size:14px; }
+.station-content__item:last-child { margin-right:0; padding-left:20px; width:50%; border-left:1px solid var(--color-gray-3); }
+.station-description { margin:20px 0; padding:20px; padding-left:0; width:100%; border-top:1px solid var(--color-gray-1); color:var(--color-gray-7); line-height:24px; text-indent:2em; font-size:14px; }
 
 /****** IMAGES ******/
 .station-images { display:flex; gap:16px; margin-top:16px; }
@@ -29,8 +29,9 @@
 .station-box big { display:block; font-weight:700; font-size:16px; }
 .station-box img { width:100%; }
 .station-box__field {  }
+/**** END BOX ****/
 
-/** transfers **/
+/****** TRANSFERS ******/
 .station-transfer-list { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-gray-1); }
 .station-transfer-list-row { display:flex; border-bottom:1px solid var(--color-gray-1); }
 .station-transfer-list-icon, .station-transfer-list-lines { display:flex; align-items:center; justify-content:center; }
@@ -39,7 +40,30 @@
 .station-transfer-list-icon { padding:0 6px; gap:2px; height:36px; border-right:1px solid var(--color-gray-1) }
 .station-transfer-list-row:last-child { border:none; }
 .station-transfer-list-lines { padding:0 8px; gap:8px; }
-/**** END BOX ****/
+/**** END TRANSFERS ****/
+
+/****** FARES ******/
+.station-fares { display:flex; flex-direction:column; gap:8px; font-size:14px; }
+.station-fares__text {  }
+.station-fares__search { position:relative; }
+.station-fares__table { width:100%; }
+.station-fares__table th { padding:4px 0; background:var(--color-gray-0); color:var(--color-black); font-weight:600; }
+.station-fares__table td { padding:4px 0; text-align:center; }
+.station-fares__lines { display:flex; flex-wrap:wrap; justify-content:center; gap:4px; }
+.station-fares .line-icon { display:flex; align-items:center; justify-content:center; border-radius:50%; width:20px; height:20px; font-size:10px; }
+
+/** form components **/
+.station-fares .field { width:100%; height:40px; outline:1px solid var(--color-gray-1); background:var(--color-gray-0); }
+.station-fares .field:hover, .station-fares .field:focus-within { background:var(--color-white); }
+.station-fares .field svg { font-size:16px; }
+.station-fares .input { padding:8px 0; font-size:14px; }
+.station-fares .button { width:40px; height:40px; }
+
+/** selections**/
+.station-fares .selections { top:48px; width:100%; height:348px; border:1px solid var(--color-gray-1); }
+.station-fares .selections--empty { height:48px !important; }
+.station-fares .empty { justify-content:flex-start; gap:8px; }
+/**** END FARES ****/
 
 /****** TIMETABLE ******/
 .station-hours { display:flex; font-size:12px; }
@@ -72,11 +96,12 @@
 	.station-timetable__item { flex-direction:column; align-items:stretch; gap:8px; }
 	.station-timetable__dest { padding-bottom:6px; width:100%; border-bottom:1px solid var(--color-gray-1); }
 	.station-timetable__times { width:100%; }
+	.station-timetable__time { width:50%; }
 }
 
 /** regular screen size **/
 @media (max-width:1024px) {
-	.station-box, .station-content__item--desc { width:50%; }
+	.station-box { width:50%; }
 	.station-images__viewport { height:260px; }
 	.station-images__image { height:240px; }
 }
@@ -84,16 +109,18 @@
 /** tablet size **/
 @media (max-width:768px) {
 	.station-content { display:flex; flex-direction:column-reverse; }
-	.station-content__item, .station-content__item:last-child { width:100%; border:none; }
-	.station-content__item--desc { padding:40px 0; width:100%; font-size:16px; line-height:1.75; }
+	.station-content__item, .station-content__item:last-child { margin:0; padding:0 !important;width:100%; border:none; }
+	.station-description { margin:40px 0 20px; padding:40px 0; font-size:16px; line-height:1.75; }
 	.station-images__viewport { height:320px; }
 	.station-images__image { height:280px; }
 	.station-images__caption { height:40px; }
-	.station-box { gap:20px; border:none; font-size:16px; }
+	.station-box { padding:0 !important; gap:20px; border:none; font-size:16px; }
 	.station-box .station-code span { padding:2px 8px; font-size:16px; }
 	.station-box big { font-size:20px; }
 	.station-box strong { margin-bottom:8px; font-size:12px; }
 	.station-box strong svg { font-size:14px; }
+	.station-fares { font-size:16px; }
+	.station-fares .input { font-size:16px; }
 	.station-hours { flex-direction:column; font-size:16px; }
 	.station-hours__label, .station-hours__time { padding:8px 12px; }
 	.station-timetable { gap:20px; font-size:16px; }

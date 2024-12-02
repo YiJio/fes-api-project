@@ -17,12 +17,12 @@ export const StationBox = ({ stationData, lineColor }) => {
 				<strong>Name</strong>
 				<big>{stationData?.name.en}</big>
 			</div>
-			<div className='station-box__field'>
+			{/*<div className='station-box__field'>
 				<strong><RiExchange2Line /> Transfers</strong>
 				{stationData?.transfers.length > 0 ? <>
-					<StationTransferList transfers={stationData?.transfers} />
+					<StationTransferList transfers={stationData?.transfers} sourceService={stationData?._service_id} />
 				</> : 'N/A'}
-			</div>
+			</div>*/}
 			<div className='station-box__field'>
 				<strong><RiMapPin5Fill /> Geo-coordinates</strong>
 				<div style={{ display: 'flex', gap: '8px' }}>

@@ -94,10 +94,12 @@ const StationPage = () => {
 			<h1 className='station-title'>{db_station?.name.en}</h1>
 			{ui_windowWidth <= 768 && <StationImages windowWidth={ui_windowWidth} images={db_station?.image} />}
 			<div className='station-content'>
-				<p className='station-content__item station-content__item--desc'>{db_station?.description}</p>
+				<div className='station-content__item'>
+					<p className='station-description'>{db_station?.description}</p>
+					<StationTabs lines={lines} stations={stations} stationData={db_station} lineColor={ui_color} />
+				</div>
 				<StationBox stationData={db_station} lineColor={ui_color} />
 			</div>
-			{/*<StationTabs transfers={db_station?.transfers} />*/}
 			<div className='station-content'>
 				{ui_windowWidth > 768 && <div className='station-content__item'>
 					<h2>Views</h2>

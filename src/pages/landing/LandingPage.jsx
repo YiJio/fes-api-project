@@ -75,6 +75,7 @@ const LandingPage = () => {
 	}, [ui_searchStation]);
 
 	if (!lines || !stations) { return <>Loading...</>; }
+	
 
 	return (
 		<div className='landing'>
@@ -111,36 +112,36 @@ const LandingPage = () => {
 					</Link>
 					<div className='landing-intro__group'>
 						<div className='row'>
-							<div className={'landing-intro__field' + (ui_isTypingLine ? ' active' : '')}>
+							<div ref={linesRef} className={'field' + (ui_isTypingLine ? ' active' : '')}>
 								<RiGitCommitFill />
-								<div className='landing-intro__input landing-intro__input--fake' onClick={() => setUiIsTypingLine(true)} >Search line</div>
-								{ui_isTypingLine && (<div ref={linesRef} className='landing-selections'>
-									<div className='landing-selections__list'>
+								<div className='input input--fake' onClick={() => setUiIsTypingLine((prev) => !prev)} >Search line</div>
+								{ui_isTypingLine && (<div className='selections'>
+									<div className='selections__list'>
 										{ui_lines.map((line) => (
-											<Link to={`/line/${line._id}`} className='landing-selections__item' key={line._id}>{line.name.en}</Link>
+											<Link to={`/line/${line._id}`} className='selections__item' key={line._id}>{line.name.en}</Link>
 										))}
 									</div>
 								</div>)}
-								<button className='landing-intro__button' onClick={() => setUiIsTypingLine(true)}><RiArrowDownSLine /></button>
+								<button className='button' onClick={() => setUiIsTypingLine((prev) => !prev)}><RiArrowDownSLine /></button>
 							</div>
 						</div>
 						<div className='row'><span>OR</span></div>
 						<div className='row'>
 							<form onSubmit={handleSearchStation}>
-								<div className='landing-intro__field'>
+								<div ref={stationsRef} className='field'>
 									<RiMapPinFill />
-									<input className='landing-intro__input' type='text' value={ui_searchStation} placeholder='Search station' onChange={(e) => { setUiSearchStation(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
-									{ui_searchStation !== '' && ui_isTypingStation && (<div ref={stationsRef} className='landing-selections'>
-										<div className='landing-selections__list'>
+									<input className='input' type='text' value={ui_searchStation} placeholder='Search station' onChange={(e) => { setUiSearchStation(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
+									{ui_searchStation !== '' && ui_isTypingStation && (<div className='selections'>
+										<div className='selections__list'>
 											{ui_filteredStations.length > 0 && ui_filteredStations.map((station) => (
-												<Link to={`/station/${station._id}`} className='landing-selections__item' key={station._id}>
+												<Link to={`/station/${station._id}`} className='selections__item' key={station._id}>
 													{station.name.en} (Line: {station.lines_served[0].toUpperCase().split('-')[2]})
 												</Link>
 											))}
-											{ui_filteredStations.length === 0 && <div className='landing__empty'>No search results.</div>}
+											{ui_filteredStations.length === 0 && <div className='empty'>No search results.</div>}
 										</div>
 									</div>)}
-									<button className='landing-intro__button'><RiSearchLine /></button>
+									<button className='button'><RiSearchLine /></button>
 								</div>
 							</form>
 						</div>

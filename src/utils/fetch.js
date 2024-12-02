@@ -70,3 +70,18 @@ export const fetchStation = async (id) => {
 		console.error('Error fetching station data.', error);
 	}
 }
+
+export const fetchFare = async (src, dest) => {
+	console.log(src, dest)
+	try {
+		const response = await fetch(`https://api.cantonprtapi.com/fare?src=${src}&dest=${dest}`, {
+			method: 'GET',
+			headers: { 'X-Api-Key': API_KEY, },
+		});
+		if(!response.ok) throw new Error('Fare data not found.');
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error('Error fetching fare data.', error);
+	}
+}

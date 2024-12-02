@@ -15,7 +15,7 @@ const StationTime = ({ stations, time }) => {
 			<div className='station-timetable__times'>
 				<div className='station-timetable__time'>
 					<strong className='station-timetable__badge station-timetable__badge--first'>first</strong>
-					<span>{time.first}</span>
+					<span>{time.first ? time.first : '--:--'}</span>
 				</div>
 				<div className='station-timetable__time'>
 					<strong className='station-timetable__badge station-timetable__badge--last'>last</strong>

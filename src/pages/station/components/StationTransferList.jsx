@@ -20,7 +20,7 @@ import logoGuangfo from '../../../assets/Guangfo_Metro_icon.svg';
 const SERVICES = ['cr', 'prdir', 'gzmtr', 'guangfometro', 'fmetro', 'gztram'];
 const RAIL_SERVICES = ['cr', 'prdir'];
 
-const StationTransferService = ({ transfers, service }) => {
+const StationTransferService = ({ transfers, service, sourceService }) => {
 	// variables
 	let tempTransfers = [];
 	if (!RAIL_SERVICES.includes(service)) {
@@ -31,7 +31,7 @@ const StationTransferService = ({ transfers, service }) => {
 
 	return (<>
 		{tempTransfers.map((transfer) => (
-			<StationTransfer key={transfer._station_id} transfer={transfer} toStation={true} />
+			<StationTransfer key={transfer._station_id} transfer={transfer} sourceService={sourceService} toStation={true} />
 		))}
 	</>);
 }
@@ -96,7 +96,7 @@ const StationTransferIcon = ({ service }) => {
 	);
 }
 
-const StationTransferList = ({ transfers }) => {
+const StationTransferList = ({ transfers, sourceService }) => {
 	// variables
 	const { lines } = useDbData();
 
@@ -113,7 +113,7 @@ const StationTransferList = ({ transfers }) => {
 				{transfers.findIndex((transfer) => transfer._service_id == service) !== -1 && <div className='station-transfer-list-row'>
 					<StationTransferIcon service={service} />
 					<div className='station-transfer-list-lines transfer__list'>
-						<StationTransferService transfers={transfers} service={service} />
+						<StationTransferService transfers={transfers} service={service} sourceService={sourceService} />
 					</div>
 				</div>}
 			</React.Fragment>))}

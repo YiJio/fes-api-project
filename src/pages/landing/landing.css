@@ -6,7 +6,6 @@
 
 .landing__left { display:flex; align-items:center; justify-content:center; max-width:1200px; width:65%; height:100%; }
 .landing__right { height:100%; display:flex; flex-direction:column; flex:1; z-index:9; }
-.landing__empty { display:flex; height:100%; align-items:center; justify-content:center; }
 .landing__full-overlay { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.25); backdrop-filter:blur(1px); opacity:0; z-index:9; }
 
 /** left side: images **/
@@ -36,12 +35,6 @@
 .landing-intro__button:hover { background:var(--color-gray-0); }
 .landing-intro__button:active { background:var(--color-gray-1); }
 
-/** selections **/
-.landing-selections { position:absolute; top:64px; left:0; padding:8px; border-radius:8px; width:400px; height:248px; background:var(--color-white); z-index:9; }
-.landing-selections__list { height:100%; overflow:auto; }
-.landing-selections__item { display:block; padding:8px; font-size:14px; transition:all 0.3s ease; }
-.landing-selections__item:hover { background:var(--color-gray-1); }
-
 /****** SCREEN SIZES ******/
 
 /** large screen size **/
@@ -54,17 +47,18 @@
 @media (max-width:1024px) {
 	.landing { position:relative; overflow:hidden; }
 	.landing .row, .landing .row form { width:100%; }
+	.landing__full-overlay { opacity:1; }
 	.landing__left { width:45%; height:100vh; position:relative; align-items:flex-start; justify-content:flex-start; background:var(--color-black); }
 	.landing__right { height:100vh; }
 	.landing__right { height:100vh; padding:0 40px; background:linear-gradient(-90deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.95) 100%); color:var(--color-white); }
 	.landing-images { transform:scale(1.25) translate(80px, 64px); display:flex; background:linear-gradient(-90deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.95) 100%); }
-	.landing-intro__field { width:100%; background:rgba(0,0,0,0.5); }
-	.landing-intro__field:focus-within, .landing-intro__field.active, .landing-intro__button, .landing-selections { background:var(--color-black); color:var(--color-white); }
-	.landing-intro__input { width:calc(100% - 56px); color:var(--color-white); }
-	.landing-selections { width:100%; }
-	.landing-selections a, .landing-intro__button { color:var(--color-gray-2); }
-	.landing-selections a:hover, .landing-intro__button:hover { background:var(--color-gray-9); }
-	.landing__full-overlay { opacity:1; }	
+	.landing-intro__title { color:var(--color-white); }
+	.landing .field { width:100%; background:rgba(0,0,0,0.5); }
+	.landing .field:focus-within, .landing .field.active, .landing .button, .landing .selections { background:var(--color-black); color:var(--color-white); }
+	.landing .input { width:calc(100% - 56px); color:var(--color-white); }
+	.landing .selections { width:100%; }
+	.landing .selections a, .landing .button { color:var(--color-gray-2); }
+	.landing .selections a:hover, .landing .button:hover { background:var(--color-gray-9); }
 }
 
 /** tablet size **/

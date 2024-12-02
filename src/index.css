@@ -62,6 +62,7 @@ button:disabled { opacity:0.5; cursor:default; }
 .row { display:flex; }
 .col { display:flex; flex-direction:column; }
 
+.empty { display:flex; height:100%; align-items:center; justify-content:center; }
 .invert { filter:brightness(0) invert(1); }
 .none { visibility:hidden; }
 /**** END STANDARD STYLES ****/
@@ -105,7 +106,7 @@ button:disabled { opacity:0.5; cursor:default; }
 
 /** tablet size **/
 @media (max-width:768px) {
-	
+	.content { width:90%; }
 }
 
 /** large smartphone size **/

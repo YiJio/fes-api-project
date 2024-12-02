@@ -6,8 +6,6 @@ import { RiExchange2Line, RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
 // hooks
 import useDbData from '../../../hooks/useDbData';
 // utils
-//import { fetchStation } from '../utils/fetch';
-//import { getLineInfo } from '../utils/get';
 import { getStatusCssName } from '../../../utils/helper';
 import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components

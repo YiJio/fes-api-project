@@ -43,16 +43,16 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 			<div className='route-station__name' style={{ color: isActive ? lineData?.color : 'var(--color-black)' }} onClick={handlePopover}>
 				{stationData.name.en}
 			</div>
-			<RouteCircle stationIndex={stationIndex} numOfStations={numOfStations} activeRoute={activeRoute} setActiveRoute={setActiveRoute} isActive={isActive} status={stationData.status} sequence={stationData.sequence} lineColor={lineData?.color} branches={stationData.branches} lineBranches={lineBranches} />
+			<RouteCircle stationIndex={stationIndex} numOfStations={numOfStations} activeRoute={activeRoute} setActiveRoute={setActiveRoute} isActive={isActive} status={stationData?.status} sequence={stationData?.sequence} lineColor={lineData?.color} branches={stationData?.branches} lineBranches={lineBranches} />
 			<Popover isOpen={isPopoverOpen && isActive} positions={['bottom', 'top']} align='center' content={<div ref={popoverRef} className='popover-content'>
-				<StationTip stationId={stationData._id} lineNumber={lineData?.prefix.real_prefix} lineColor={lineData?.color} />
+				<StationTip stationId={stationData?._id} lineNumber={lineData?.prefix.real_prefix} lineColor={lineData?.color} />
 			</div>}>
 				<div className='route-station__trigger' onClick={handlePopover} />
 			</Popover>
-			{stationData.transfers.length !== 0 && (<div className='route-station__transfers transfer__list'>
+			{stationData?.transfers.length !== 0 && (<div className='route-station__transfers transfer__list'>
 				<div className='route-station__transfer-line' />
 				{stationData.transfers.map((transfer, index) => (
-					<StationTransfer key={index} transfer={transfer} position='right' />
+					<StationTransfer key={index} transfer={transfer} sourceService={lineData?._service_id} position='right' />
 				))}
 			</div>)}
 		</div>
@@ -73,7 +73,7 @@ const RouteStationMobile = ({ lineData, stationData }) => {
 				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
 				{stationData.transfers.length !== 0 ? (<div className='route-station__transfers transfer__list'>
 					{stationData.transfers.map((transfer, index) => (
-						<StationTransfer key={index} transfer={transfer} position='bottom' />
+						<StationTransfer key={index} transfer={transfer} sourceService={lineData?._service_id} position='bottom' />
 					))}
 				</div>) : <code>N/A</code>}
 			</div>
