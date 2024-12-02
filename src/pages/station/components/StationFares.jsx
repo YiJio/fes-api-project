@@ -1,8 +1,7 @@
 // packages
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RiCornerDownLeftLine, RiExchange2Line, RiLoader5Fill, RiMapPinFill, RiMoneyCnyCircleLine, RiStackLine } from 'react-icons/ri';
-import { TbArrowGuide, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbDoorExit, TbStairs } from 'react-icons/tb';
+import { RiCornerDownLeftLine, RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
 // utils
 import { fetchFare } from '../../../utils/fetch';
 import { sortByStationNameAndLineName } from '../../../utils/helper';
@@ -25,14 +24,11 @@ export const StationFares = ({ lines, stations, stationData }) => {
 
 	const filterStations = (search) => {
 		let results = [];
-		results = stations.filter((station) => {
+		results = stations.filter((station, index) => {
 			if (station.station === stationData.station) return false;
-			return station.name.en.toLowerCase().includes(search.toLocaleLowerCase()) && SHOW_SERVICES.includes(station._service_id);
-		}).sort((a, b) => sortByStationNameAndLineName(a, b, lines)).map((station) => {
-			let index = lines.findIndex((l) => l.prefix.db_prefix == station._id.split('.')[1]);
-			station.lineName = lines[index].name.en;
-			return station;
-		})
+			// make it only unique
+			return (stations.findIndex((s) => s.station == station.station) === index && station.name.en.toLowerCase().includes(search.toLocaleLowerCase()) && SHOW_SERVICES.includes(station._service_id));
+		}).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
 		setUiFilteredStations(results);
 	}
 
@@ -100,7 +96,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 					{ui_isSelectionOpen && <div className={`selections ${ui_filteredStations.length === 0 ? 'selections--empty' : ''}`}>
 						<div className='selections__list'>
 							{ui_filteredStations.length > 0 && ui_filteredStations.map((station) => (
-								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{station.name.en} ({station.lineName})</div>
+								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{station.name.en}</div>
 							))}
 							{ui_filteredStations.length === 0 && <div className='empty'>No stations.</div>}
 						</div>
