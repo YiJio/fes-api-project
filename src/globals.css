@@ -49,6 +49,11 @@
 
 /****** REUSE STYLES ******/
 
+/** nav **/
+.nav { width:100%; height:40px; display:flex; align-items:center; justify-content:center; background:var(--color-surface-light); }
+.nav__item { display:flex; align-items:center; padding:0 20px; height:100%; background:transparent; color:var(--color-black); cursor:pointer; }
+.nav__item:hover { background:var(--color-surface-dark); color:var(--color-black); }
+
 /** tabs **/
 .tabs { }
 .tabs__list { margin-bottom:4px; display:flex; gap:8px; width:100%; }

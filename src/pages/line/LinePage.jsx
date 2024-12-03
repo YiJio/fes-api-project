@@ -30,12 +30,9 @@ const LinePageSkeleton = () => {
 }
 
 const LinePage = () => {
-	// variables
-	//const _path = useLocation().pathname;
-	//const _lineId = _path.split('/').pop();
+	// hooks
 	const { lineId } = useParams();
 	const navigate = useNavigate();
-	// hooks
 	const { lines, stations } = useDbData();
 	// states
 	const [db_line, setDbLine] = useState({});

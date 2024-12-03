@@ -1,7 +1,7 @@
 // packages
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { RiArrowDownSLine, RiGitCommitFill, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
+import { RiArrowDownSLine, RiGitCommitFill, RiLoader5Fill, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
 // css
 import './landing.css';
 // hooks
@@ -14,12 +14,21 @@ import imageYuyinShanfang from '../../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../../assets/Huadu_District.jpg';
 import imageHongshengshaStation from '../../assets/Hongshengsha_Station_Construction.jpg';
 
+const LandingPageSkeleton = () => {
+	return (
+		<div className='empty' style={{ height:'100vh', fontSize: '100px' }}>
+			<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
+		</div>
+	);
+}
+
 const LandingPage = () => {
 	// hooks
 	const { lines, stations } = useDbData();
 	const { query, setQuery, filteredLines, filteredStations, isLineDataReady, isStationDataReady } = useSearchFilter(lines, stations);
 	const navigate = useNavigate();
 	// states
+	const [ui_isLoading, setUiIsLoading] = useState(true);
 	const [ui_isTypingLine, setUiIsTypingLine] = useState(false);
 	const [ui_isTypingStation, setUiIsTypingStation] = useState(false);
 	// refs
@@ -38,6 +47,9 @@ const LandingPage = () => {
 
 	useEffect(() => {
 		document.title = 'Guangzhou Metro';
+		setTimeout(() => {
+			setUiIsLoading(false);
+		}, 500);
 	}, []);
 
 	useEffect(() => {
@@ -51,8 +63,8 @@ const LandingPage = () => {
 		}
 	}, [linesRef, stationsRef]);
 
-	if (!lines || !stations) { return <>Loading...</>; }
-	
+	if (!lines || !stations || ui_isLoading) { return <LandingPageSkeleton />; }
+
 	return (
 		<div className='landing'>
 			<div className='landing__full-overlay' />

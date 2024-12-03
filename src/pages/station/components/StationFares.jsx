@@ -22,7 +22,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 
 	const getHighlightedText = (text, highlight) => {
 		const regex = new RegExp(`(${highlight})`, 'gi');
-		return text.split(regex).map((part, index) => part.toLowerCase() === highlight.toLowerCase() ? (<span key={index} style={{ background:'var(--color-yellow)' }}>{part}</span>) : (part));
+		return text.split(regex).map((part, index) => part.toLowerCase() === highlight.toLowerCase() ? (<span key={index}>{part}</span>) : (part));
 	}
 
 	const handleSetFare = (station) => {
@@ -80,7 +80,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 					{ui_isSelectionOpen && <div className={`selections ${filteredStations.length === 0 ? 'selections--empty' : ''}`}>
 						<div className='selections__list'>
 							{isStationDataReady && filteredStations.length > 0 && filteredStations.map((station) => (
-								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)}</div>
+								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)} {station._id}</div>
 							))}
 							{isStationDataReady && filteredStations.length === 0 && <div className='empty'>No stations.</div>}
 						</div>

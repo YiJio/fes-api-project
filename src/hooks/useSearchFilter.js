@@ -23,7 +23,7 @@ const useSearchFilter = (lines, stations, sort = 1, options = {}) => {
 	}, [lines]);
 
 	const filteredStations = useMemo(() => {
-		if(!stations) { return []; }
+		if (!stations) { return []; }
 		// otherwise can proceed with empty or not
 		if (!query && !Object.keys(inclusions).length && !Object.keys(exclusions).length) { return []; }
 		// this is necessary if want to have no data displayed when no query,
@@ -31,16 +31,14 @@ const useSearchFilter = (lines, stations, sort = 1, options = {}) => {
 		if (query === '' && sort !== 2) { return []; }
 		let results = stations;
 		// filter results with the main query
-		if (query) {
-			// match with station name and only show stations from services shown
-			results = results.filter((station) => station.name.en.toLowerCase().includes(query.toLowerCase()) && SHOW_SERVICES.includes(station._service_id));
-			if (sort === 1) {
-				// sort by station name and line number
-				results = results.sort((a, b) => sortByStationNameAndLineName(a, b, lines));
-			} else if (sort === 2) {
-				// sort by just name and no duplicates
-				results = results.filter((station, index) => results.findIndex((s) => s.station == station.station) === index).sort((a, b) => a.name.en.localeCompare(b.name.en));
-			}
+		// match with station name and only show stations from services shown
+		results = results.filter((station) => station.name.en.toLowerCase().includes(query.toLowerCase()) && SHOW_SERVICES.includes(station._service_id));
+		if (sort === 1) {
+			// sort by station name and line number
+			results = results.sort((a, b) => sortByStationNameAndLineName(a, b, lines));
+		} else if (sort === 2) {
+			// sort by just name and no duplicates
+			results = results.filter((station, index) => results.findIndex((s) => s.station == station.station) === index).sort((a, b) => a.name.en.localeCompare(b.name.en));
 		}
 		// apply inclusions
 		Object.keys(inclusions).forEach((key) => {

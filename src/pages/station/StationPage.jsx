@@ -34,9 +34,9 @@ const StationPageSkeleton = () => {
 }
 
 const StationPage = () => {
+	// hooks
 	const { stationId } = useParams();
 	const navigate = useNavigate();
-	// hooks
 	const { lines, stations } = useDbData();
 	// states
 	const [db_station, setDbStation] = useState({});
