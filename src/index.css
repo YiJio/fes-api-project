@@ -17,12 +17,29 @@
   --color-gray-8:#242424;
   --color-gray-9:#1a1a1a;
 
-  --color-blue:#273a51;
+  --color-navy:#273a51;
+  --color-navy-dark:#243237;
   --color-green:#13ae4e;
+  --color-yellow:#ffff00;
+  --color-yellow-dark:#666600;
 
   --color-text-primary:var(--color-gray-9);
   --color-text-secondary:var(--color-gray-7);
-  --color-text-link:var(--color-blue);
+  --color-text-tertiary:var(--color-gray-4);
+  --color-text-link:var(--color-navy);
+
+  --color-main-primary:var(--color-gray-3);
+  --color-main-primary-hover:var(--color-gray-4);
+  --color-main-secondary:var(--color-gray-2);
+  --color-main-tertiary:var(--color-gray-1);
+
+  --color-header:var(--color-gray-8);
+
+  --color-surface-dark:var(--color-gray-1);
+  --color-surface-light:var(--color-gray-0);
+
+  --color-divider-dark:var(--color-gray-3);
+  --color-divider-light:var(--color-gray-1);
 
   --font-tiny:10px 'Inter', sans-serif;
   --font-small:12px 'Inter', sans-serif;
@@ -38,7 +55,7 @@
 * { padding:0; margin:0; outline:0; border:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body { font-size:1rem; font-family:'Inter', sans-serif; color:var(--color-text-primary); }
-p { margin:8px 0; }
+p { margin:16px 0; line-height:1.5; }
 ul { margin:0; padding-left:24px; }
 li { margin:4px 0; }
 code { font-family:'JetBrains Mono', monospace; }
@@ -46,8 +63,9 @@ a { display:inline-block; text-decoration:none; color:var(--color-text-link); tr
 a:hover { color:var(--color-text-link); }
 :hover { transition:all 0.3s ease; }
 h1 { font:var(--font-heading-1); font-weight:700; }
-h2 { margin:16px 0; font:var(--font-heading-2); font-weight:600; border-bottom:1px solid var(--color-gray-1); }
-h3 { font:var(--font-heading-3); font-weight:500; }
+h2 { margin:16px 0; font:var(--font-heading-2); font-weight:600; border-bottom:1px solid var(--color-divider-light); }
+h3 { margin:16px 0 8px; font:var(--font-heading-3); font-weight:500; }
+li { margin-bottom:8px; }
 input { padding:8px; border-radius:8px; font-family:'Inter', sans-serif; cursor:pointer; }
 input::placeholder { font-style:italic; }
 button { padding:16px 4px; height:40px; display:flex; align-items:center; justify-content:center; gap:8px; border-radius:8px; color:var(--color-white); font-family:'Inter', sans-serif; font-size:13px; font-weight:800; cursor:pointer; }
@@ -72,7 +90,7 @@ button:disabled { opacity:0.5; cursor:default; }
 /****** END OVERRIDES ******/
 
 /****** ANIMATIONS ******/
-.loading-spinner { animation:rotate 600ms infinite linear; color:var(--color-gray-1); }
+.loading-spinner { animation:rotate 600ms infinite linear; color:var(--color-surface-dark); }
 @keyframes rotate {
   0% { transform:rotate(0); }
   100% { transform:rotate(360deg); }

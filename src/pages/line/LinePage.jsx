@@ -17,7 +17,7 @@ import { Route, RouteMobile } from './components/Route';
 
 const LinePageSkeleton = () => {
 	return (
-		<>
+		<div className='line'>
 			<Skeleton className='line-title' count={1} height='56px' />
 			<div className='route'>
 				<Skeleton className='route-line' count={1} />
@@ -25,7 +25,7 @@ const LinePageSkeleton = () => {
 					<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

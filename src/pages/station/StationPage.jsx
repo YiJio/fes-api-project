@@ -19,8 +19,18 @@ const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
 
 const StationPageSkeleton = () => {
 	return (
-		<div>Loading...</div>
-	)
+		<div className='station'>
+			<Skeleton className='station-title' count={1} height='36px' />
+			<div className='station-content'>
+				<div className='station-content__item' style={{ paddingTop:'20px' }}>
+					<Skeleton style={{ marginBottom:'4px' }} count={10} height='12px' />
+				</div>
+				<div className='station-content__item'>
+					<Skeleton count={1} height='240px' />
+				</div>
+			</div>
+		</div>
+	);
 }
 
 const StationPage = () => {
@@ -37,7 +47,7 @@ const StationPage = () => {
 
 	useEffect(() => {
 		const handleResize = () => {
-			const width = window.innerWidth;// <= 1280;
+			const width = window.innerWidth;
 			setUiWindowWidth(width);
 		}
 		window.addEventListener('resize', handleResize);
@@ -57,9 +67,6 @@ const StationPage = () => {
 			let theStation = { ...currStation, lineNumber };
 			setDbStation(theStation);
 			document.title = `${theStation.name.en} - ${lines[lineIndex].name.en} | Guangzhou Metro`;
-			// will have to do other services later?
-			//let timings = stations.filter(s => s.station === currStation.station && s.timings.length > 0 && (SHOW_SERVICES.includes(s._service_id))).map((s) => {
-			// show timings for the current and transfers
 			let timings = stations.filter((s) => {
 				if (!SHOW_SERVICES.includes(s._service_id)) { return false; }
 				if (s._id === currStation._id) { return true; }

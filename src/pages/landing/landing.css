@@ -1,7 +1,7 @@
 /************ LANDING STYLES ************/
 .landing { display:flex; align-items:center; min-height:100vh; background:url('../../assets/background.jpg') no-repeat; }
 .landing .row { position:relative; gap:16px; }
-.landing .row span { font-style:italic; font-weight:700; color:var(--color-gray-5); }
+.landing .row span { font-style:italic; font-weight:700; color:var(--color-text-secondary); }
 .landing .col { gap:32px; }
 
 .landing__left { display:flex; align-items:center; justify-content:center; max-width:1200px; width:65%; height:100%; }
@@ -24,16 +24,6 @@
 .landing-intro__group { display:flex; flex-direction:column; gap:16px; }
 .landing-intro__title { display:flex; gap:16px; font-size:48px; font-weight:900; color:var(--color-black) }
 .landing-intro__title img { width:32px; }
-.landing-intro__field { width:400px; height:56px; display:flex; align-items:center; gap:16px; border-radius:8px; background:rgba(255,255,255,0.5); cursor:pointer; transition:all 0.3s ease; }
-.landing-intro__field:focus-within, .landing-intro__field.active { background:var(--color-white); }
-.landing-intro__field svg { margin-left:16px; font-size:24px; color:var(--color-green); }
-.landing-intro__input { flex:1; padding:16px 0; background:transparent; border-radius:0; font-size:20px; cursor:pointer; }
-.landing-intro__input--fake { font-style:italic; font-family:'Inter', sans-serif; font-size:20px; color:var(--color-gray-3); }
-.landing-intro__input::placeholder { color:var(--color-gray-3); }
-.landing-intro__button { padding:0; width:56px; height:56px; background:var(--color-white); color:var(--color-text-link); transition:all 0.3s ease; }
-.landing-intro__button svg { margin:0; font-size:24px; }
-.landing-intro__button:hover { background:var(--color-gray-0); }
-.landing-intro__button:active { background:var(--color-gray-1); }
 
 /****** SCREEN SIZES ******/
 
@@ -56,9 +46,11 @@
 	.landing .field { width:100%; background:rgba(0,0,0,0.5); }
 	.landing .field:focus-within, .landing .field.active, .landing .button, .landing .selections { background:var(--color-black); color:var(--color-white); }
 	.landing .input { width:calc(100% - 56px); color:var(--color-white); }
+	.landing .input--fake { color:var(--color-text-tertiary); }
 	.landing .selections { width:100%; }
-	.landing .selections a, .landing .button { color:var(--color-gray-2); }
-	.landing .selections a:hover, .landing .button:hover { background:var(--color-gray-9); }
+	.landing .selections a, .landing .button { color:var(--color-main-secondary); }
+	.landing .selections a:hover, .landing .button:hover { background:var(--color-text-primary); }
+	.landing .selections__item span { background:var(--color-yellow-dark); }
 }
 
 /** tablet size **/

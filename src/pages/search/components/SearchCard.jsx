@@ -15,7 +15,7 @@ const SearchCardSkeleton = () => {
 	);
 }
 
-const SearchCard = ({ lines, stationId, stationCode, stationName, lineId, stationStatus }) => {
+const SearchCard = ({ lines, stationId, stationCode, stationName, lineId, stationStatus, query }) => {
 	// hooks
 	const navigate = useNavigate();
 	// variables
@@ -25,10 +25,15 @@ const SearchCard = ({ lines, stationId, stationCode, stationName, lineId, statio
 	let color = lines[index]?.color || '#c3c3c3';
 	if (color === '') { color = '#c3c3c3'; }
 
+	const getHighlightedText = (text, highlight) => {
+		const regex = new RegExp(`(${highlight})`, 'gi');
+		return text.split(regex).map((part, index) => part.toLowerCase() === highlight.toLowerCase() ? (<span key={index} style={{ background:'var(--color-yellow)' }}>{part}</span>) : (part));
+	}
+
 	return (
 		<div className='search-card' style={{ borderStyle: style, borderColor: color }}>
 			<div className='search-card__heading'>
-				<div className='search-card__name'>{stationName}</div>
+				<div className='search-card__name'>{getHighlightedText(stationName, query)}</div>
 				<StationCode code={stationCode} color={color} status={stationStatus} />
 			</div>
 			<div className='search-card__actions'>

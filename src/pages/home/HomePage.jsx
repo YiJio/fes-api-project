@@ -51,7 +51,7 @@ const HomePage = () => {
 			</div>
 			<div className='home__intro'>
 				<div className='home__intro__title'>Welcome to the Guangzhou Metro project.</div>
-				<p className='home__paragraph'>This is a project that utilizes the <b>Canton Passenger Rail Transit (PRT) API</b> that I created.</p>
+				<p className='home__paragraph'>This is a project that utilizes the <b>Canton Passenger Rail Transit (PRT) API</b> that I created. The lines and stations I chose to show in this project are from <b>Guangzhou</b> and some parts of <b>Foshan</b>.</p>
 				<p className='home__paragraph'>You can search for stations through the search bar and also view line routes.</p>
 			</div>
 			{SHOW_STATUSES.map((status, index) => (<React.Fragment key={index}>

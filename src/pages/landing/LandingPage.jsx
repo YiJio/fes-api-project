@@ -6,8 +6,7 @@ import { RiArrowDownSLine, RiGitCommitFill, RiMapPinFill, RiSearchLine } from 'r
 import './landing.css';
 // hooks
 import useDbData from '../../hooks/useDbData';
-// utils
-import { sortByStationNameAndLineName } from '../../utils/helper';
+import useSearchFilter from '../../hooks/useSearchFilter';
 // assets
 import logoGZMTR from '../../assets/Guangzhou_Metro_icon.svg';
 import imageCantonTower from '../../assets/Canton_Tower.jpg';
@@ -15,49 +14,31 @@ import imageYuyinShanfang from '../../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../../assets/Huadu_District.jpg';
 import imageHongshengshaStation from '../../assets/Hongshengsha_Station_Construction.jpg';
 
-// constants
-const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
-
 const LandingPage = () => {
+	// hooks
+	const { lines, stations } = useDbData();
+	const { query, setQuery, filteredLines, filteredStations, isLineDataReady, isStationDataReady } = useSearchFilter(lines, stations);
+	const navigate = useNavigate();
 	// states
-	const [ui_lines, setUiLines] = useState([]);
-	const [ui_filteredStations, setUiFilteredStations] = useState([]);
 	const [ui_isTypingLine, setUiIsTypingLine] = useState(false);
 	const [ui_isTypingStation, setUiIsTypingStation] = useState(false);
-	const [ui_searchStation, setUiSearchStation] = useState('');
 	// refs
 	const linesRef = useRef(null);
 	const stationsRef = useRef(null);
-	// hooks
-	const { lines, stations } = useDbData();
-	const navigate = useNavigate();
 
 	const handleSearchStation = (e) => {
 		e.preventDefault();
-		navigate(`/search?q=${ui_searchStation}`);
+		navigate(`/search?q=${query}`);
 	}
 
-	const filterStations = (search) => {
-		let results = [];
-		if (search === '') {
-			results = stations.filter((station) => SHOW_SERVICES.includes(station._service_id)).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
-		} else {
-			results = stations.filter((station) => station.name.en.toLowerCase().includes(search.toLocaleLowerCase()) && SHOW_SERVICES.includes(station._service_id)).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
-		}
-		setUiFilteredStations(results);
+	const getHighlightedText = (text, highlight) => {
+		const regex = new RegExp(`(${highlight})`, 'gi');
+		return text.split(regex).map((part, index) => part.toLowerCase() === highlight.toLowerCase() ? (<span key={index}>{part}</span>) : (part));
 	}
 
 	useEffect(() => {
 		document.title = 'Guangzhou Metro';
 	}, []);
-
-	useEffect(() => {
-		if (lines) {
-			let results = lines.filter((line) => SHOW_SERVICES.includes(line._service_id)).sort((a, b) => a.name.en.localeCompare(b.name.en, 'en', { numeric: true }));
-			setUiLines(results);
-		}
-		if (stations) { filterStations(''); }
-	}, [stations, lines]);
 
 	useEffect(() => {
 		const handleClickOutside = (e) => {
@@ -70,13 +51,8 @@ const LandingPage = () => {
 		}
 	}, [linesRef, stationsRef]);
 
-	useEffect(() => {
-		if (ui_searchStation) { filterStations(ui_searchStation); }
-	}, [ui_searchStation]);
-
 	if (!lines || !stations) { return <>Loading...</>; }
 	
-
 	return (
 		<div className='landing'>
 			<div className='landing__full-overlay' />
@@ -117,7 +93,7 @@ const LandingPage = () => {
 								<div className='input input--fake' onClick={() => setUiIsTypingLine((prev) => !prev)} >Search line</div>
 								{ui_isTypingLine && (<div className='selections'>
 									<div className='selections__list'>
-										{ui_lines.map((line) => (
+										{filteredLines.map((line) => (
 											<Link to={`/line/${line._id}`} className='selections__item' key={line._id}>{line.name.en}</Link>
 										))}
 									</div>
@@ -130,15 +106,15 @@ const LandingPage = () => {
 							<form onSubmit={handleSearchStation}>
 								<div ref={stationsRef} className='field'>
 									<RiMapPinFill />
-									<input className='input' type='text' value={ui_searchStation} placeholder='Search station' onChange={(e) => { setUiSearchStation(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
-									{ui_searchStation !== '' && ui_isTypingStation && (<div className='selections'>
+									<input className='input' type='text' value={query} placeholder='Search station' onChange={(e) => { setQuery(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
+									{query !== '' && ui_isTypingStation && (<div className='selections'>
 										<div className='selections__list'>
-											{ui_filteredStations.length > 0 && ui_filteredStations.map((station) => (
+											{filteredStations.length > 0 && filteredStations.map((station) => (
 												<Link to={`/station/${station._id}`} className='selections__item' key={station._id}>
-													{station.name.en} (Line: {station.lines_served[0].toUpperCase().split('-')[2]})
+													{getHighlightedText(station.name.en, query)} (Line: {station.lines_served[0].toUpperCase().split('-')[2]})
 												</Link>
 											))}
-											{ui_filteredStations.length === 0 && <div className='empty'>No search results.</div>}
+											{filteredStations.length === 0 && <div className='empty'>No search results.</div>}
 										</div>
 									</div>)}
 									<button className='button'><RiSearchLine /></button>

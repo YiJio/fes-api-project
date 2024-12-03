@@ -2,41 +2,34 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RiCornerDownLeftLine, RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
+// hooks
+import useSearchFilter from '../../../hooks/useSearchFilter';
 // utils
 import { fetchFare } from '../../../utils/fetch';
-import { sortByStationNameAndLineName } from '../../../utils/helper';
 import { getContrastingTextColor } from '../../../utils/color';
 // components
 
-// constants
-const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
-
 export const StationFares = ({ lines, stations, stationData }) => {
+	// hooks
+	const { query, setQuery, filteredStations, isStationDataReady } = useSearchFilter(lines, stations, 2, { initialExclusions: { station: [stationData.station] } });
 	// states
-	const [ui_isSelectionOpen, setUiIsSelectionOpen] = useState(false);
-	const [ui_searchStation, setUiSearchStation] = useState('');
-	const [ui_filteredStations, setUiFilteredStations] = useState([]);
-	const [ui_fareStation, setUiFareStation] = useState(null);
 	const [ui_isLoading, setUiIsLoading] = useState(false);
+	const [ui_isSelectionOpen, setUiIsSelectionOpen] = useState(false);
+	const [ui_fareStation, setUiFareStation] = useState(null);
 	const [db_fareData, setDbFareData] = useState({});
 	// refs
 	const selectionsRef = useRef(null);
 
-	const filterStations = (search) => {
-		let results = [];
-		results = stations.filter((station, index) => {
-			if (station.station === stationData.station) return false;
-			// make it only unique
-			return (stations.findIndex((s) => s.station == station.station) === index && station.name.en.toLowerCase().includes(search.toLocaleLowerCase()) && SHOW_SERVICES.includes(station._service_id));
-		}).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
-		setUiFilteredStations(results);
+	const getHighlightedText = (text, highlight) => {
+		const regex = new RegExp(`(${highlight})`, 'gi');
+		return text.split(regex).map((part, index) => part.toLowerCase() === highlight.toLowerCase() ? (<span key={index} style={{ background:'var(--color-yellow)' }}>{part}</span>) : (part));
 	}
 
 	const handleSetFare = (station) => {
 		//console.log('to', station)
 		setDbFareData({}); // clear things first
+		setQuery(station.name.en);
 		setUiFareStation(station);
-		setUiSearchStation(station.name.en);
 		setUiIsSelectionOpen(false);
 	}
 
@@ -66,11 +59,6 @@ export const StationFares = ({ lines, stations, stationData }) => {
 	}, [ui_fareStation, db_fareData]);
 
 	useEffect(() => {
-		if (stations) { filterStations(''); }
-		//if (stationData) { console.log(stationData) }
-	}, [lines, stations, stationData]);
-
-	useEffect(() => {
 		const handleClickOutside = (e) => {
 			if (selectionsRef.current && !selectionsRef.current.contains(e.target)) { setUiIsSelectionOpen(false); }
 		}
@@ -80,10 +68,6 @@ export const StationFares = ({ lines, stations, stationData }) => {
 		}
 	}, [selectionsRef]);
 
-	useEffect(() => {
-		if (ui_searchStation) { filterStations(ui_searchStation); }
-	}, [ui_searchStation]);
-
 	if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
@@ -92,13 +76,13 @@ export const StationFares = ({ lines, stations, stationData }) => {
 			<div className='station-fares__search'>
 				<div ref={selectionsRef} className='field'>
 					<RiMapPinFill />
-					<input className='input' type='text' value={ui_searchStation} placeholder='Search station' onChange={(e) => setUiSearchStation(e.target.value)} onFocus={() => setUiIsSelectionOpen(true)} />
-					{ui_isSelectionOpen && <div className={`selections ${ui_filteredStations.length === 0 ? 'selections--empty' : ''}`}>
+					<input className='input' type='text' value={query} placeholder='Search station' onChange={(e) => setQuery(e.target.value)} onFocus={() => setUiIsSelectionOpen(true)} />
+					{ui_isSelectionOpen && <div className={`selections ${filteredStations.length === 0 ? 'selections--empty' : ''}`}>
 						<div className='selections__list'>
-							{ui_filteredStations.length > 0 && ui_filteredStations.map((station) => (
-								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{station.name.en}</div>
+							{isStationDataReady && filteredStations.length > 0 && filteredStations.map((station) => (
+								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)}</div>
 							))}
-							{ui_filteredStations.length === 0 && <div className='empty'>No stations.</div>}
+							{isStationDataReady && filteredStations.length === 0 && <div className='empty'>No stations.</div>}
 						</div>
 					</div>}
 					<button className='button' onClick={handleGetFare} disabled={ui_isLoading || isFetchDisabled || !ui_fareStation}><RiCornerDownLeftLine /></button>
@@ -124,7 +108,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 						</tr>
 					</tbody>
 				</table>}
-				{db_fareData == undefined && <>No available fare data between <b>{stationData.name.en}</b> and <b>{ui_searchStation}</b>.</>}
+				{db_fareData == undefined && <>No available fare data between <b>{stationData.name.en}</b> and <b>{query}</b>.</>}
 			</>}</div>
 		</div>
 	);
