@@ -7,8 +7,6 @@ import './search.css';
 // hooks
 import useDbData from '../../hooks/useDbData';
 import useSearchFilter from '../../hooks/useSearchFilter';
-// utils
-import { sortByStationNameAndLineName } from '../../utils/helper';
 // components
 import { SearchCard, SearchCardSkeleton } from './components/SearchCard';
 //
@@ -19,7 +17,6 @@ const STATUSES = [
 	{ name: 'Under construction', short: 'uc', },
 	{ name: 'Planning', short: 'p', },
 ];
-const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
 
 const SearchPage = () => {
 	// hooks
@@ -31,27 +28,10 @@ const SearchPage = () => {
 	const _initialQuery = _queryParams.get('q') || '';
 	// states
 	const [ui_isLoading, setUiIsLoading] = useState(false);
-	const [ui_query, setUiQuery] = useState(_initialQuery);
-	const [ui_filterStatus, setUiFilterStatus] = useState({ inOperation: false, underConstruction: false, planning: false });
-	const [ui_filteredStations, setUiFilteredStations] = useState([]);
-
-
-	const filterStations = () => {
-		if (ui_query !== '') {
-			let filtered = stations?.filter((station) => {
-				const matches = station.name.en.toLowerCase().includes(ui_query.toLowerCase());
-				const service = SHOW_SERVICES.includes(station._service_id);
-				//const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
-				return matches && service;
-			}).sort((a, b) => sortByStationNameAndLineName(a, b, lines));
-			setUiFilteredStations(filtered);
-		} else { setUiFilteredStations([]); }
-	}
 
 	const handleQuery = (e) => {
 		setUiIsLoading(true);
 		const newQuery = e.target.value;
-		//setUiQuery(newQuery);
 		setQuery(newQuery);
 		setTimeout(() => {
 			setUiIsLoading(false);
@@ -80,44 +60,16 @@ const SearchPage = () => {
 		}
 	}
 
-	/*const handleFilters = (field, value) => {
-		//let temp = ui_filterStatus;
-		//temp[field] = value;
-		if(field === 'status')
-			setUiFilterStatus((prev) => ({ ...prev, [value]: !prev[value] }));
-	}
-
-	const handleSearch = (search) => {
-		const filtered = stations?.filter((station) => {
-			const matches = search && station.name.en.toLowerCase().includes(search.toLowerCase());
-			const service = station._service_id === 'gzmtr' || station._service_id === 'guangfometro';
-			const status = (!ui_filterStatus.inOperation || station.status === 'in operation') && (!ui_filterStatus.underConstruction || station.status === 'under construction') && (!ui_filterStatus.planning || station.status === 'planning');
-			return matches && service && status;
-		});
-		setUiFilteredStations(filtered);
-	}*/
-
-	/*const debouncedFilter = useMemo(() =>
-		debounce((value) => handleSearch(value), 300), [stations, ui_filterStatus]
-	);*/
-
 	useEffect(() => {
 		// if coming from search bar
-		//setUiQuery(_initialQuery);
 		setQuery(_initialQuery);
 		document.title = `${_initialQuery} | Guangzhou Metro`;
 	}, [_initialQuery]);
 
 	useEffect(() => {
-		// must do this after every query update
-		filterStations(ui_query);
-	}, [ui_query]);
-
-	useEffect(() => {
 		// must do this after stations are loaded
 		if (query !== '') {
 			document.title = `${query} | Guangzhou Metro`;
-			//filterStations();
 		}
 	}, [stations]);
 
@@ -146,13 +98,6 @@ const SearchPage = () => {
 					))}
 				</div>
 			</div>
-			{/*<div className='search-filters'>
-				<div className='search-filter-group'>
-					<div className={'search-filter-option' + ui_filterStatus.inOperation ? ' active' : ''} onClick={() => handleFilters('status', 'inOperation')}>In operation</div>
-					<div className={'search-filter-option' + ui_filterStatus.underConstruction ? ' active' : ''} onClick={() => handleFilters('status', 'underConstruction')}>Under construction</div>
-					<div className={'search-filter-option' + ui_filterStatus.planning ? ' active' : ''} onClick={() => handleFilters('status', 'planning')}>Planning</div>
-				</div>
-			</div>*/}
 			<div className='search__list'>
 				{ui_isLoading ? <>
 					<SearchCardSkeleton />
