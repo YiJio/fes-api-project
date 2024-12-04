@@ -60,6 +60,7 @@ const CreditsPage = () => {
 				<ul>
 					<li>The website (React + Vite)</li>
 					<li>Rail transit icons (Adobe Illustrator)</li>
+					<li>Rail structure icons (Adobe Illustrator)</li>
 					<li>The public API itself (Node.js/Express, AWS API Gateway)</li>
 				</ul>
 			</div>

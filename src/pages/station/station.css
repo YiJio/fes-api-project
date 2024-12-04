@@ -5,7 +5,8 @@
 /** content **/
 .station-content { display:flex; margin-bottom:20px; }
 .station-content__item { margin-right:20px; width:70%; }
-.station-content__item:last-child { margin-right:0; padding-left:20px; width:50%; border-left:1px solid var(--color-divider-dark); }
+.station-content__item:last-child { margin-right:0; width:50%; }
+.station-content__item--last { padding-left:20px; border-left:1px solid var(--color-divider-dark); }
 .station-description { margin:20px 0; padding:20px; padding-left:0; width:100%; border-top:1px solid var(--color-divider-light); color:var(--color-text-secondary); line-height:24px; text-indent:2em; font-size:14px; }
 
 /****** IMAGES ******/
@@ -17,29 +18,30 @@
 .station-images__page { flex:0 0 100%; display:flex; width:100%; scroll-snap-align:start; }
 .station-images__page img { width:100%; height:100%; object-fit:cover; border-radius:8px; }
 .station-images__wrapper { display:flex; flex-direction:column; width:100%; height:100%; }
-.station-images__image { width:100%; height:220px; padding:8px; overflow:hidden; cursor:pointer; opacity:0.85; transition:all 0.3s ease; }
+.station-images__image { width:100%; height:220px; padding:8px; overflow:hidden; /*cursor:pointer;*/ opacity:0.85; transition:all 0.3s ease; }
 .station-images__image:hover { opacity:1; }
 .station-images__caption { height:20px; font-size:12px; text-align:center; }
 /**** END IMAGES ****/
 
 /****** BOX ******/
-.station-box { display:flex; flex-direction:column; gap:16px; padding:16px !important; border:1px solid var(--color-divider-dark); font-size:12px; }
-.station-box strong { display:flex; gap:2px; margin-bottom:4px; text-transform:uppercase; font-size:10px; color:var(--color-text-tertiary); }
+.station-box { display:flex; flex-direction:column; gap:16px; padding:16px !important; border:1px solid var(--color-divider-dark); font-size:14px; }
+.station-box strong { display:flex; gap:2px; margin-bottom:4px; text-transform:uppercase; font-size:12px; color:var(--color-text-tertiary); }
 .station-box strong svg { font-size:12px; }
-.station-box big { display:block; font-weight:700; font-size:16px; }
+.station-box big { display:block; font-weight:700; }
 .station-box img { width:100%; }
+.station-box__basic { display:flex; align-items:center; gap:8px; }
+.station-box__basic svg { width:24px; height:24px; }
 .station-box__field {  }
 /**** END BOX ****/
 
 /****** TRANSFERS ******/
-.station-transfer-list { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-divider-light); }
-.station-transfer-list-row { display:flex; border-bottom:1px solid var(--color-divider-light); }
-.station-transfer-list-icon, .station-transfer-list-lines { display:flex; align-items:center; justify-content:center; }
-.station__transfer-service__icon { display:flex; align-items:center; justify-content:center; width:24px; height:24px; cursor:help; }
-
-.station-transfer-list-icon { padding:0 6px; gap:2px; height:36px; border-right:1px solid var(--color-divider-light) }
-.station-transfer-list-row:last-child { border:none; }
-.station-transfer-list-lines { padding:0 8px; gap:8px; }
+.station-transfers { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-divider-light); }
+.station-transfers__row { display:flex; border-bottom:1px solid var(--color-divider-light); }
+.station-transfers__icons, .station-transfers__lines { display:flex; align-items:center; justify-content:center; }
+.station-transfers__icons { padding:0 6px; gap:2px; height:36px; border-right:1px solid var(--color-divider-light) }
+.station-transfers__icon--service { display:flex; align-items:center; justify-content:center; width:24px; height:24px; cursor:help; }
+.station-transfers__row:last-child { border:none; }
+.station-transfers__lines { padding:0 8px; gap:8px; }
 /**** END TRANSFERS ****/
 
 /****** FARES ******/
@@ -53,7 +55,7 @@
 .station-fares .line-icon { display:flex; align-items:center; justify-content:center; border-radius:50%; width:20px; height:20px; font-size:10px; }
 
 /** form components **/
-.station-fares .field { width:100%; height:40px; outline:1px solid var(--color-divider-light); background:var(--color-surface-light); }
+.station-fares .field { width:100%; max-width:400px; height:40px; outline:1px solid var(--color-divider-light); background:var(--color-surface-light); }
 .station-fares .field:hover, .station-fares .field:focus-within { background:var(--color-white); }
 .station-fares .field svg { font-size:16px; }
 .station-fares .input { padding:8px 0; font-size:14px; }
@@ -68,15 +70,15 @@
 /**** END FARES ****/
 
 /****** TIMETABLE ******/
-.station-hours { display:flex; font-size:12px; }
+.station-hours { display:flex; font-size:14px; }
 .station-hours__label { padding:8px; background:var(--color-surface-dark); }
 .station-hours__time { display:flex; align-items:center; gap:4px; padding:4px 6px; background:var(--color-surface-light); }
 
 /** timings **/
-.station-timetable { margin:16px 0; width:100%; display:flex; flex-direction:column; gap:8px; font-size:12px; }
+.station-timetable { margin:16px 0; width:100%; display:flex; flex-direction:column; gap:8px; font-size:14px; }
 .station-timetable .row { flex-direction:column; gap:8px; }
 .station-timetable .row a:hover { text-decoration:underline; }
-.station-timetable__line { display:flex; align-items:center; gap:4px; font-size:14px; font-weight:500; }
+.station-timetable__line { display:flex; align-items:center; gap:4px; font-size:16px; font-weight:500; }
 .station-timetable__line a { color:inherit; }
 .station-timetable__item { display:flex; align-items:center; justify-content:space-between; padding:8px; background:var(--color-surface-light); }
 .station-timetable__dest { display:flex; gap:4px; color:var(--color-text-tertiary); }
@@ -95,15 +97,17 @@
 @media (max-width:1280px) {
 	.station-images__viewport { height:300px; }
 	.station-images__image { height:280px; }
+	.station-hours { flex-direction:column; }
+	.station-hours__time { padding:8px; }
 	.station-timetable__item { flex-direction:column; align-items:stretch; gap:8px; }
 	.station-timetable__dest { padding-bottom:6px; width:100%; border-bottom:1px solid var(--color-divider-light); }
 	.station-timetable__times { width:100%; }
-	.station-timetable__time { width:50%; }
+	.station-timetable__time { width:50%; gap:8px; }
 }
 
 /** regular screen size **/
 @media (max-width:1024px) {
-	.station-box { width:50%; }
+	.station-content__item { width:50%; }
 	.station-images__viewport { height:260px; }
 	.station-images__image { height:240px; }
 }
@@ -119,11 +123,12 @@
 	.station-box { padding:0 !important; gap:20px; border:none; font-size:16px; }
 	.station-box .station-code span { padding:2px 8px; font-size:16px; }
 	.station-box big { font-size:20px; }
-	.station-box strong { margin-bottom:8px; font-size:12px; }
+	.station-box strong { margin-bottom:8px; }
 	.station-box strong svg { font-size:14px; }
+	.station-box__basic svg { width:28px; height:28px; }
 	.station-fares { font-size:16px; }
 	.station-fares .input { font-size:16px; }
-	.station-hours { flex-direction:column; font-size:16px; }
+	.station-hours { font-size:16px; }
 	.station-hours__label, .station-hours__time { padding:8px 12px; }
 	.station-timetable { gap:20px; font-size:16px; }
 	.station-timetable__line { font-size:20px; }

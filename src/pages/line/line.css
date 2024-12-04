@@ -21,7 +21,7 @@
 
 /** circle **/
 .route-station__circle { position:relative; margin:6px 4px; width:28px; height:28px; }
-.route-station__trigger { position:absolute; top:125px; margin:0 4px; width:28px; height:28px; z-index:3; cursor:pointer; }
+.route-station__trigger { position:absolute; top:133px; margin:0 4px; width:28px; height:28px; z-index:3; cursor:pointer; }
 .route-station__code { position:relative; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:4px solid var(--color-main-secondary); font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; cursor:pointer; z-index:3; }
 .route-station.active .route-station__code { outline:4px solid var(--color-main-primary); background:var(--color-main-primary); border:2px solid var(--color-white); transition:border 0.3s ease, outline 0.3s ease; }
 

@@ -33,8 +33,9 @@ const Nav = ({ currentPage, lines, stations }) => {
 
 	return (
 		<nav className='nav'>
-			{currentPage === 'home' ? <Link to='/credits' className='nav__item'>Credits</Link> : <Link to='/home' className='nav__item'>Home</Link>}
-			<Link to='/search' className='nav__item'>Search</Link>
+			{currentPage !== 'home' && <Link to='/home' className='nav__item'>Home</Link>}
+			{currentPage !== 'credits' && <Link to='/credits' className='nav__item'>Credits</Link>}
+			{currentPage !== 'search' && <Link to='/search' className='nav__item'>Search</Link>}
 			<div className='nav__item' onClick={goToRandomLine}>Random line</div>
 			<div className='nav__item' onClick={goToRandomStation}>Random station</div>
 		</nav>

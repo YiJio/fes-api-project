@@ -11,7 +11,7 @@ const IconHighSpeedRail = ({ cursor = 'default', size, width, height, color }) =
 	);
 }
 
-const IconTrain = ({ cursor, size, width, height, color }) => {
+const IconTrain = ({ cursor = 'default', size, width, height, color }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.75 24" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">
@@ -21,7 +21,7 @@ const IconTrain = ({ cursor, size, width, height, color }) => {
 	);
 }
 
-const IconMetro = ({ cursor, size, width, height, color }) => {
+const IconMetro = ({ cursor = 'default', size, width, height, color }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 24" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">
@@ -34,7 +34,7 @@ const IconMetro = ({ cursor, size, width, height, color }) => {
 	);
 }
 
-const IconMonorail = ({ cursor, size, width, height, color }) => {
+const IconMonorail = ({ cursor = 'default', size, width, height, color }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 24" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">
@@ -47,7 +47,7 @@ const IconMonorail = ({ cursor, size, width, height, color }) => {
 	);
 }
 
-const IconTram = ({ cursor, size, width, height, color }) => {
+const IconTram = ({ cursor = 'default', size, width, height, color }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.75 24" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">

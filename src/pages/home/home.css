@@ -29,7 +29,7 @@
 
 /** large smartphone size **/
 @media (max-width:600px) {
-
+	.home__intro { width:90%; }
 }
 
 /** small smartphone size **/

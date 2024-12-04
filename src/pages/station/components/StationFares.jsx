@@ -68,7 +68,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 		}
 	}, [selectionsRef]);
 
-	if (!lines || !stations) { return <>Loading...</>; }
+	//if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='station-fares'>
@@ -80,7 +80,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 					{ui_isSelectionOpen && <div className={`selections ${filteredStations.length === 0 ? 'selections--empty' : ''}`}>
 						<div className='selections__list'>
 							{isStationDataReady && filteredStations.length > 0 && filteredStations.map((station) => (
-								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)} {station._id}</div>
+								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)}</div>
 							))}
 							{isStationDataReady && filteredStations.length === 0 && <div className='empty'>No stations.</div>}
 						</div>

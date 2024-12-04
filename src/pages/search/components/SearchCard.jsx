@@ -21,7 +21,7 @@ const SearchCard = ({ lines, stationId, stationCode, stationName, lineId, statio
 	// variables
 	let index = lines.findIndex(l => l._id === lineId);
 	let lineName = lines[index]?.name?.en || 'Line';
-	let style = stationStatus === 'under construction' ? 'dashed' : 'solid';
+	let style = stationStatus !== 'in operation' ? 'dashed' : 'solid';
 	let color = lines[index]?.color || '#c3c3c3';
 	if (color === '') { color = '#c3c3c3'; }
 

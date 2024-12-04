@@ -22,11 +22,11 @@ const StationPageSkeleton = () => {
 		<div className='station'>
 			<Skeleton className='station-title' count={1} height='36px' />
 			<div className='station-content'>
-				<div className='station-content__item' style={{ paddingTop:'20px' }}>
-					<Skeleton style={{ marginBottom:'4px' }} count={10} height='12px' />
+				<div className='station-content__item' style={{ marginTop:'8px', paddingTop: '20px' }}>
+					<Skeleton style={{ marginBottom: '4px' }} count={10} height='12px' />
 				</div>
 				<div className='station-content__item'>
-					<Skeleton count={1} height='240px' />
+					<Skeleton count={1} height='256px' />
 				</div>
 			</div>
 		</div>
@@ -39,6 +39,7 @@ const StationPage = () => {
 	const navigate = useNavigate();
 	const { lines, stations } = useDbData();
 	// states
+	const [db_line, setDbLine] = useState({});
 	const [db_station, setDbStation] = useState({});
 	const [db_timings, setDbTimings] = useState([]);
 	const [ui_windowWidth, setUiWindowWidth] = useState(1600);
@@ -65,8 +66,10 @@ const StationPage = () => {
 			let lineIndex = lines.findIndex(l => l._id == currStation.lines_served[0]);
 			let lineNumber = lines[lineIndex].prefix.real_prefix;
 			let theStation = { ...currStation, lineNumber };
+			let currLine = lines[lineIndex];
+			setDbLine(currLine);
 			setDbStation(theStation);
-			document.title = `${theStation.name.en} - ${lines[lineIndex].name.en} | Guangzhou Metro`;
+			document.title = `${theStation.name.en} - ${currLine.name.en} | Guangzhou Metro`;
 			let timings = stations.filter((s) => {
 				if (!SHOW_SERVICES.includes(s._service_id)) { return false; }
 				if (s._id === currStation._id) { return true; }
@@ -78,12 +81,12 @@ const StationPage = () => {
 				let lineName = lines[index].name.en;
 				let color = lines[index].color;
 				if (color === '') { color = '#c3c3c3'; }
-				let object = { service: s._service_id, lineId, lineName, color, timings: s.timings };
+				let object = { service: s._service_id, lineId, lineNumber, lineName, color, timings: s.timings };
 				return object;
 			});
 			setDbTimings(timings);
 			setTimeout(() => {
-				setUiColor(lines[lineIndex]?.color);
+				setUiColor(currLine?.color);
 				setUiIsLoading(false);
 			}, 1000);
 		}
@@ -103,16 +106,18 @@ const StationPage = () => {
 			<div className='station-content'>
 				<div className='station-content__item'>
 					<p className='station-description'>{db_station?.description}</p>
-					<StationTabs lines={lines} stations={stations} stationData={db_station} lineColor={ui_color} />
+					<StationTabs lines={lines} stations={stations} stationData={db_station} lineData={db_line} />
 				</div>
-				<StationBox stationData={db_station} lineColor={ui_color} />
+				<div className='station-content__item'>
+					<StationBox stationData={db_station} lineColor={ui_color} />
+				</div>
 			</div>
 			<div className='station-content'>
 				{ui_windowWidth > 768 && <div className='station-content__item'>
 					<h2>Views</h2>
 					<StationImages windowWidth={ui_windowWidth} images={db_station?.image} />
 				</div>}
-				<div className='station-content__item'>
+				<div className='station-content__item station-content__item--last'>
 					<h2>Times</h2>
 					<div className='station-hours'>
 						<b className='station-hours__label'>Operational hours</b>

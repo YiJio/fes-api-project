@@ -9,16 +9,16 @@ import Accordion from '../../../components/Accordion';
 import StationTransferList from './StationTransferList';
 import StationFares from './StationFares';
 
-const StationTabs = ({ lines, stations, stationData, lineColor, floors }) => {
+const StationTabs = ({ lines, stations, stationData, lineData, floors }) => {
 	// states
 	const [ui_tab, setUiTab] = useState(0);
 	// variables
-	let color = lineColor !== '' ? lineColor : '#c3c3c3';
+	let color = lineData?.color !== '' ? lineData?.color : '#c3c3c3';
 	let borderColor = getLighterColor(color, 40);
 	let bgColor = getLighterColor(color, 80);
 	let fontColor = getContrastingTextColor(bgColor);
 
-	if (!lines || !stations) { return <>Loading...</>; }
+	//if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='tabs'>
@@ -40,7 +40,7 @@ const StationTabs = ({ lines, stations, stationData, lineColor, floors }) => {
 						<p>Station transfer methods can be one of the following:</p>
 					</Accordion>*/}
 					{/* transfer in schema model need to go through changes as well, so do the before method first and then use the correct component for showing transfers with transfer methods, ALSO when doing the floor layouts, may possibly just have transfers there? */}
-					<StationTransferList transfers={stationData?.transfers} />
+					<StationTransferList transfers={stationData?.transfers} sourceLine={lineData} />
 				</>}
 				{ui_tab === 2 && <></>}
 			</div>

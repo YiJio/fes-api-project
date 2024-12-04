@@ -13,6 +13,7 @@ const Header = () => {
 
 	const handleSearchStation = (e) => {
 		e.preventDefault();
+		setUiSearchTerm('');
 		navigate(`/search?q=${encodeURIComponent(ui_searchTerm)}`, { replace: true });
 	}
 

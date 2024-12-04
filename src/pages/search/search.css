@@ -11,13 +11,14 @@
 .search-options { margin-bottom:40px; display:flex; flex-direction:column; gap:8px; }
 .search-options__group { display:flex; align-items:center; gap:8px; }
 .search-options__label { display:flex; align-items:center; width:80px; height:24px; padding:0 8px; border-right:1px solid var(--color-divider-light); font-size:14px; font-weight:600; }
+.search-options__items { display:flex; gap:8px; flex-wrap:wrap; }
 .search-options .status, .search-options .status__border { padding:0 8px; height:24px; font-weight:400; font-size:12px; }
 .search-options .status__border { background:var(--color-white); color:var(--color-black); opacity:0.5; transition:all 0.3s ease; }
 .search-options .status__border:hover { opacity:1; }
 
 /** search cards **/
 .search-card { display:flex; flex-direction:column; justify-content:space-between; gap:16px; padding:24px; width:calc(100% / 5 - 16px); border:1px solid var(--color-main-primary); border-radius:16px; }
-.search-card__heading { display:flex; gap:8px; align-items:flex-start; justify-content:space-between; }
+.search-card__heading { display:flex; gap:8px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; }
 .search-card__name { padding:2px 0; font-size:16px; font-weight:700; }
 .search-card__actions { display:flex; flex-direction:column; gap:8px; }
 .search-card__line { display:flex; gap:4px; font-size:14px; cursor:pointer; }
@@ -45,7 +46,8 @@
 
 /** large smartphone size **/
 @media (max-width:600px) {
-	
+	.search-options__group { flex-direction:column; }
+	.search-options__label { border:none; }
 }
 
 /** small smartphone size **/

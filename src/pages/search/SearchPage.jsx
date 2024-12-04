@@ -8,6 +8,7 @@ import './search.css';
 import useDbData from '../../hooks/useDbData';
 import useSearchFilter from '../../hooks/useSearchFilter';
 // components
+import Nav from '../../components/Nav';
 import { SearchCard, SearchCardSkeleton } from './components/SearchCard';
 //
 
@@ -69,7 +70,7 @@ const SearchPage = () => {
 	useEffect(() => {
 		// must do this after stations are loaded
 		if (query !== '') {
-			document.title = `${query} | Guangzhou Metro`;
+			document.title = `"${query}" | Guangzhou Metro`;
 		}
 	}, [stations]);
 
@@ -82,20 +83,25 @@ const SearchPage = () => {
 
 	return (
 		<div className='search'>
+			<Nav currentPage='search' lines={lines} stations={stations} />
 			<h2>Search station results for "{query}"</h2>
 			<input className='search-input' type='text' value={query} placeholder='Search station' onChange={handleQuery} />
 			<div className='search-options'>
 				<div className='search-options__group'>
 					<span className='search-options__label'>Include</span>
-					{STATUSES.map((s) => (
-						<button key={s.short} className={inclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(true, 'status', s.name.toLowerCase())}>{s.name}</button>
-					))}
+					<div className='search-options__items'>
+						{STATUSES.map((s) => (
+							<button key={s.short} className={inclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(true, 'status', s.name.toLowerCase())}>{s.name}</button>
+						))}
+					</div>
 				</div>
 				<div className='search-options__group'>
 					<span className='search-options__label'>Exclude</span>
-					{STATUSES.map((s) => (
-						<button key={s.short} className={exclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(false, 'status', s.name.toLowerCase())}>{s.name}</button>
-					))}
+					<div className='search-options__items'>
+						{STATUSES.map((s) => (
+							<button key={s.short} className={exclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(false, 'status', s.name.toLowerCase())}>{s.name}</button>
+						))}
+					</div>
 				</div>
 			</div>
 			<div className='search__list'>

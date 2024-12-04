@@ -1,18 +1,23 @@
 // packages
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { RiExchange2Line, RiMapPinFill, RiMapPin5Fill, RiMapPinTimeFill } from 'react-icons/ri';
+import { RiMapPinFill, RiMapPin5Fill, RiMapPinTimeFill } from 'react-icons/ri';
 // utils
 import { getStatusCssName } from '../../../utils/helper';
 // components
+import Tooltip from '../../../components/Tooltip';
 import StationCode from '../../../components/StationCode';
 import { StationAddress, StationLocation } from '../../../components/StationLocation';
+import { IconElevated, IconSurface, IconUnderground } from '../../../components/StructureSvg';
 import StationTransferList from './StationTransferList';
 
 export const StationBox = ({ stationData, lineColor }) => {
 	return (
-		<div className='station-content__item station-box'>
-			<StationCode code={stationData?.station_code} color={lineColor} status={stationData?.status} />
+		<div className='station-box'>
+			<div className='station-box__basic'>
+				<StationCode code={stationData?.station_code} color={lineColor} status={stationData?.status} />
+				<Tooltip text={stationData?.structure_type === 'elevated' ? 'Elevated' : stationData?.structure_type === 'surface' ? 'Surface' : 'Underground'}>{stationData?.structure_type === 'elevated' ? <IconElevated /> : stationData?.structure_type === 'surface' ? <IconSurface /> : <IconUnderground />}</Tooltip>
+			</div>
 			<div className='station-box__field'>
 				<strong>Name</strong>
 				<big>{stationData?.name.en}</big>

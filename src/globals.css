@@ -50,8 +50,8 @@
 /****** REUSE STYLES ******/
 
 /** nav **/
-.nav { width:100%; height:40px; display:flex; align-items:center; justify-content:center; background:var(--color-surface-light); }
-.nav__item { display:flex; align-items:center; padding:0 20px; height:100%; background:transparent; color:var(--color-black); cursor:pointer; }
+.nav { width:100%; display:flex; align-items:center; justify-content:center; background:var(--color-surface-light); }
+.nav__item { display:flex; align-items:center; padding:0 20px; height:40px; background:transparent; color:var(--color-black); cursor:pointer; }
 .nav__item:hover { background:var(--color-surface-dark); color:var(--color-black); }
 
 /** tabs **/
@@ -88,11 +88,11 @@
 .button:disabled, .button:disabled:hover { background:var(--color-surface-light); }
 
 /** selections **/
-.selections { position:absolute; top:64px; left:0; padding:8px; border-radius:8px; width:100%; height:248px; background:var(--color-white); z-index:9; }
-.selections--empty { padding:0 16px; height:80px !important; cursor:default; }
+.selections { position:absolute; top:64px; left:0; padding:8px; border-radius:8px; width:100%; height:248px; background:var(--color-white); z-index:9; cursor:default; }
+.selections--empty { padding:0 16px; height:80px !important; }
 .selections__list { height:100%; overflow:auto; }
 .selections__item { display:block; padding:8px; font-size:14px; transition:all 0.3s ease; }
-.selections__item:hover { background:var(--color-surface-dark); }
+.selections__item:hover { background:var(--color-surface-dark); cursor:pointer; }
 .selections__item span { font-style:normal !important; font-weight:600 !important; background:var(--color-yellow); color:inherit !important; }
 
 /** status **/
@@ -116,14 +116,16 @@
 
 /** transfers **/
 .transfer__list { }
-.transfer__group { display:flex; padding:0 6px; background:var(--color-surface-dark); border-radius:4px; }
+.transfer__group { display:flex; background:var(--color-surface-light); border-radius:4px; }
 .transfer__logo, .transfer__icon, .transfer__item, .transfer__item--circle, .transfer__method { display:flex; align-items:center; justify-content:center; }
 .transfer__logo { width:20px; height:20px; }
-.transfer__item, .transfer__item--circle { height:20px; font-weight:500; overflow:hidden; cursor:pointer; }
-.transfer__item { width:auto; font-size:12px; }
-.transfer__item--circle { width:20px; border-radius:50%; background:var(--color-main-tertiary); outline-offset:-2px; font-size:10px; }
-.transfer__method { margin:4px 0 4px 6px; padding-left:6px; height:12px; border-left:1px solid var(--color-divider-dark); font-size:14px; }
-.transfer__img { max-width:100%; max-height:100%; padding:4px; }
+.transfer__item { padding:0 6px; width:auto; height:20px; font-size:14px; font-weight:500; cursor:pointer; }
+.transfer__item--circle { padding:4px; width:20px; border-radius:50%; background:var(--color-main-tertiary); font-size:10px; outline-offset:-2px; overflow:hidden; }
+.transfer__item--first { position:relative; border-top-left-radius:4px; border-bottom-left-radius:4px; line-height:1; }
+.transfer__item--last { background:var(--color-main-primary); border-top-right-radius:4px; border-bottom-right-radius:4px; line-height:1; }
+.transfer__item--last svg { width:16px; height:16px; }
+.transfer__item--method { }
+.transfer__item--slash { margin:0 -2px; padding:0; color:var(--color-divider-dark); cursor:default; }
 /**** END REUSE STYLES ****/
 
 /****** SCREEN SIZES ******/
@@ -150,6 +152,8 @@
 /** large smartphone size **/
 @media (max-width:600px) {
 	.controls-box { display:none; }
+	.nav { flex-wrap:wrap; gap:8px; background:transparent; }
+	.nav__item { background:var(--color-surface-light); }
 	.transfer__item, .transfer__item--circle { height:24px; font-size:12px; }
 	.transfer__item--circle { width:24px; }
 }
