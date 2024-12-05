@@ -1,7 +1,7 @@
 // packages
 import React from 'react';
 
-const IconElevated = ({ cursor = 'default', size, width = '24px', height = '24px', strokeColor = '#000000', strokeWidth = '2px' }) => {
+const IconElevated = ({ cursor = 'help', size, width = '24px', height = '24px', strokeColor = '#000000', strokeWidth = '2px' }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 18" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">
@@ -21,7 +21,7 @@ const IconElevated = ({ cursor = 'default', size, width = '24px', height = '24px
 	);
 }
 
-const IconSurface = ({ cursor = 'default', size, width = '24px', height = '24px', strokeColor = '#000000', strokeWidth = '2px' }) => {
+const IconSurface = ({ cursor = 'help', size, width = '24px', height = '24px', strokeColor = '#000000', strokeWidth = '2px' }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 18" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">
@@ -41,7 +41,7 @@ const IconSurface = ({ cursor = 'default', size, width = '24px', height = '24px'
 	);
 }
 
-const IconUnderground = ({ cursor = 'default', size, width = '24px', height = '24px', strokeColor = '#000000', strokeWidth = '2px' }) => {
+const IconUnderground = ({ cursor = 'help', size, width = '24px', height = '24px', strokeColor = '#000000', strokeWidth = '2px' }) => {
 	return (
 		<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 18" width={size || width} height={height} style={{ cursor: cursor }}>
 			<g id="Layer_1-2" data-name="Layer 1">

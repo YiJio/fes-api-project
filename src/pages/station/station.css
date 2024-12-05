@@ -7,7 +7,7 @@
 .station-content__item { margin-right:20px; width:70%; }
 .station-content__item:last-child { margin-right:0; width:50%; }
 .station-content__item--last { padding-left:20px; border-left:1px solid var(--color-divider-dark); }
-.station-description { margin:20px 0; padding:20px; padding-left:0; width:100%; border-top:1px solid var(--color-divider-light); color:var(--color-text-secondary); line-height:24px; text-indent:2em; font-size:14px; }
+.station-description { margin:20px 0; padding:20px; padding-left:0; width:100%; border-top:1px solid var(--color-divider-light); color:var(--color-text-secondary); line-height:24px; text-indent:2em; text-align:justify; font-size:14px; }
 
 /****** IMAGES ******/
 .station-images { display:flex; gap:16px; margin-top:16px; }
@@ -37,11 +37,11 @@
 /****** TRANSFERS ******/
 .station-transfers { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-divider-light); }
 .station-transfers__row { display:flex; border-bottom:1px solid var(--color-divider-light); }
-.station-transfers__icons, .station-transfers__lines { display:flex; align-items:center; justify-content:center; }
-.station-transfers__icons { padding:0 6px; gap:2px; height:36px; border-right:1px solid var(--color-divider-light) }
+.station-transfers__icons, .station-transfers__lines { display:flex; align-items:center; }
+.station-transfers__icons { padding:8px; gap:2px; align-items:flex-start; min-height:36px; border-right:1px solid var(--color-divider-light); }
 .station-transfers__icon--service { display:flex; align-items:center; justify-content:center; width:24px; height:24px; cursor:help; }
 .station-transfers__row:last-child { border:none; }
-.station-transfers__lines { padding:0 8px; gap:8px; }
+.station-transfers__lines { padding:8px; gap:8px; flex-wrap:wrap; }
 /**** END TRANSFERS ****/
 
 /****** FARES ******/
@@ -87,8 +87,8 @@
 .station-timetable__time { display:flex; gap:4px; color:var(--color-text-tertiary); }
 .station-timetable__time span { width:40px; font-weight:400; }
 .station-timetable__badge { display:flex; align-items:center; padding:0 4px; border-radius:2px; font-size:8px; text-transform:uppercase; color:var(--color-white); }
-.station-timetable__badge--first { background:#63d076; }
-.station-timetable__badge--last { background:#f76454; }
+.station-timetable__badge--first { background:var(--color-green-light); }
+.station-timetable__badge--last { background:var(--color-red-light); }
 /**** END TIMETABLE ****/
 
 /****** SCREEN SIZES ******/

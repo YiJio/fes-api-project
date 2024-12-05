@@ -18,6 +18,7 @@ const STATUSES = [
 	{ name: 'Under construction', short: 'uc', },
 	{ name: 'Planning', short: 'p', },
 ];
+const STRUCTURE_TYPES = ['Elevated', 'Surface', 'Underground'];
 
 const SearchPage = () => {
 	// hooks
@@ -88,18 +89,28 @@ const SearchPage = () => {
 			<input className='search-input' type='text' value={query} placeholder='Search station' onChange={handleQuery} />
 			<div className='search-options'>
 				<div className='search-options__group'>
-					<span className='search-options__label'>Include</span>
+					<span className='search-options__label search-options__label--include'>Include</span>
 					<div className='search-options__items'>
+						<strong className='search-options__strong'>Status</strong>
 						{STATUSES.map((s) => (
 							<button key={s.short} className={inclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(true, 'status', s.name.toLowerCase())}>{s.name}</button>
+						))}
+						<strong className='search-options__strong'>Structure</strong>
+						{STRUCTURE_TYPES.map((structure) => (
+							<button key={structure} className={`search-options__button${inclusions?.structure_type?.includes(structure.toLowerCase()) ? ' active--include' : ''}`} onClick={() => handleFilters(true, 'structure_type', structure.toLowerCase())}>{structure}</button>
 						))}
 					</div>
 				</div>
 				<div className='search-options__group'>
-					<span className='search-options__label'>Exclude</span>
+					<span className='search-options__label search-options__label--exclude'>Exclude</span>
 					<div className='search-options__items'>
+						<strong className='search-options__strong'>Status</strong>
 						{STATUSES.map((s) => (
 							<button key={s.short} className={exclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(false, 'status', s.name.toLowerCase())}>{s.name}</button>
+						))}
+						<strong className='search-options__strong'>Structure</strong>
+						{STRUCTURE_TYPES.map((structure) => (
+							<button key={structure} className={`search-options__button${exclusions?.structure_type?.includes(structure.toLowerCase()) ? ' active--exclude' : ''}`} onClick={() => handleFilters(false, 'structure_type', structure.toLowerCase())}>{structure}</button>
 						))}
 					</div>
 				</div>
@@ -113,7 +124,7 @@ const SearchPage = () => {
 				</> : (<>
 					{isStationDataReady && filteredStations?.length > 0 ? (
 						filteredStations.map((station) => (
-							<SearchCard key={station._id} lines={lines} stationId={station._id} stationCode={station.station_code} stationName={station.name.en} lineId={station.lines_served[0]} stationStatus={station.status} query={query} />
+							<SearchCard key={station._id} lines={lines} stationData={station} stationId={station._id} stationCode={station.station_code} stationName={station.name.en} lineId={station.lines_served[0]} stationStatus={station.status} query={query} />
 						))
 					) : query === '' ? (<p>Type something to search.</p>)
 						: (<div>

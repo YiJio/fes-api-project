@@ -44,7 +44,7 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 				{stationData.name.en}
 			</div>
 			<RouteCircle stationIndex={stationIndex} numOfStations={numOfStations} activeRoute={activeRoute} setActiveRoute={setActiveRoute} isActive={isActive} status={stationData?.status} sequence={stationData?.sequence} lineColor={lineData?.color} branches={stationData?.branches} lineBranches={lineBranches} />
-			<Popover isOpen={isPopoverOpen && isActive} positions={['bottom', 'top']} align='center' content={<div ref={popoverRef} className='popover-content'>
+			<Popover isOpen={isPopoverOpen && isActive} positions={['bottom', 'top', 'right', 'left']} reposition={true} align='center' content={<div ref={popoverRef} className='popover-content'>
 				<StationTip stationId={stationData?._id} lineNumber={lineData?.prefix.real_prefix} lineColor={lineData?.color} />
 			</div>}>
 				<div className='route-station__trigger' onClick={handlePopover} />

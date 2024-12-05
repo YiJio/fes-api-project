@@ -1,8 +1,8 @@
 // packages
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RiArrowRightLine, RiWalkFill } from 'react-icons/ri';
-import { TbArrowGuide, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbCircleOff, TbDoorExit, TbQuestionMark, TbSlash, TbStairs } from 'react-icons/tb';
+import { RiWalkFill } from 'react-icons/ri';
+import { TbArrowAutofitContent, TbArrowNarrowDown, TbArrowNarrowUp, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbCircleOff, TbDoorExit, TbQuestionMark, TbSeparator, TbStairs } from 'react-icons/tb';
 // utils
 import { getStationInfo } from '../utils/get';
 import { isServiceAccessible } from '../utils/helper';
@@ -20,9 +20,13 @@ const TRANSFER_METHODS = [
 	{ name: 'parallel platform', icon: <TbArrowsRight />, text: 'Walk across platform to parallel transfer' },
 	{ name: 'concourse', icon: <TbStairs />, text: 'Go to concourse to transfer' },
 	{ name: 'node', icon: <TbArrowRotaryRight />, text: 'Use elevator / escalator / stairs to a concourse to transfer' },
-	{ name: 'channel', icon: <TbArrowGuide />, text: 'Walk the designated channel passageway to transfer' },
+	{ name: 'channel', icon: <TbArrowAutofitContent />, text: 'Walk the designated channel passageway to transfer' },
 	{ name: 'exit', icon: <TbDoorExit />, text: 'Exit station to transfer' },
 	{ name: 'termination', icon: <TbCircleOff />, text: 'The transfer line is the terminal, go to other direction to transfer' },
+];
+const METHOD_DIRECTIONS = [
+	{ name: 'Forward', text: 'Head in the same direction as the transfer', position: 'top' },
+	{ name: 'Reverse', text: 'Head in the opposite direction as the transfer', position: 'bottom' }
 ];
 
 function getNumberOrIcon(lineId, lineNumber, service, invert) {
@@ -77,7 +81,7 @@ function getTooltipText2(lineId, stationName, stationLineName, destService) {
 	let stationNameText = isRail ? <u>{stationName} Railway Station</u> : <u>{stationName}</u>;
 	switch (destService) {
 		case 'cr': case 'prdir': return <>To {stationNameText}</>;
-		case 'gztram': return <>To {stationNameText} tram line</>;
+		case 'gztram': return <>To {stationNameText} on tram line</>;
 		case 'fmetro': {
 			if (lineId.split('-')[1] === 'tl') { return <>To {stationNameText} on tram line</>; }
 			return <>To {stationNameText} on {stationLineName}</>;
@@ -117,31 +121,47 @@ const StationTransferMethod = ({ transfer, sourceLine }) => {
 	let fontColor = getContrastingTextColor(color);
 	let opacity = isNio ? '0.5' : '1';
 	let number = getNumberOrIcon(stationLine, stationLineNumber, transfer?._service_id, true);
-	let methods = transfer?.method.forward === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.forward.split(', ').map((method) => {
+	let methods = [];
+	methods[0] = transfer?.method.forward === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.forward.split(', ').map((method) => {
 		let index = TRANSFER_METHODS.findIndex((m) => m.name == method);;
 		return TRANSFER_METHODS[index];
 	});
-	console.log(methods)
-	let tooltipText = <>{getTooltipText2(stationLine, stationName, stationLineName, transfer?._service_id)}{isNio ? <><br/><small>(currently <b><i>not in operation</i></b> or is <b><i>under construction</i></b>)</small></> : ''}</>;
+	methods[1] = transfer?.method.reverse === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.reverse.split(', ').map((method) => {
+		let index = TRANSFER_METHODS.findIndex((m) => m.name == method);;
+		return TRANSFER_METHODS[index];
+	});
+	console.log(methods);
+	let tooltipText = <>{getTooltipText2(stationLine, stationName, stationLineName, transfer?._service_id)}{isNio ? <><br /><small>(currently <b><i>not in operation</i></b> or is <b><i>under construction</i></b>)</small></> : ''}</>;
 
 	return (
 		<div className='transfer__group'>
-			<Tooltip text={`From ${sourceLine?.name.en}`}>
-				<div className='transfer__item transfer__item--first' style={{ background: sourceLine?.color, color: getContrastingTextColor(sourceLine?.color) }}>{sourceLine.prefix.real_prefix}</div>
-			</Tooltip>
-			{methods?.map((method, index) => (<React.Fragment key={index}>
-				<Tooltip key={index} text={method.text}>
-					<div className='transfer__item transfer__item--method'>{method.icon}</div>
+			<div className='transfer__item--tip'>
+				<Tooltip text={`From ${sourceLine?.name.en}`}>
+					<div className='transfer__item transfer__item--first' style={{ background: sourceLine?.color, color: getContrastingTextColor(sourceLine?.color) }}>{sourceLine.prefix.real_prefix}</div>
 				</Tooltip>
-				{index !== methods.length - 1 && <div className='transfer__item transfer__item--slash'><TbSlash /></div>}
-			</React.Fragment>))}
-			<Tooltip text={tooltipText}>
-				{isServiceAccessible(stationLine, transfer?._service_id) ? <Link to={`/station/${transfer?._station_id}`} className='transfer__item transfer__item--last' style={{ background: stationLineColor, color: fontColor, opacity: opacity }}>
+			</div>
+			<div>
+				{METHOD_DIRECTIONS.map((direction, directionIndex) => (<div key={directionIndex} style={{ display: 'flex', justifyContent:'flex-end' }}>
+					{methods[directionIndex]?.map((method, index) => (<React.Fragment key={index}>
+						<Tooltip key={index} text={method.text} position={direction.position}>
+							<div className='transfer__item transfer__item--method'>{method.icon}</div>
+						</Tooltip>
+						{index !== methods[directionIndex].length - 1 && <div className='transfer__item transfer__item--slash'><TbSeparator /></div>}
+					</React.Fragment>))}
+					<Tooltip text={`${direction.name} - ${direction.text}`} position={direction.position}>
+						{isServiceAccessible(stationLine, transfer?._service_id) ? <div className='transfer__item transfer__item--direction' style={{ background: bgColor, color: fontColor, opacity: opacity }}>{directionIndex === 0 ? <TbArrowNarrowUp /> : <TbArrowNarrowDown />}</div> : <div className='transfer__item transfer__item--direction' style={{ background: bgColor, color: fontColor, opacity: opacity, cursor: 'help' }}>{directionIndex === 0 ? <TbArrowNarrowUp /> : <TbArrowNarrowDown />}</div>}
+					</Tooltip>
+				</div>))}
+			</div>
+			<div className='transfer__item--tip'>
+				<Tooltip text={tooltipText}>
+					{isServiceAccessible(stationLine, transfer?._service_id) ? <Link to={`/station/${transfer?._station_id}`} className='transfer__item transfer__item--last' style={{ background: bgColor, color: fontColor, opacity: opacity }}>
 					{number}
-				</Link> : <div className='transfer__item transfer__item--last' style={{ background: bgColor, color: fontColor, opacity: opacity, cursor: 'help' }}>
-					{number}
-				</div>}
-			</Tooltip>
+					</Link> : <div className='transfer__item transfer__item--last' style={{ background: bgColor, color: fontColor, opacity: opacity, cursor: 'help' }}>
+						{number}
+					</div>}
+				</Tooltip>
+			</div>
 		</div>
 	);
 }

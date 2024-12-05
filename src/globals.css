@@ -102,8 +102,8 @@
 .status--ut { background:rgb(52, 152, 219); }
 .status--p { background:rgb(155, 89, 182); }
 .status--ofs { background:rgb(192, 0, 0); }
-.status__border { border-radius:4px; border:1px solid transparent; }
-.status__border--io { border-color:rgb(0, 176, 80); }
+.status__border { border-radius:4px; border:1px dashed transparent; }
+.status__border--io { border-color:rgb(0, 176, 80); border-style:solid; }
 .status__border--uc { border-color:rgb(230, 118, 34); }
 .status__border--ut { border-color:rgb(52, 152, 219); }
 .status__border--p { border-color:rgb(155, 89, 182); }
@@ -121,11 +121,13 @@
 .transfer__logo { width:20px; height:20px; }
 .transfer__item { padding:0 6px; width:auto; height:20px; font-size:14px; font-weight:500; cursor:pointer; }
 .transfer__item--circle { padding:4px; width:20px; border-radius:50%; background:var(--color-main-tertiary); font-size:10px; outline-offset:-2px; overflow:hidden; }
-.transfer__item--first { position:relative; border-top-left-radius:4px; border-bottom-left-radius:4px; line-height:1; }
-.transfer__item--last { background:var(--color-main-primary); border-top-right-radius:4px; border-bottom-right-radius:4px; line-height:1; }
+.transfer__item--first { height:40px; position:relative; border-top-left-radius:4px; border-bottom-left-radius:4px; line-height:1; }
+.transfer__item--last { padding:0 6px 0 2px; height:40px; background:var(--color-main-primary); border-top-right-radius:4px; border-bottom-right-radius:4px; line-height:1; }
 .transfer__item--last svg { width:16px; height:16px; }
+.transfer__item--tip .tooltip__content { bottom:48px; }
 .transfer__item--method { }
-.transfer__item--slash { margin:0 -2px; padding:0; color:var(--color-divider-dark); cursor:default; }
+.transfer__item--direction { padding:0 0 0 2px; }
+.transfer__item--slash { margin:0 -4px; padding:0; color:var(--color-divider-dark); cursor:default; transform:rotate(90deg); }
 /**** END REUSE STYLES ****/
 
 /****** SCREEN SIZES ******/

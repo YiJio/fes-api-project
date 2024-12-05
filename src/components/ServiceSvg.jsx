@@ -32,7 +32,7 @@ const IconGZMTR = ({ cursor = 'default', width = '20px', height = '20px', color 
 const IconFMETRO = ({ cursor = 'default', width = '20px', height = '20px', color = '#cd171c' }) => {
 	return (
 		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width={width} height={height} viewBox="0 0 256 90">
-			<path class="st0" d="M181.5,15.7c0,0-72.8-14-86.4-14.7c-7.9,0.1-26.4,2-47.9,18.8c-18.3,14.5-58,49.1-43.2,61.8
+			<path d="M181.5,15.7c0,0-72.8-14-86.4-14.7c-7.9,0.1-26.4,2-47.9,18.8c-18.3,14.5-58,49.1-43.2,61.8
 	c0,0,7.7,10.5,48-7.6c0,0,104.4-48.1,202.5-45.4c0,0-91.5-24.5-204.2,23c0,0,30.4-33.2,69.1-37.8C119.3,13.8,140.9,11.4,181.5,15.7
 	L181.5,15.7z" fill={color} />
 		</svg>
