@@ -24,9 +24,7 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 			}
 		};
 		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
+		return () => { document.removeEventListener('mousedown', handleClickOutside); };
 	}, []);
 
 	const handlePopover = () => {

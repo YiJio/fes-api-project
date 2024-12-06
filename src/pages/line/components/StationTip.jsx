@@ -92,10 +92,6 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 		}
 	}, [db_station.image]);
 
-	/*useEffect(() => {
-		console.log(db_station, ui_color)
-	}, [db_station, ui_color]);*/
-
 	if (ui_isLoading) { return <StationTipSkeleton /> }
 
 	return (
@@ -136,7 +132,7 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 			</div>
 			<div className='station-tip__bg' style={{ backgroundImage: getStyles('background') }}>{ui_background === '' && <RiLoader5Fill className='loading-spinner' strokeWidth={2} />}</div>
 		</div>
-	)
+	);
 }
 
 export default StationTip;

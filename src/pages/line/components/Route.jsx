@@ -30,7 +30,7 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	let lightestColor = getLighterColor(lineData?.color, 50);
 
 	const handleRouteChange = (route) => {
-		console.log('route changing')
+		//console.log('route changing')
 		setUiIsLoading(true);
 		setUiActiveRoute(route);
 		setUiActiveCircle(0);

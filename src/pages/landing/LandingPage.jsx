@@ -59,9 +59,7 @@ const LandingPage = () => {
 			if (stationsRef.current && !stationsRef.current.contains(e.target)) { setUiIsTypingStation(false); }
 		}
 		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		}
+		return () => { document.removeEventListener('mousedown', handleClickOutside); }
 	}, [linesRef, stationsRef]);
 
 	if (!lines || !stations || ui_isLoading) { return <LandingPageSkeleton />; }

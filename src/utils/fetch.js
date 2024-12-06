@@ -72,7 +72,7 @@ export const fetchStation = async (id) => {
 }
 
 export const fetchFare = async (src, dest) => {
-	console.log(src, dest)
+	//console.log(src, dest)
 	try {
 		const response = await fetch(`https://api.cantonprtapi.com/fare?src=${src}&dest=${dest}`, {
 			method: 'GET',

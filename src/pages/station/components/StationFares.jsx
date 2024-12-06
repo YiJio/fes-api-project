@@ -8,6 +8,22 @@ import useSearchFilter from '../../../hooks/useSearchFilter';
 import { fetchFare } from '../../../utils/fetch';
 import { getContrastingTextColor } from '../../../utils/color';
 
+const StationFaresLineIcon = ({ lines, lineId }) => {
+	// variables
+	let index = lines.findIndex((l) => l._id == lineId);
+	let line = lines[index];
+	let bgColor = line?.color !== '' ? line?.color : '#c3c3c3';
+	let fontColor = getContrastingTextColor(bgColor);
+
+	return (
+		<div className='station-fares__lines'>
+			<Link to={`/line/${lineId}`} className='line-icon' style={{ background: bgColor, color: fontColor }}>
+				{line.prefix.real_prefix}
+			</Link>
+		</div>
+	);
+}
+
 export const StationFares = ({ lines, stations, stationData }) => {
 	// hooks
 	const { query, setQuery, filteredStations, isStationDataReady } = useSearchFilter(lines, stations, 2, { initialExclusions: { station: [stationData.station] } });
@@ -61,9 +77,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 			if (selectionsRef.current && !selectionsRef.current.contains(e.target)) { setUiIsSelectionOpen(false); }
 		}
 		document.addEventListener('mousedown', handleClickOutside);
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		}
+		return () => { document.removeEventListener('mousedown', handleClickOutside); }
 	}, [selectionsRef]);
 
 	return (
@@ -95,9 +109,8 @@ export const StationFares = ({ lines, stations, stationData }) => {
 					<tbody>
 						<tr>
 							<td>{db_fareData?.lines?.length > 0 ? <div className='station-fares__lines'>
-								{db_fareData?.lines.map((line) => (<Link to={`/line/${line}`} className='line-icon' style={{ background: lines[lines.findIndex((l) => l._id == line)].color || '#c3c3c3', color: getContrastingTextColor(lines[lines.findIndex((l) => l._id == line)].color) }}>
-									{line.split('-')[2].toUpperCase()}
-								</Link>))}</div> : ''}</td>
+								{db_fareData?.lines.map((line) => (<StationFaresLineIcon lines={lines} lineId={line} />))}
+							</div> : ''}</td>
 							<td>￥{db_fareData.fare}</td>
 							<td>{db_fareData.time} mins</td>
 							<td>{db_fareData.stops}</td>

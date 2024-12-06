@@ -51,7 +51,6 @@ export const StationImages = ({ windowWidth, images }) => {
 	}
 
 	const openModal = (index) => {
-		console.log(index);
 		setUiImageIndex(index);
 		setUiIsModalOpen(true);
 	}
