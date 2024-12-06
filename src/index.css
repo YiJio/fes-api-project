@@ -85,6 +85,8 @@ button:disabled { opacity:0.5; cursor:default; }
 .empty { display:flex; height:100%; align-items:center; justify-content:center; }
 .invert { filter:brightness(0) invert(1); }
 .none { visibility:hidden; }
+.drag { cursor:grab; }
+.dragging { cursor:grabbing; }
 /**** END STANDARD STYLES ****/
 
 /******** OVERRIDES ********/
@@ -93,6 +95,8 @@ button:disabled { opacity:0.5; cursor:default; }
 
 /****** ANIMATIONS ******/
 .loading-spinner { animation:rotate 600ms infinite linear; color:var(--color-surface-dark); }
+.fade-left { animation:fadeRight 0.3s ease forwards; }
+.fade-right { animation:fadeLeft 0.3s ease forwards; }
 @keyframes rotate {
   0% { transform:rotate(0); }
   100% { transform:rotate(360deg); }
@@ -109,6 +113,14 @@ button:disabled { opacity:0.5; cursor:default; }
   0% { transform:translateX(0px); opacity:1; width:200px; }
   90% { transform:translateX(400px); opacity:0.1; width:0; }
   100% { transform:translateX(500px); opacity:0; width:0; }
+}
+@keyframes fadeLeft {
+  from { opacity:0; transform:translateX(100%); }
+  to { opacity:1; transform:translateX(0); }
+}
+@keyframes fadeRight {
+  from { opacity:0; transform:translateX(-100%); }
+  to { opacity:1; transform:translateX(0); }
 }
 /**** END ANIMATIONS ****/
 
