@@ -13,7 +13,6 @@ import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
 import { ControlsBox } from '../../components/ControlsBox';
 import { Route, RouteMobile } from './components/Route';
-// assets
 
 const LinePageSkeleton = () => {
 	return (
@@ -75,12 +74,7 @@ const LinePage = () => {
 		}
 	}, [lineId, lines]);
 
-	useEffect(() => {
-		//console.log(db_lineStations)
-	}, [db_lineStations]);
-
-	if (!lines || !stations) { return <LinePageSkeleton />; }
-	if (ui_isLoading) { return <LinePageSkeleton />; }
+	if (!lines || !stations || ui_isLoading) { return <LinePageSkeleton />; }
 
 	return (
 		<div className='line'>
@@ -95,7 +89,7 @@ const LinePage = () => {
 				<RouteMobile lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />
 			</>}
 		</div>
-	)
+	);
 }
 
 export default LinePage;

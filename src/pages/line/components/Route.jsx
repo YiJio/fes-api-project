@@ -5,16 +5,15 @@ import { RiArrowGoBackFill, RiLoader5Fill, RiShuffleLine } from 'react-icons/ri'
 import { getRouteLengths } from '../../../utils/helper';
 import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components
-import RouteForkSvg from '../../../components/RouteForkSvg';
+import SvgRouteFork from '../../../components/SvgRouteFork';
 import { RouteStation, RouteStationMobile } from './RouteStation';
-// assets
 
 const RouteSkeleton = () => {
 	return (
 		<div style={{ marginTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '100px' }}>
 			<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
 		</div>
-	)
+	);
 }
 
 const Route = ({ lineData, lineStations, numOfStations }) => {
@@ -24,23 +23,11 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	const [ui_isPopoverOpen, setUiIsPopoverOpen] = useState(true);
 	const [ui_isLoading, setUiIsLoading] = useState(false);
 	// refs
-	const containerRef = useRef(null);
 	const routeRef = useRef(null);
 	const isScrollingRef = useRef(false);
 	// variables
 	let lighterColor = getLighterColor(lineData?.color, 20);
 	let lightestColor = getLighterColor(lineData?.color, 50);
-
-	// probably just better with displaying than scrolling into view
-	// because there may be more stations that get off viewport
-	/*const scrollToRoute = (route) => {
-		console.log('scrolling')
-		const container = containerRef.current;
-		const height = container.offsetHeight;
-		const position = height * 520;
-		console.log(height, position)
-		container.scrollTo({ top: 520, behavior: 'smooth' });
-	}*/
 
 	const handleRouteChange = (route) => {
 		console.log('route changing')
@@ -163,7 +150,7 @@ const RouteMobile = ({ lineData, lineStations }) => {
 							</div>
 							<div className='route-branch__stations'>
 								<div className='route-branch__line' style={{ background: `linear-gradient(180deg, ${lightestColor} 50%, ${lighterColor} 100%)` }}>
-									<RouteForkSvg color={lighterColor} />
+									<SvgRouteFork color={lighterColor} />
 								</div>
 								<div className='route__list route__list--mobile'>
 									{branch.stations?.map((station) => (

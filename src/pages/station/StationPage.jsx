@@ -8,7 +8,7 @@ import './station.css';
 // hooks
 import useDbData from '../../hooks/useDbData';
 // components
-import { IconMetro, IconTrain, IconTram } from '../../components/TransitSvg';
+import { IconMetro, IconTrain, IconTram } from '../../components/SvgTransit';
 import StationBox from './components/StationBox';
 import StationNav from './components/StationNav';
 import StationImages from './components/StationImages';
@@ -93,12 +93,7 @@ const StationPage = () => {
 		}
 	}, [stationId, stations, lines]);
 
-	useEffect(() => {
-		//console.log(db_station, ui_color)
-	}, [db_station, ui_color]);
-
-	if (!lines || !stations) { return <StationPageSkeleton />; }
-	if (ui_isLoading) { return <StationPageSkeleton />; }
+	if (!lines || !stations || ui_isLoading) { return <StationPageSkeleton />; }
 
 	return (
 		<div className='station'>

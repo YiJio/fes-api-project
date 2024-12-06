@@ -6,9 +6,9 @@ import { RiGitMergeFill } from 'react-icons/ri';
 // utils
 import { getContrastingTextColor } from '../../../utils/color';
 // components
-import Tooltip from '../../../components/Tooltip';
-import { IconElevated, IconSurface, IconUnderground } from '../../../components/StructureSvg';
 import StationCode from '../../../components/StationCode';
+import Tooltip from '../../../components/Tooltip';
+import { IconElevated, IconSurface, IconUnderground } from '../../../components/SvgStructure';
 
 const SearchCardSkeleton = () => {
 	return (

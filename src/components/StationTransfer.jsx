@@ -1,7 +1,6 @@
 // packages
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RiWalkFill } from 'react-icons/ri';
 import { TbArrowAutofitContent, TbArrowNarrowDown, TbArrowNarrowUp, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbCircleOff, TbDoorExit, TbQuestionMark, TbSeparator, TbStairs } from 'react-icons/tb';
 // utils
 import { getStationInfo } from '../utils/get';
@@ -9,28 +8,17 @@ import { isServiceAccessible } from '../utils/helper';
 import { getContrastingTextColor, getLighterColor } from '../utils/color';
 // components
 import Tooltip from './Tooltip';
-import { IconCR, IconPRDIR } from './ServiceSvg';
-import { IconTram } from './TransitSvg';
+import { IconCR, IconPRDIR } from './SvgService';
+import { IconTram } from './SvgTransit';
 
 // constants
 const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
-const TRANSFER_METHODS = [
-	{ name: 'tba', icon: <TbQuestionMark />, text: 'To be available (under construction)' },
-	{ name: 'cross platform', icon: <TbArrowsDoubleSwNe />, text: 'Walk across platform to cross transfer' },
-	{ name: 'parallel platform', icon: <TbArrowsRight />, text: 'Walk across platform to parallel transfer' },
-	{ name: 'concourse', icon: <TbStairs />, text: 'Go to concourse to transfer' },
-	{ name: 'node', icon: <TbArrowRotaryRight />, text: 'Use elevator / escalator / stairs to a concourse to transfer' },
-	{ name: 'channel', icon: <TbArrowAutofitContent />, text: 'Walk the designated channel passageway to transfer' },
-	{ name: 'exit', icon: <TbDoorExit />, text: 'Exit station to transfer' },
-	{ name: 'termination', icon: <TbCircleOff />, text: 'The transfer line is the terminal, go to other direction to transfer' },
-];
 const METHOD_DIRECTIONS = [
 	{ name: 'Forward', text: 'Head in the same direction as the transfer', position: 'top' },
 	{ name: 'Reverse', text: 'Head in the opposite direction as the transfer', position: 'bottom' }
 ];
 
 function getNumberOrIcon(lineId, lineNumber, service, invert) {
-	//console.log(lineId, lineNumber)
 	switch (service) {
 		case 'cr': return <IconCR color='#000000' invert={invert} />;
 		case 'prdir': return <IconPRDIR color='#000000' invert={invert} />;
@@ -45,7 +33,6 @@ function getNumberOrIcon(lineId, lineNumber, service, invert) {
 
 function getBgColor(lineId, lineColor, service) {
 	let color = lineColor && lineColor !== '' ? lineColor : '#c3c3c3';
-	//console.log(lineId, lineColor, color)
 	switch (service) {
 		case 'cr': return '#e60012';
 		case 'prdir': return '#009543';
@@ -59,7 +46,6 @@ function getBgColor(lineId, lineColor, service) {
 }
 
 function getTooltipText(lineId, stationLineName, sourceService, destService) {
-	//console.log('source',sourceService,'dest',destService)
 	let isSameService = destService !== sourceService;
 	switch (destService) {
 		case 'cr': return 'Transfer to China Railway';
@@ -112,7 +98,7 @@ const StationTransfer = ({ transfer, sourceService = 'gzmtr', position = 'top' }
 	);
 }
 
-const StationTransferMethod = ({ transfer, sourceLine }) => {
+const StationTransferMethod = ({ transfer, sourceLine, methodsDict }) => {
 	// variables
 	let { stationStatus, stationLine, stationName, stationLineNumber, stationLineName, stationLineColor } = getStationInfo(transfer?._station_id);
 	let isNio = stationStatus !== 'in operation';
@@ -122,15 +108,14 @@ const StationTransferMethod = ({ transfer, sourceLine }) => {
 	let opacity = isNio ? '0.5' : '1';
 	let number = getNumberOrIcon(stationLine, stationLineNumber, transfer?._service_id, true);
 	let methods = [];
-	methods[0] = transfer?.method.forward === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.forward.split(', ').map((method) => {
-		let index = TRANSFER_METHODS.findIndex((m) => m.name == method);;
-		return TRANSFER_METHODS[index];
+	methods[0] = transfer?.method.forward === '' ? [methodsDict[0]] : transfer?.method?.forward.split(', ').map((method) => {
+		let index = methodsDict.findIndex((m) => m.name == method);;
+		return methodsDict[index];
 	});
-	methods[1] = transfer?.method.reverse === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.reverse.split(', ').map((method) => {
-		let index = TRANSFER_METHODS.findIndex((m) => m.name == method);;
-		return TRANSFER_METHODS[index];
+	methods[1] = transfer?.method.reverse === '' ? [methodsDict[0]] : transfer?.method?.reverse.split(', ').map((method) => {
+		let index = methodsDict.findIndex((m) => m.name == method);;
+		return methodsDict[index];
 	});
-	console.log(methods);
 	let tooltipText = <>{getTooltipText2(stationLine, stationName, stationLineName, transfer?._service_id)}{isNio ? <><br /><small>(currently <b><i>not in operation</i></b> or is <b><i>under construction</i></b>)</small></> : ''}</>;
 
 	return (

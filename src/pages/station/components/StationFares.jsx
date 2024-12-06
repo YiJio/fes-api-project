@@ -7,7 +7,6 @@ import useSearchFilter from '../../../hooks/useSearchFilter';
 // utils
 import { fetchFare } from '../../../utils/fetch';
 import { getContrastingTextColor } from '../../../utils/color';
-// components
 
 export const StationFares = ({ lines, stations, stationData }) => {
 	// hooks
@@ -26,7 +25,6 @@ export const StationFares = ({ lines, stations, stationData }) => {
 	}
 
 	const handleSetFare = (station) => {
-		//console.log('to', station)
 		setDbFareData({}); // clear things first
 		setQuery(station.name.en);
 		setUiFareStation(station);
@@ -67,8 +65,6 @@ export const StationFares = ({ lines, stations, stationData }) => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		}
 	}, [selectionsRef]);
-
-	//if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='station-fares'>

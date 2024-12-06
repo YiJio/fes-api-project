@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RiSearchLine } from 'react-icons/ri';
-// assets
-import logoGZMTR from '../assets/Guangzhou_Metro_icon.svg';
+// components
+import { IconGZMTR } from './SvgService';
 
 const Header = () => {
 	// states
@@ -21,7 +21,7 @@ const Header = () => {
 		<header className='header'>
 			<div className='header__wrapper'>
 				<Link to='/home' className='header__title'>
-					<img src={logoGZMTR} alt='Guangzhou Metro logo' style={{ height: '24px' }} />
+					<IconGZMTR width='24px' height='24px' />
 					Guangzhou Metro
 				</Link>
 				<div className='header__search'>

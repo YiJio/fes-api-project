@@ -4,9 +4,9 @@ import { RiArrowLeftSLine, RiArrowRightSLine, RiCloseFill } from 'react-icons/ri
 
 const ImagesModal = ({ images, isOpen, setIsOpen, imageIndex, setImageIndex, }) => {
 	// states
-	const [isDraggingCss, setIsDraggingCss] = useState(false);
-	const [isDragging, setIsDragging] = useState(false);
-	const [startX, setStartX] = useState(0);
+	const [ui_isDraggingCss, setUiIsDraggingCss] = useState(false);
+	const [ui_isDragging, setUiIsDragging] = useState(false);
+	const [ui_startX, setStartX] = useState(0);
 	// refs
 	const modalRef = useRef();
 	const viewportRef = useRef();
@@ -21,23 +21,23 @@ const ImagesModal = ({ images, isOpen, setIsOpen, imageIndex, setImageIndex, }) 
 	}
 
 	const handleMouseDown = (e) => {
-		setIsDraggingCss(true);
-		setIsDragging(true);
+		setUiIsDraggingCss(true);
+		setUiIsDragging(true);
 		setStartX(e.clientX || e.touches[0].clientX);
 	}
 
 	const handleMouseMove = (e) => {
-		if (!isDragging) return;
+		if (!ui_isDragging) return;
 		const moveX = e.clientX || e.touches[0].clientX;
-		const diff = startX - moveX;
+		const diff = ui_startX - moveX;
 		if (Math.abs(diff) > 50) {
 			if (diff > 0) { setImageIndex((prev) => (prev + 1) % images.length); }
 			else if (diff < 0) { setImageIndex((prev) => prev === 0 ? images.length - 1 : prev - 1); }
-			setIsDragging(false);
+			setUiIsDragging(false);
 		}
 	}
 
-	const handleMouseUp = () => { setIsDraggingCss(false); setIsDragging(false); }
+	const handleMouseUp = () => { setUiIsDraggingCss(false); setUiIsDragging(false); }
 
 	const resetModal = () => {
 		setIsOpen(false);
@@ -73,7 +73,7 @@ const ImagesModal = ({ images, isOpen, setIsOpen, imageIndex, setImageIndex, }) 
 				<div className='modal__control' onClick={handlePrevModal}>
 					<RiArrowLeftSLine strokeWidth='1px' />
 				</div>
-				<div ref={viewportRef} className={`modal__viewport ${isDraggingCss ? 'dragging' : 'drag'}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onTouchStart={handleMouseDown} onTouchMove={handleMouseMove} onTouchEnd={handleMouseUp}>
+				<div ref={viewportRef} className={`modal__viewport ${ui_isDraggingCss ? 'dragging' : 'drag'}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onTouchStart={handleMouseDown} onTouchMove={handleMouseMove} onTouchEnd={handleMouseUp}>
 					{images?.map((image, index) => (<div key={index} className={`modal__image ${imageIndex === index ? 'active' : ''}`}>
 						<img src={image.image} alt={image.caption} />
 						<div className='modal__caption'>

@@ -1,5 +1,5 @@
 // packages
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Popover } from 'react-tiny-popover';
 import { RiExchange2Line } from 'react-icons/ri';
@@ -7,8 +7,8 @@ import { RiExchange2Line } from 'react-icons/ri';
 import { getLighterColor } from '../../../utils/color';
 // components
 import { StationTransfer } from '../../../components/StationTransfer';
-import StationTip from './StationTip';
 import { RouteCircle, RouteCircleMobile } from './RouteCircle';
+import StationTip from './StationTip';
 
 const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stationIndex, route, activeRoute, setActiveRoute, activeCircle, setActiveCircle, isPopoverOpen, setIsPopoverOpen }) => {
 	// variables

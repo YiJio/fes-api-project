@@ -23,7 +23,7 @@ const TestPage = () => {
 				))}
 			</ul>
 		</div>
-	)
+	);
 }
 
 export default TestPage;

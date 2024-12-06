@@ -7,8 +7,9 @@ import './landing.css';
 // hooks
 import useDbData from '../../hooks/useDbData';
 import useSearchFilter from '../../hooks/useSearchFilter';
+// components
+import { IconGZMTR } from '../../components/SvgService';
 // assets
-import logoGZMTR from '../../assets/Guangzhou_Metro_icon.svg';
 import imageCantonTower from '../../assets/Canton_Tower.jpg';
 import imageYuyinShanfang from '../../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../../assets/Huadu_District.jpg';
@@ -95,7 +96,7 @@ const LandingPage = () => {
 			<div className='landing__right'>
 				<div className='landing-intro'>
 					<Link to='/home' className='landing-intro__title'>
-						<img src={logoGZMTR} alt='Guangzhou Metro logo' style={{ width: '32px' }} />
+						<IconGZMTR width='32px' height='32px' strokeWidth='4px' />
 						Guangzhou Metro
 					</Link>
 					<div className='landing-intro__group'>

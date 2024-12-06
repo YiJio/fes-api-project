@@ -1,7 +1,7 @@
 // packages
 import React from 'react';
 
-const RouteForkSvg = ({ color }) => {
+const SvgRouteFork = ({ color }) => {
 	return (
 		<svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 91.09 76.64" style={{ height:'76px' }}>
 			<g data-name="Layer 1">
@@ -14,4 +14,4 @@ const RouteForkSvg = ({ color }) => {
 	);
 }
 
-export default RouteForkSvg;
+export default SvgRouteFork;

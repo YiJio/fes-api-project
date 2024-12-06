@@ -40,7 +40,7 @@ const HomePage = () => {
 		document.title = 'Guangzhou Metro';
 		setTimeout(() => {
 			setUiIsLoading(false);
-		}, 100);
+		}, 50);
 	}, []);
 
 	if (!lines || !stations || ui_isLoading) { return <HomePageSkeleton />; }

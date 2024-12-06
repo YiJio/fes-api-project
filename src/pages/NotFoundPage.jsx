@@ -22,7 +22,7 @@ const NotFoundPage = () => {
 			</div>
 			<div className='not-found__paragraph'>Try something else to <Link to='/search'>search</Link>.</div>
 		</div>
-	)
+	);
 }
 
 export default NotFoundPage;

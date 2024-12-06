@@ -1,5 +1,5 @@
 // packages
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 // css
@@ -10,7 +10,6 @@ import useSearchFilter from '../../hooks/useSearchFilter';
 // components
 import Nav from '../../components/Nav';
 import { SearchCard, SearchCardSkeleton } from './components/SearchCard';
-//
 
 // constants
 const STATUSES = [

@@ -1,13 +1,25 @@
 // packages
-import React, { useEffect, useState } from 'react';
-import { RiExchange2Line, RiMapPinFill, RiMoneyCnyCircleLine, RiRunFill, RiStackLine, RiWalkFill  } from 'react-icons/ri';
-import { TbArrowGuide, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbDoorExit, TbStairs } from 'react-icons/tb';
+import React, { useState } from 'react';
+import { RiExchange2Line, RiMoneyCnyCircleLine, RiStackLine  } from 'react-icons/ri';
+import { TbArrowAutofitContent, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrowsRight, TbCircleOff, TbDoorExit, TbQuestionMark, TbStairs } from 'react-icons/tb';
 // utils
 import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components
 import Accordion from '../../../components/Accordion';
-import StationTransferList from './StationTransferList';
 import StationFares from './StationFares';
+import StationTransferList from './StationTransferList';
+
+// constants
+const TRANSFER_METHODS = [
+	{ name: 'tba', icon: <TbQuestionMark />, text: 'To be available (under construction)' },
+	{ name: 'cross platform', icon: <TbArrowsDoubleSwNe />, text: 'Walk across platform to cross transfer' },
+	{ name: 'parallel platform', icon: <TbArrowsRight />, text: 'Walk across platform to parallel transfer' },
+	{ name: 'concourse', icon: <TbStairs />, text: 'Go to concourse to transfer' },
+	{ name: 'node', icon: <TbArrowRotaryRight />, text: 'Use elevator / escalator / stairs to a concourse to transfer' },
+	{ name: 'channel', icon: <TbArrowAutofitContent />, text: 'Walk the designated channel passageway to transfer' },
+	{ name: 'exit', icon: <TbDoorExit />, text: 'Exit station to transfer' },
+	{ name: 'termination', icon: <TbCircleOff />, text: 'The transfer line is the terminal, go to other direction to transfer' },
+];
 
 const StationTabs = ({ lines, stations, stationData, lineData, floors }) => {
 	// states
@@ -17,8 +29,6 @@ const StationTabs = ({ lines, stations, stationData, lineData, floors }) => {
 	let borderColor = getLighterColor(color, 40);
 	let bgColor = getLighterColor(color, 80);
 	let fontColor = getContrastingTextColor(bgColor);
-
-	//if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
 		<div className='tabs'>
@@ -36,11 +46,15 @@ const StationTabs = ({ lines, stations, stationData, lineData, floors }) => {
 			<div className='tabs__content'>
 				{ui_tab === 0 && <StationFares lines={lines} stations={stations} stationData={stationData} />}
 				{ui_tab === 1 && <>
-					{/*<Accordion label='Legend'>
+					<Accordion label='Legend'>
 						<p>Station transfer methods can be one of the following:</p>
-					</Accordion>*/}
-					{/* transfer in schema model need to go through changes as well, so do the before method first and then use the correct component for showing transfers with transfer methods, ALSO when doing the floor layouts, may possibly just have transfers there? */}
-					<StationTransferList transfers={stationData?.transfers} sourceLine={lineData} />
+						<ul>
+							{TRANSFER_METHODS.map((method, index) => (
+								<li key={index}><b>{method.icon} {method.name}</b> - {method.text.toLowerCase()}</li>
+							))}
+						</ul>
+					</Accordion>
+					<StationTransferList transfers={stationData?.transfers} sourceLine={lineData} methodsDict={TRANSFER_METHODS} />
 				</>}
 				{ui_tab === 2 && <></>}
 			</div>

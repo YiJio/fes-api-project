@@ -1,19 +1,16 @@
 // packages
-import React, { useEffect } from 'react';
-// hooks
-import useDbData from '../../../hooks/useDbData';
+import React from 'react';
 // components
-import Tooltip from '../../../components/Tooltip';
-import { IconMetro, IconTrain, IconTram } from '../../../components/TransitSvg';
-import { IconCR, IconFMETRO, IconGF, IconGZMTR, IconPRDIR } from '../../../components/ServiceSvg';
 import { StationTransferMethod } from '../../../components/StationTransfer';
-// assets
+import Tooltip from '../../../components/Tooltip';
+import { IconCR, IconFMETRO, IconGF, IconGZMTR, IconPRDIR } from '../../../components/SvgService';
+import { IconMetro, IconTrain, IconTram } from '../../../components/SvgTransit';
 
 // constants
 const SERVICES = ['cr', 'prdir', 'gzmtr', 'guangfometro', 'fmetro', 'gztram'];
 const RAIL_SERVICES = ['cr', 'prdir'];
 
-const StationTransferService = ({ transfers, service, sourceService, sourceLine }) => {
+const StationTransferService = ({ transfers, service, sourceService, sourceLine, methodsDict }) => {
 	// variables
 	let tempTransfers = [];
 	if (!RAIL_SERVICES.includes(service)) {
@@ -24,7 +21,7 @@ const StationTransferService = ({ transfers, service, sourceService, sourceLine 
 
 	return (<>
 		{tempTransfers.map((transfer) => (
-			<StationTransferMethod key={transfer._station_id} transfer={transfer} sourceLine={sourceLine} />
+			<StationTransferMethod key={transfer._station_id} transfer={transfer} sourceLine={sourceLine} methodsDict={methodsDict} />
 		))}
 	</>);
 }
@@ -89,29 +86,19 @@ const StationTransferIcon = ({ service }) => {
 	);
 }
 
-const StationTransferList = ({ transfers, sourceService, sourceLine }) => {
-	// variables
-	const { lines } = useDbData();
-
-	useEffect(() => {
-		//let test = transfers.findIndex((t) => t.transfer_to._service_id == 'prdir');
-		//console.log(test);
-	}, [lines]);
-
-	if (!lines) { return <>Loading...</>; }
-
+const StationTransferList = ({ transfers, sourceService, sourceLine, methodsDict }) => {
 	return (
 		<div className='station-transfers'>
 			{SERVICES.map((service, index) => (<React.Fragment key={index}>
 				{transfers.findIndex((transfer) => transfer._service_id == service) !== -1 && <div className='station-transfers__row'>
 					<StationTransferIcon service={service} />
 					<div className='station-transfers__lines transfer__list'>
-						<StationTransferService transfers={transfers} service={service} sourceService={sourceService} sourceLine={sourceLine} />
+						<StationTransferService transfers={transfers} service={service} sourceService={sourceService} sourceLine={sourceLine} methodsDict={methodsDict} />
 					</div>
 				</div>}
 			</React.Fragment>))}
 		</div>
-	)
+	);
 }
 
 export default StationTransferList;

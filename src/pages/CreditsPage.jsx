@@ -31,7 +31,7 @@ const CreditsPage = () => {
 		document.title = 'Credits | Guangzhou Metro';
 		setTimeout(() => {
 			setUiIsLoading(false);
-		}, 100);
+		}, 50);
 	}, []);
 
 	if (!lines || !stations || ui_isLoading) { return <CreditsPageSkeleton />; }
@@ -65,7 +65,7 @@ const CreditsPage = () => {
 				</ul>
 			</div>
 		</div>
-	)
+	);
 }
 
 export default CreditsPage;
