@@ -10,6 +10,7 @@ import useDbData from '../../hooks/useDbData';
 // components
 import { IconMetro, IconTrain, IconTram } from '../../components/TransitSvg';
 import StationBox from './components/StationBox';
+import StationNav from './components/StationNav';
 import StationImages from './components/StationImages';
 import StationTabs from './components/StationTabs';
 import StationTime from './components/StationTime';
@@ -110,6 +111,7 @@ const StationPage = () => {
 				</div>
 				<div className='station-content__item'>
 					<StationBox stationData={db_station} lineColor={ui_color} />
+					<StationNav stations={stations} lineColor={ui_color} preceding={db_station?.navigation?.preceding} following={db_station?.navigation?.following} />
 				</div>
 			</div>
 			<div className='station-content'>
@@ -123,7 +125,7 @@ const StationPage = () => {
 						<b className='station-hours__label'>Operational hours</b>
 						<div className='station-hours__time'>
 							<RiTimeLine strokeWidth={0.5} />
-							<span>{db_station?.operational_hours.opening} - {db_station?.operational_hours.closing}</span>
+							<span>{db_station?.operational_hours?.opening} - {db_station?.operational_hours?.closing[0] === '0' ? <>{db_station?.operational_hours?.closing}<sup>+1</sup></> : <>{db_station?.operational_hours?.closing}</>}</span>
 						</div>
 					</div>
 					<div className='station-timetable'>
@@ -142,7 +144,7 @@ const StationPage = () => {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
 
 export default StationPage;

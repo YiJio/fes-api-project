@@ -124,7 +124,7 @@ const SearchPage = () => {
 				</> : (<>
 					{isStationDataReady && filteredStations?.length > 0 ? (
 						filteredStations.map((station) => (
-							<SearchCard key={station._id} lines={lines} stationData={station} stationId={station._id} stationCode={station.station_code} stationName={station.name.en} lineId={station.lines_served[0]} stationStatus={station.status} query={query} />
+							<SearchCard key={station._id} lines={lines} stationData={station} lineId={station.lines_served[0]} query={query} />
 						))
 					) : query === '' ? (<p>Type something to search.</p>)
 						: (<div>

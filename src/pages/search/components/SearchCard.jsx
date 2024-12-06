@@ -17,7 +17,7 @@ const SearchCardSkeleton = () => {
 	);
 }
 
-const SearchCard = ({ lines, stationData, stationId, stationCode, stationName, lineId, stationStatus, stationStructure, query }) => {
+const SearchCard = ({ lines, stationData, lineId, query }) => {
 	// hooks
 	const navigate = useNavigate();
 	// variables

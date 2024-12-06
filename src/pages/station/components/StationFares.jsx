@@ -104,7 +104,7 @@ export const StationFares = ({ lines, stations, stationData }) => {
 								</Link>))}</div> : ''}</td>
 							<td>￥{db_fareData.fare}</td>
 							<td>{db_fareData.time} mins</td>
-							<td>{db_fareData.stations}</td>
+							<td>{db_fareData.stops}</td>
 						</tr>
 					</tbody>
 				</table>}
