@@ -1,5 +1,4 @@
-/*********** SEARCH STYLES ***********/
-.search { }
+/*********** SEARCH PAGE STYLES ***********/
 .search__list { display:flex; flex-wrap:wrap; gap:20px; }
 
 /*** input **/
@@ -63,4 +62,4 @@
 }
 /**** END SCREEN SIZES ****/
 
-/********* END SEARCH STYLES *********/
+/********* END SEARCH PAGE STYLES *********/

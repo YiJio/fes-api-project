@@ -1,12 +1,13 @@
 // packages
 import React, { useEffect, useRef, useState } from 'react';
 import { RiArrowGoBackFill, RiLoader5Fill, RiShuffleLine } from 'react-icons/ri';
+// css
+import './route.css';
 // utils
-import { getRouteLengths } from '../../../utils/helper';
-import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
+import { getRouteLengths } from '../../utils/helper';
+import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
-import SvgRouteFork from '../../../components/icons/SvgRouteFork';
-import { RouteStation, RouteStationMobile } from './RouteStation';
+import { RouteStation } from './RouteStation';
 
 const RouteSkeleton = () => {
 	return (
@@ -100,24 +101,24 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	if (ui_isLoading) { return <RouteSkeleton />; }
 
 	return (
-		<div ref={routeRef} className='route'>
-			<div className='route__separator' style={{ background: lighterColor }} />
-			{ui_activeRoute === 'primary' && <div className='route__list'>
+		<div ref={routeRef} className='c-route'>
+			<div className='c-route__separator' style={{ background: lighterColor }} />
+			{ui_activeRoute === 'primary' && <div className='c-route__list'>
 				{lineStations?.stations?.map((station, index) => (
 					<RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} lineBranches={lineStations?.branches} stationIndex={index} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
 				))}
 			</div>}
 			{lineStations?.branches?.map((branch) => (<React.Fragment key={branch.code}>
-				{ui_activeRoute === branch.code && <div className='route-branch'>
-					<div className='route-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
+				{ui_activeRoute === branch.code && <div className='c-branch'>
+					<div className='c-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
 						<RiShuffleLine strokeWidth={1} />
 						Branch: {branch.name.en}
 					</div>
-					<div className='route-branch__back' style={{ outlineColor: lineData.color, color: lineData.color }} onClick={() => handleRouteChange('primary')}>
+					<div className='c-branch__back' style={{ outlineColor: lineData.color, color: lineData.color }} onClick={() => handleRouteChange('primary')}>
 						<RiArrowGoBackFill />
 						<span>Back to route</span>
 					</div>
-					<div className='route__list'>
+					<div className='c-route__list'>
 						{branch.stations.map((station, index) => (
 							<RouteStation key={station.code} lineData={lineData} stationData={station} numOfStations={branch.stations.length - 1} stationIndex={index} route={branch.code} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
 						))}
@@ -128,43 +129,4 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	);
 }
 
-const RouteMobile = ({ lineData, lineStations }) => {
-	// variables
-	let lighterColor = getLighterColor(lineData?.color, 20);
-	let lightestColor = getLighterColor(lineData?.color, 50);
-
-	return (
-		<div className='route'>
-			<div className='route__separator' style={{ background: lighterColor }} />
-			<div className='route__list route__list--mobile'>
-				{lineStations?.stations?.map((station) => (<React.Fragment key={station._id}>
-					<RouteStationMobile lineData={lineData} stationData={station} />
-					{station.branches.length > 0 && <>
-						{lineStations?.branches?.filter((branch) => station.branches.includes(branch.code)).map((branch) => (<div key={branch.code} className='route-branch'>
-							<div className='route-branch__title'>
-								<div className='route-branch__line' style={{ background: lighterColor }} />
-								<div className='route-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
-									<RiShuffleLine />
-									{branch.name.en}
-								</div>
-							</div>
-							<div className='route-branch__stations'>
-								<div className='route-branch__line' style={{ background: `linear-gradient(180deg, ${lightestColor} 50%, ${lighterColor} 100%)` }}>
-									<SvgRouteFork color={lighterColor} />
-								</div>
-								<div className='route__list route__list--mobile'>
-									{branch.stations?.map((station) => (
-										<RouteStationMobile key={station._id} lineData={lineData} stationData={station} />
-									))}
-								</div>
-							</div>
-						</div>))}
-					</>}
-				</React.Fragment>
-				))}
-			</div>
-		</div>
-	);
-}
-
-export { Route, RouteMobile };
+export default Route;

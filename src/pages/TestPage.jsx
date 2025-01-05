@@ -28,7 +28,6 @@ const TestPage = () => {
 	useEffect(() => {
 		const fetch = async (index) => {
 			let lineStations = await fetchLineStations(lineId);
-			console.log('fetcgibng',lineStations);
 			setDbLineStations(lineStations);
 			setUiLighterColor(getLighterColor(lines[index]?.color, 20));
 			setTimeout(() => {
@@ -36,13 +35,11 @@ const TestPage = () => {
 			}, 1000);
 		}
 		if (lines) {
-			console.log('got here')
 			setDbLine(null);
 			setDbLineStations(null);
 			setUiIsLoading(true);
 			setUiLighterColor('');
 			let index = lines.findIndex(l => l._id == lineId);
-			console.log('index',index)
 			setDbLine(lines[index]);
 			document.title = `${lines[index].full_name.en} | Guangzhou Metro`;
 			fetch(index);
@@ -58,8 +55,8 @@ const TestPage = () => {
 					<li key={index}>{getHighlightedText(station.name.en, query)}</li>
 				))}
 				</ul>*/}
-				{console.log('from test',db_line)}
-				{/*<RouteLoop lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />*/}
+				{console.log(db_lineStations)}
+				<RouteLoop lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />
 		</div>
 	);
 }

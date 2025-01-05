@@ -1,4 +1,4 @@
-/************ NOT FOUND STYLES ************/
+/************ NOT FOUND PAGE STYLES ************/
 .not-found { height:100vh; display:flex; align-items:center; justify-content:center; flex-direction:column; }
 .not-found a { position:relative; display:inline-flex; color:var(--color-text-tertiary); }
 .not-found a:hover { color:var(--color-text-secondary); }
@@ -39,4 +39,4 @@
 }
 /**** END SCREEN SIZES ****/
 
-/********** END NOT FOUND STYLES **********/
+/********** END NOT FOUND PAGE STYLES **********/

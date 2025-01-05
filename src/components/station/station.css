@@ -1,0 +1,63 @@
+/************ STATION STYLES ************/
+/** station code **/
+.c-station-code { display:flex; border:1px solid transparent; font-family:'JetBrains Mono', monospace; font-size:12px; font-weight:500; }
+
+.c-station-code span { display:flex; align-items:center; padding:0 4px; border-top-left-radius:4px; border-bottom-left-radius:4px; border:2px solid transparent; }
+.c-station-code span:last-child { border-radius:0; border-top-right-radius:4px; border-bottom-right-radius:4px; border-left:none; }
+
+/****** STATION TIP ******/
+.c-station-tip { position:relative; margin:24px; display:flex; flex-direction:column; justify-content:flex-end; width:320px; height:520px; background:var(--color-white); border-radius:16px; overflow:hidden; }
+.c-station-tip__info { position:absolute; width:100%; height:300px; border-radius:16px; background:var(--color-white); z-index:9; }
+.c-station-tip__wrapper { height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:20px; }
+.c-station-tip__row { display:flex; }
+
+/** info **/
+.c-station-tip .status { position:absolute; top:-28px; margin:4px 0; box-shadow:0 2px 4px 0 rgba(0,0,0,0.25); font-size:10px; cursor:default; user-select:none; pointer-events:none; }
+.c-station-tip__intro { display:flex; flex-direction:column; gap:16px; }
+.c-station-tip__basic { display:flex; flex-direction:column; gap:8px; }
+.c-station-tip__heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.c-station-tip__title { display:flex; gap:2px 8px; flex-wrap:wrap; align-items:flex-start; }
+.c-station-tip__name { font-size:20px; font-weight:700; }
+.c-station-tip__location { display:flex; gap:2px; padding-right:20px; font-size:12px; color:var(--color-text-secondary); }
+.c-station-tip__location svg { font-size:16px; }
+.c-station-tip__transfers { display:flex; gap:6px; padding:6px; background:var(--color-white); box-shadow:0 4px 8px 0 rgba(211,211,211,0.25); border-radius:16px; }
+.c-station-tip__description { font-size:14px; line-height:1.5; max-height:calc(14px * 1.5 * 3); overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; }
+.c-station-tip__description p { margin:0; }
+.c-station-tip__button { font-size:13px; font-weight:600; transition:all 0.3s ease; }
+.c-station-tip__button:hover { background:var(--color-header) !important; box-shadow:0 8px 12px 0 rgba(62,62,62,0.25) !important; color:var(--color-white) !important; }
+.c-station-tip__button:active { background:var(--color-black) !important; box-shadow:0 8px 12px 0 rgba(0,0,0,0.25) !important; color:var(--color-white) !important; }
+
+/** background **/
+.c-station-tip__bg { position:absolute; top:0; left:0; width:100%; height:50%; background-size:cover; display:flex; align-items:center; justify-content:center; }
+.c-station-tip__bg svg { font-size:80px; color:var(--color-surface-dark); }
+/**** END STATION TIP ****/
+
+/****** SCREEN SIZES ******/
+
+/** large screen size **/
+@media (max-width:1280px) {
+
+}
+
+/** regular screen size **/
+@media (max-width:1024px) {
+	
+}
+
+/** tablet size **/
+@media (max-width:768px) {
+	
+}
+
+/** large smartphone size **/
+@media (max-width:600px) {
+	.station-tip { display:none; }
+}
+
+/** small smartphone size **/
+@media (max-width:480px) {
+	
+}
+/**** END SCREEN SIZES ****/
+
+/********** END STATION STYLES **********/

@@ -1,7 +1,7 @@
 // packages
-import React, { useEffect } from 'react';
+import React from 'react';
 // utils
-import { convertDDToDMS } from '../utils/helper';
+import { convertDDToDMS } from '../../utils/helper';
 
 const StationLocation = ({ coordinate, isLon }) => {
 	// variables

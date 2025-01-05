@@ -38,6 +38,32 @@ export function sortByServiceIdAndLineName(a, b, lines) {
 	return lines[indexA]?.name.en.localeCompare(lines[indexB]?.name.en, 'en', { numeric: true });
 }
 
+export function getStationsSplit(stations) {
+	let numStations = stations.length;
+	let counts = { top: 0, right: 0, bottom: 0, left: 0 };
+	let maxMidpoint = 15;
+	let midpoint = numStations % 2 === 0 ? Math.floor(numStations / 2) - 1 : Math.floor(numStations / 2);
+	midpoint = midpoint > maxMidpoint ? maxMidpoint : midpoint;
+	if (numStations === 1) {
+		throw new Error('Number of stations cannot be 1!');
+	} else if (numStations === 2) {
+		counts = { top: 2, right: 0, bottom: 0, left: 0 };
+	} else if (numStations === 3) {
+		counts = { top: 1, right: 1, bottom: 1, left: 0 };
+	} else {
+		let topBottom = midpoint;
+		let leftover = numStations - (2 * midpoint);
+		let right = leftover === 1 ? 1 : Math.round(leftover / 2);
+		let left = leftover - right;
+		counts = { top: topBottom, right, bottom: topBottom, left };
+	}
+	let topStations = stations?.slice(0, counts.top);
+	let rightStations = stations?.slice(counts.top, counts.top + counts.right);
+	let bottomStations = stations?.slice(counts.top + counts.right, counts.left === 0 ? numStations.length : counts.top + counts.right + counts.bottom);
+	let leftStations = counts.left !== 0 ? stations?.slice(counts.top + counts.right + counts.bottom) : [];
+	return { topStations, rightStations, bottomStations, leftStations };
+}
+
 export function getRouteLengths(activeRoute, lineStations) {
 	let length = lineStations?.stations?.length - 1;
 	if (activeRoute !== 'primary') {
@@ -51,7 +77,7 @@ export function getRouteLengths(activeRoute, lineStations) {
 export function isServiceAccessible(lineId, service) {
 	let test = lineId ? true : false;
 	// disable tram lines
-	if(lineId && lineId.split('-')[1] === 'tl') { test = false; }
+	if (lineId && lineId.split('-')[1] === 'tl') { test = false; }
 	switch (service) {
 		case 'cr': return false;
 		case 'prdir': return false;

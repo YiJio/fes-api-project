@@ -12,7 +12,7 @@
 .c-mouse--left:after { content:''; margin-top:4px; width:4px; height:6px; border-left:4px solid var(--color-white); border-top-left-radius:4px; }
 .c-mouse--wheel:after { content:''; margin-top:8px; width:2px; height:4px; border-radius:2px; background:var(--color-white); animation:scroll 0.75s infinite alternate-reverse; }
 
-/**** CONTROLS BOX ****/
+/****** CONTROLS BOX ******/
 .c-controls-box { position:fixed; right:8px; top:calc(50% - 104px); display:flex; flex-direction:column; gap:16px; cursor:pointer; z-index:999; }
 
 .c-controls-box__group,
@@ -25,6 +25,7 @@
 .c-controls-box__span { font-size:12px; text-shadow:-1px 1px 0 var(--color-white), 1px 1px 0 var(--color-white), 1px -1px 0 var(--color-white), -1px -1px 0 var(--color-white); white-space:nowrap; }
 
 .c-controls-box__icon { justify-content:center; width:24px; height:24px; }
+/**** END CONTROLS BOX ****/
 
 /****** SCREEN SIZES ******/
 
@@ -47,8 +48,7 @@
 }
 
 /** small smartphone size **/
-@media (max-width:480px) {
-	
+@media (max-width:480px) {	
 }
 /**** END SCREEN SIZES ****/
 

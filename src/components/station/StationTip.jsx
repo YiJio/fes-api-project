@@ -1,23 +1,26 @@
 // packages
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import Skeleton from 'react-loading-skeleton';
-import { RiExchange2Line, RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
+import { RiLoader5Fill, RiMapPinFill } from 'react-icons/ri';
+// css
+import './station.css';
 // hooks
-import useDbData from '../../../hooks/useDbData';
+import useDbData from '../../hooks/useDbData';
 // utils
-import { getStatusCssName } from '../../../utils/helper';
-import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../../../utils/color';
+import { getStatusCssName } from '../../utils/helper';
+import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
-import { TransferBubble } from '../../../components/transfer';
-import StationCode from '../../../components/StationCode';
-import { StationAddress } from '../../../components/StationLocation';
+import { TransferBubble } from '../transfer';
+import StationCode from './StationCode';
+import { StationAddress } from './StationLocation';
 
 const StationTipSkeleton = () => {
 	return (
-		<div className='station-tip' style={{ boxShadow: '0 8px 8px 0 rgba(0,0,0,0.25)' }}>
-			<div className='station-tip__info'>
-				<div className='station-tip__wrapper'>
+		<div className='c-station-tip' style={{ boxShadow: '0 8px 8px 0 rgba(0,0,0,0.25)' }}>
+			<div className='c-station-tip__info'>
+				<div className='c-station-tip__wrapper'>
 					<div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
 						<Skeleton count={1} height='24px' />
 						<Skeleton count={2} />
@@ -27,7 +30,7 @@ const StationTipSkeleton = () => {
 					<Skeleton count={1} height='40px' />
 				</div>
 			</div>
-			<div className='station-tip__bg'>
+			<div className='c-station-tip__bg'>
 				<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
 			</div>
 		</div>
@@ -94,32 +97,34 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 	if (ui_isLoading) { return <StationTipSkeleton /> }
 
 	return (
-		<div className='station-tip' style={{ boxShadow: getStyles('boxShadowTip') }}>
-			<div className='station-tip__info'>
-				<div className='station-tip__wrapper'>
-					<div className='station-tip__intro'>
-						<div className='station-tip__basic'>
-							<div className='station-tip__heading'>
-								<div className='station-tip__title'>
-									<div className='station-tip__name'>{db_station?.name?.en}</div>
+		<div className='c-station-tip' style={{ boxShadow: getStyles('boxShadowTip') }}>
+			<div className='c-station-tip__info'>
+				<div className='c-station-tip__wrapper'>
+					<div className='c-station-tip__intro'>
+						<div className='c-station-tip__basic'>
+							<div className='c-station-tip__heading'>
+								<div className='c-station-tip__title'>
+									<div className='c-station-tip__name'>{db_station?.name?.en}</div>
 									<div className={`status ${getStatusCssName(db_station?.status)}`}>{db_station?.status}</div>
 								</div>
 								<StationCode code={db_station?.station_code} color={lineColor} status={db_station?.status} />
 							</div>
-							<div className='station-tip__location'>
+							<div className='c-station-tip__location'>
 								<RiMapPinFill />
 								<StationAddress address={db_station?.address} />
 							</div>
-							{db_station?.transfers.length !== 0 && (<div className='station-tip__row'>
+							{db_station?.transfers.length !== 0 && (<div className='c-station-tip__row'>
 								<TransferBubble transfers={db_station?.transfers} lineNumber={lineNumber} lineColor={lineColor} />
 							</div>)}
 						</div>
-						<div className='station-tip__description'>{db_station?.description && db_station?.description}</div>
+						<div className='c-station-tip__description'>
+							<ReactMarkdown children={db_station?.description && db_station?.description} />
+						</div>
 					</div>
-					<button className='station-tip__button' style={{ boxShadow: getStyles('boxShadowBtn'), background: lighterColor, color: getContrastingTextColor(lighterColor) }} onClick={() => navigate(`/station/${stationId}`)}>Read more</button>
+					<button className='c-station-tip__button' style={{ boxShadow: getStyles('boxShadowBtn'), background: lighterColor, color: getContrastingTextColor(lighterColor) }} onClick={() => navigate(`/station/${stationId}`)}>Read more</button>
 				</div>
 			</div>
-			<div className='station-tip__bg' style={{ backgroundImage: getStyles('background') }}>{ui_background === '' && <RiLoader5Fill className='loading-spinner' strokeWidth={2} />}</div>
+			<div className='c-station-tip__bg' style={{ backgroundImage: getStyles('background') }}>{ui_background === '' && <RiLoader5Fill className='loading-spinner' strokeWidth={2} />}</div>
 		</div>
 	);
 }

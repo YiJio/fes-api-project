@@ -4,10 +4,9 @@ import { RiMapPinFill, RiMapPin5Fill, RiMapPinTimeFill } from 'react-icons/ri';
 // utils
 import { getStatusCssName } from '../../../utils/helper';
 // components
-import StationCode from '../../../components/StationCode';
-import { StationAddress, StationLocation } from '../../../components/StationLocation';
-import Tooltip from '../../../components/tooltip/Tooltip';
 import { IconElevated, IconSurface, IconUnderground } from '../../../components/icons/SvgStructure';
+import { StationCode, StationAddress, StationLocation } from '../../../components/station';
+import Tooltip from '../../../components/tooltip/Tooltip';
 
 export const StationBox = ({ stationData, lineColor }) => {
 	return (

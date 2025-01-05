@@ -10,7 +10,7 @@ import { fetchLineStations } from '../../utils/fetch';
 import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
 import ControlsBox from '../../components/controls/ControlsBox';
-import { Route, RouteMobile } from './components';
+import { Route, RouteLoop, RouteMobile } from '../../components/route';
 import LinePageSkeleton from './LinePageSkeleton';
 
 const LinePage = () => {
@@ -62,18 +62,18 @@ const LinePage = () => {
 	if (!lines || !stations || ui_isLoading) { return <LinePageSkeleton />; }
 
 	return (
-		<div className='line'>
+		<>
 			<ControlsBox />
-			<div className='line-title' style={{ background: ui_lighterColor, color: getContrastingTextColor(ui_lighterColor) }}>
-				<div className='line-title__number' style={{ background: db_line?.color, color: getContrastingTextColor(db_line?.color) }}>{db_line?.prefix.real_prefix}</div>
-				<div className='line-title__name'>{db_line?.name?.en}</div>
+			<div className='c-line-title' style={{ background: ui_lighterColor, color: getContrastingTextColor(ui_lighterColor) }}>
+				<div className='c-line-title__number' style={{ background: db_line?.color, color: getContrastingTextColor(db_line?.color) }}>{db_line?.prefix.real_prefix}</div>
+				<div className='c-line-title__name'>{db_line?.name?.en}</div>
 			</div>
 			{!ui_isMobile ? <>
-				<Route lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />
+				{db_line.is_loop ? <RouteLoop lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} /> : <Route lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />}
 			</> : <>
 				<RouteMobile lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />
 			</>}
-		</div>
+		</>
 	);
 }
 

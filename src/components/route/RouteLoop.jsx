@@ -1,9 +1,12 @@
 // packages
 import React, { useEffect, useRef, useState } from 'react';
-import { RiArrowGoBackFill, RiShuffleLine } from 'react-icons/ri';
+// css
+import './route.css';
 // utils
-import { getRouteLengths } from '../../utils/helper';
+import { getRouteLengths, getStationsSplit } from '../../utils/helper';
 import { getLighterColor } from '../../utils/color';
+// components
+import { RouteStation } from './RouteStation';
 
 const RouteSkeleton = () => {
 	return (
@@ -15,6 +18,7 @@ const RouteSkeleton = () => {
 
 const RouteLoop = ({ lineData, lineStations, numOfStations }) => {
 	// states
+	const [ui_loopStations, setUiLoopStations] = useState({ top: [], right: [], bottom: [], left: [] });
 	const [ui_activeRoute, setUiActiveRoute] = useState('');
 	const [ui_activeCircle, setUiActiveCircle] = useState(-1);
 	const [ui_isPopoverOpen, setUiIsPopoverOpen] = useState(true);
@@ -23,7 +27,6 @@ const RouteLoop = ({ lineData, lineStations, numOfStations }) => {
 	const routeRef = useRef(null);
 	const isScrollingRef = useRef(false);
 	// variables
-	console.log(lineData)
 	let lighterColor = getLighterColor(lineData?.color, 20);
 	let lightestColor = getLighterColor(lineData?.color, 50);
 
@@ -85,6 +88,15 @@ const RouteLoop = ({ lineData, lineStations, numOfStations }) => {
 	}, []);
 
 	useEffect(() => {
+		if (lineStations) {
+			setUiIsLoading(true);
+			const { topStations, rightStations, bottomStations, leftStations } = getStationsSplit(lineStations.stations);
+			setUiLoopStations({ top: topStations, right: rightStations, bottom: bottomStations, left: leftStations });
+			setUiIsLoading(false);
+		}
+	}, [lineStations]);
+
+	useEffect(() => {
 		// having errors when deployed, for now void it
 		// try just doing the window instead of ref
 		window.addEventListener('wheel', handleScroll, { passive: false });
@@ -98,30 +110,22 @@ const RouteLoop = ({ lineData, lineStations, numOfStations }) => {
 	if (ui_isLoading) { return <RouteSkeleton />; }
 
 	return (
-		<div ref={routeRef} className='c-route c-route--loop'>
+		<div ref={routeRef} className='c-route'>
 			<div className='c-route__separator' style={{ background: lighterColor }} />
-			{/*<>{ui_activeRoute === 'primary' && <div className='route__list'>
-				{lineStations?.stations?.map((station, index) => (
-					<RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} lineBranches={lineStations?.branches} stationIndex={index} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
-				))}
+			{ui_activeRoute === 'primary' && <div className='c-route__list c-route__list--loop'>
+				<div className='c-route__row c-route__row--top'>
+					{ui_loopStations?.top?.map((station, index) => <RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} numOfStationsRow={ui_loopStations.top.length} lineBranches={lineStations?.branches} stationIndex={index} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />)}
+				</div>
+				<div className='c-route__side c-route__side--left'>
+					{ui_loopStations?.left?.map((station, index) => <RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} numOfStationsRow={ui_loopStations.top.length + ui_loopStations.right.length} lineBranches={lineStations?.branches} stationIndex={index + ui_loopStations.top.length + ui_loopStations.right.length + ui_loopStations.bottom.length} isSide={true} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />)}
+				</div>
+				<div className='c-route__side c-route__side--right'>
+					{ui_loopStations?.right?.map((station, index) => <RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} numOfStationsRow={ui_loopStations.top.length + ui_loopStations.right.length + ui_loopStations.bottom.length} lineBranches={lineStations?.branches} stationIndex={index + ui_loopStations.top.length} isSide={true} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />)}
+				</div>
+				<div className='c-route__row c-route__row--bottom'>
+					{ui_loopStations?.bottom?.map((station, index) => <RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} numOfStationsRow={ui_loopStations.top.length + ui_loopStations.right.length + ui_loopStations.bottom.length + ui_loopStations.left.length}lineBranches={lineStations?.branches} stationIndex={index + ui_loopStations.top.length + ui_loopStations.right.length} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />)}
+				</div>
 			</div>}
-			{lineStations?.branches?.map((branch) => (<React.Fragment key={branch.code}>
-				{ui_activeRoute === branch.code && <div className='route-branch'>
-					<div className='route-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
-						<RiShuffleLine strokeWidth={1} />
-						Branch: {branch.name.en}
-					</div>
-					<div className='route-branch__back' style={{ outlineColor: lineData.color, color: lineData.color }} onClick={() => handleRouteChange('primary')}>
-						<RiArrowGoBackFill />
-						<span>Back to route</span>
-					</div>
-					<div className='route__list'>
-						{branch.stations.map((station, index) => (
-							<RouteStation key={station.code} lineData={lineData} stationData={station} numOfStations={branch.stations.length - 1} stationIndex={index} route={branch.code} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
-						))}
-					</div>
-				</div>}
-						</React.Fragment>))}</>*/}
 		</div>
 	);
 }

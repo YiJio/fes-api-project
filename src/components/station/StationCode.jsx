@@ -1,5 +1,7 @@
 // packages
 import React from 'react';
+// css
+import './station.css';
 
 const StationCode = ({ code, color, status }) => {
 	// variables
@@ -14,7 +16,7 @@ const StationCode = ({ code, color, status }) => {
 	let opacity = status === 'in operation' ? '1' : '0.5';
 
 	return (
-		<div className='station-code'>
+		<div className='c-station-code'>
 			<span style={{ borderColor: borderColor, background: bgColor, opacity: opacity }}>{theCode[0]}</span>
 			<span style={{ borderColor: borderColor, background: bgColor, opacity: opacity }}>{theCode[1]}</span>
 		</div>

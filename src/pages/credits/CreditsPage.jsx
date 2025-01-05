@@ -31,10 +31,9 @@ const CreditsPage = () => {
 				<p>The below outlines sources of data used in both the API and this project.</p>
 				<h3>Used in API</h3>
 				<ul>
-					<li>Line & station data: Wikipedia, Baidu Maps (<a href='http://api.map.baidu.com/lbsapi/getpoint/index.html'>coordinates</a>)</li>
+					<li>Line & station data: Wikipedia, Baidu Maps (<a href='http://map.baidu.com'>times/fares</a>, <a href='http://api.map.baidu.com/lbsapi/getpoint/index.html'>coordinates</a>)</li>
 					<li>Service logos: Wikipedia</li>
 					<li>Station images: Wikipedia (Chinese)</li>
-					<li>Station fares: Baidu Maps</li>
 				</ul>
 				<h3>Used in project specifically</h3>
 				<ul>

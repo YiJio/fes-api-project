@@ -1,4 +1,4 @@
-/************ LANDING STYLES ************/
+/************ LANDING PAGE STYLES ************/
 .landing { display:flex; align-items:center; min-height:100vh; background:url('../../assets/background.jpg') no-repeat; }
 .landing .row { position:relative; gap:16px; }
 .landing .row span { font-style:italic; font-weight:700; color:var(--color-text-secondary); }
@@ -72,4 +72,4 @@
 }
 /**** END SCREEN SIZES ****/
 
-/********** END LANDING STYLES **********/
+/********** END LANDING PAGE STYLES **********/

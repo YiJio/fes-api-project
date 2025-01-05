@@ -15,6 +15,9 @@ This project is a SAMPLE using the Canton PRT API. This gives an idea of how to 
 This project was originally done for the final API project for the FES Week 6 bootcamp. This is a continuation of the API project done in Week 4, but I chose to use another metro-related API this time. I used a public API that I created (links to <a href="https://github.com/YiJio/cantonprt/">repo</a> and <a href="https://cantonprtapi.com/">site</a>) to fetch services, lines, and stations data.
 
 ## Changelog
+**[1.12] - 2025/01/05**
+* More reorganization changes and BEM convention.
+
 **[1.11] - 2025/01/04**
 * Updated README.
 * Updated line page route for loop lines.
