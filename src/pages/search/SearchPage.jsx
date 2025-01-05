@@ -114,6 +114,7 @@ const SearchPage = () => {
 					</div>
 				</div>
 			</div>
+			{filteredStations?.length > 0 && <div>{filteredStations?.length} results found</div>}
 			<div className='search__list'>
 				{ui_isLoading ? <>
 					<SearchCardSkeleton />

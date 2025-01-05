@@ -1,25 +1,10 @@
 // packages
 import React, { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
 // hooks
-import useDbData from '../hooks/useDbData';
+import useDbData from '../../hooks/useDbData';
 // components
-import Nav from '../components/Nav';
-
-const CreditsPageSkeleton = () => {
-	return (
-		<div className='credits'>
-			<Skeleton className='nav' count={1} />
-			<div style={{ margin: '16px 0' }}>
-				<Skeleton count={1} style={{ marginBottom: '16px' }} height='32px' />
-				<div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-					<Skeleton count={3} style={{ marginBottom: '8px' }} />
-					<Skeleton count={3} style={{ marginBottom: '8px' }} />
-				</div>
-			</div>
-		</div>
-	);
-}
+import Nav from '../../components/Nav';
+import CreditsPageSkeleton from './CreditsPageSkeleton';
 
 const CreditsPage = () => {
 	// hooks
@@ -46,7 +31,7 @@ const CreditsPage = () => {
 				<p>The below outlines sources of data used in both the API and this project.</p>
 				<h3>Used in API</h3>
 				<ul>
-					<li>Line & station data: Wikipedia, Baidu Maps</li>
+					<li>Line & station data: Wikipedia, Baidu Maps (<a href='http://api.map.baidu.com/lbsapi/getpoint/index.html'>coordinates</a>)</li>
 					<li>Service logos: Wikipedia</li>
 					<li>Station images: Wikipedia (Chinese)</li>
 					<li>Station fares: Baidu Maps</li>

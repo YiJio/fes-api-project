@@ -1,3 +1,9 @@
+export function getFromIndex(array, fieldCheck, value, returnField = null) {
+	const index = array.findIndex((a) => a[fieldCheck] == value);
+	if (returnField) return array[index][returnField];
+	return array[index];
+}
+
 export function convertDMSToDD(degrees, minutes, seconds, direction) {
 	var dd = degrees + minutes / 60 + seconds / (60 * 60);
 	if (direction == "S" || direction == "W") {

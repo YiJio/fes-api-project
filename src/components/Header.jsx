@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { RiSearchLine } from 'react-icons/ri';
 // components
-import { IconGZMTR } from './SvgService';
+import { IconGZMTR } from './icons/SvgService';
 
 const Header = () => {
 	// states

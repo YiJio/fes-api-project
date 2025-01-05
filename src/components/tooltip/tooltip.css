@@ -1,0 +1,15 @@
+/************ TOOLTIP STYLES ************/
+.c-tooltip { position:relative; display:inline-block; }
+.c-tooltip--help { border-bottom:1px dotted var(--color-black); cursor:help; }
+
+.c-tooltip__label { display:flex; align-items:center; cursor:pointer; }
+
+.c-tooltip__content { position:absolute; display:flex; width:160px; z-index:999; visibility:hidden; opacity:0; transition:all 0.2s ease; user-select:none; pointer-events:none; }
+.c-tooltip:hover .c-tooltip__content { visibility:visible; opacity:1; transition:all 0.3s ease; transform:translate(0,0); }
+.c-tooltip__content--right { top:-4px; left:24px; transform:translateX(10px); }
+.c-tooltip__content--left { top:-4px; right:24px; transform:translateX(-10px); justify-content:flex-end; }
+.c-tooltip__content--top { bottom:28px; left:0; transform:translateY(10px); }
+.c-tooltip__content--bottom { top:28px; left:0; transform:translateY(-10px); }
+
+.c-tooltip__text { padding:6px 8px; width:auto; min-height:24px; background-color:var(--color-black); color:var(--color-white); border-radius:8px; font-size:12px; }
+/********** END TOOLTIP STYLES **********/

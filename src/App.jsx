@@ -6,16 +6,9 @@ import 'react-loading-skeleton/dist/skeleton.css'
 // hooks
 import useDbData from './hooks/useDbData';
 // layouts
-import RootLayout from './layouts/RootLayout';
-import MainLayout from './layouts/MainLayout';
+import { MainLayout, RootLayout } from './layouts';
 // pages
-import { LandingPage } from './pages/landing';
-import { HomePage } from './pages/home';
-import { SearchPage } from './pages/search';
-import { LinePage } from './pages/line';
-import { StationPage } from './pages/station';
-import CreditsPage from './pages/CreditsPage';
-import NotFoundPage from './pages/NotFoundPage';
+import { CreditsPage, HomePage, LandingPage, LinePage, NotFoundPage, SearchPage, StationPage } from './pages';
 import TestPage from './pages/TestPage';
 
 const router = createBrowserRouter([{

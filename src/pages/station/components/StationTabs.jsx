@@ -5,9 +5,10 @@ import { TbArrowAutofitContent, TbArrowRotaryRight, TbArrowsDoubleSwNe, TbArrows
 // utils
 import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components
-import Accordion from '../../../components/Accordion';
+import Accordion from '../../../components/accordion/Accordion';
 import StationFares from './StationFares';
 import StationTransferList from './StationTransferList';
+import TransferTable from '../../../components/transfer/TransferTable';
 
 // constants
 const TRANSFER_METHODS = [
@@ -54,7 +55,9 @@ const StationTabs = ({ lines, stations, stationData, lineData, floors }) => {
 							))}
 						</ul>
 					</Accordion>
-					<StationTransferList transfers={stationData?.transfers} sourceLine={lineData} methodsDict={TRANSFER_METHODS} />
+					{/*<StationTransferList transfers={stationData?.transfers} sourceLine={lineData} methodsDict={TRANSFER_METHODS} />*/}
+					{console.log('from tabs', stationData.transfers)}
+					<TransferTable transfers={stationData?.transfers} sourceLine={lineData} />
 				</>}
 				{ui_tab === 2 && <></>}
 			</div>

@@ -1,27 +1,20 @@
 // packages
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { RiArrowDownSLine, RiGitCommitFill, RiLoader5Fill, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
+import { RiArrowDownSLine, RiGitCommitFill, RiMapPinFill, RiSearchLine } from 'react-icons/ri';
 // css
 import './landing.css';
 // hooks
 import useDbData from '../../hooks/useDbData';
 import useSearchFilter from '../../hooks/useSearchFilter';
 // components
-import { IconGZMTR } from '../../components/SvgService';
+import { IconGZMTR } from '../../components/icons/SvgService';
+import LandingPageSkeleton from './LandingPageSkeleton';
 // assets
 import imageCantonTower from '../../assets/Canton_Tower.jpg';
 import imageYuyinShanfang from '../../assets/Yuyin_Shanfang.jpg';
 import imageHuaduDistrict from '../../assets/Huadu_District.jpg';
 import imageHongshengshaStation from '../../assets/Hongshengsha_Station_Construction.jpg';
-
-const LandingPageSkeleton = () => {
-	return (
-		<div className='empty' style={{ height:'100vh', fontSize: '100px' }}>
-			<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
-		</div>
-	);
-}
 
 const LandingPage = () => {
 	// hooks

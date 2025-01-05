@@ -1,0 +1,43 @@
+/************ ACCORDION STYLES ************/
+.c-accordion { font-size:12px; }
+
+.c-accordion__heading { display:flex; }
+
+.c-accordion__label { padding:4px 8px; background:var(--color-surface-dark); cursor:pointer; cursor:help; }
+
+.c-accordion__content { }
+
+.c-accordion__body { padding:8px 12px; background:var(--color-surface-light); cursor:default; }
+
+/** defaults **/
+.c-accordion__body p { margin:0; }
+.c-accordion__body ul { padding-left:8px; list-style:none; }
+.c-accordion__body li { margin:4px 0; }
+
+/****** SCREEN SIZES ******/
+
+/** large screen size **/
+@media (max-width:1280px) {
+}
+
+/** regular screen size **/
+@media (max-width:1024px) {	
+}
+
+/** tablet size **/
+@media (max-width:768px) {
+	.c-accordion { font-size:14px; }
+	.c-accordion__label { padding:8px 12px; }
+	.c-accordion__body li { margin:8px 0; }
+}
+
+/** large smartphone size **/
+@media (max-width:600px) {
+}
+
+/** small smartphone size **/
+@media (max-width:480px) {	
+}
+/**** END SCREEN SIZES ****/
+
+/********** END ACCORDION STYLES **********/

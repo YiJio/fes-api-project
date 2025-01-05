@@ -6,7 +6,7 @@ import { RiExchange2Line } from 'react-icons/ri';
 // utils
 import { getLighterColor } from '../../../utils/color';
 // components
-import { StationTransfer } from '../../../components/StationTransfer';
+import { TransferList, TransferStick } from '../../../components/transfer';
 import { RouteCircle, RouteCircleMobile } from './RouteCircle';
 import StationTip from './StationTip';
 
@@ -47,12 +47,7 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 			</div>}>
 				<div className='route-station__trigger' onClick={handlePopover} />
 			</Popover>
-			{stationData?.transfers.length !== 0 && (<div className='route-station__transfers transfer__list'>
-				<div className='route-station__transfer-line' />
-				{stationData.transfers.map((transfer, index) => (
-					<StationTransfer key={index} transfer={transfer} sourceService={lineData?._service_id} position='right' />
-				))}
-			</div>)}
+			{stationData?.transfers.length !== 0 && <TransferStick transfers={stationData?.transfers} sourceService={lineData?._service_id} />}
 		</div>
 	);
 }
@@ -69,11 +64,7 @@ const RouteStationMobile = ({ lineData, stationData }) => {
 			<div className='route-station__info'>
 				<Link to={`/station/${stationData._id}`} className='route-station__name'>{stationData.name.en}</Link>
 				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
-				{stationData.transfers.length !== 0 ? (<div className='route-station__transfers transfer__list'>
-					{stationData.transfers.map((transfer, index) => (
-						<StationTransfer key={index} transfer={transfer} sourceService={lineData?._service_id} position='bottom' />
-					))}
-				</div>) : <code>N/A</code>}
+				{stationData.transfers.length !== 0 ? <TransferList transfers={stationData?.transfers} sourceService={lineData?._service_id} /> : <code>N/A</code>}
 			</div>
 		</div>
 	);

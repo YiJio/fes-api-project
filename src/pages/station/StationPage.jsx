@@ -1,38 +1,19 @@
 // packages
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
+import ReactMarkdown from 'react-markdown';
 import { RiTimeLine } from 'react-icons/ri';
 // css
 import './station.css';
 // hooks
 import useDbData from '../../hooks/useDbData';
 // components
-import { IconMetro, IconTrain, IconTram } from '../../components/SvgTransit';
-import StationBox from './components/StationBox';
-import StationNav from './components/StationNav';
-import StationImages from './components/StationImages';
-import StationTabs from './components/StationTabs';
-import StationTime from './components/StationTime';
+import { IconMetro, IconTrain, IconTram } from '../../components/icons/SvgTransit';
+import { StationBox, StationImages, StationNav, StationTabs, StationTime } from './components';
+import StationPageSkeleton from './StationPageSkeleton';
 
 // constants
 const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
-
-const StationPageSkeleton = () => {
-	return (
-		<div className='station'>
-			<Skeleton className='station-title' count={1} height='36px' />
-			<div className='station-content'>
-				<div className='station-content__item' style={{ marginTop:'8px', paddingTop: '20px' }}>
-					<Skeleton style={{ marginBottom: '4px' }} count={10} height='12px' />
-				</div>
-				<div className='station-content__item'>
-					<Skeleton count={1} height='256px' />
-				</div>
-			</div>
-		</div>
-	);
-}
 
 const StationPage = () => {
 	// hooks
@@ -101,7 +82,9 @@ const StationPage = () => {
 			{ui_windowWidth <= 768 && <StationImages windowWidth={ui_windowWidth} images={db_station?.image} />}
 			<div className='station-content'>
 				<div className='station-content__item'>
-					<p className='station-description'>{db_station?.description}</p>
+					<div className='station-description'>
+						<ReactMarkdown children={db_station?.description} />
+					</div>
 					<StationTabs lines={lines} stations={stations} stationData={db_station} lineData={db_line} />
 				</div>
 				<div className='station-content__item'>

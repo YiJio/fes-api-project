@@ -49,7 +49,7 @@ const IconGF = ({ cursor = 'default', width = '20px', height = '20px', color = '
 	);
 }
 
-const IconSZMC = ({ cursor = 'default', width = '20px', height = '20px', color = '#13A034' }) => {
+const IconSZMC = ({ cursor = 'default', width = '20px', height = '20px', color = '#13a034' }) => {
 	return (
 		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" width={width} height={height} viewBox="0 0 406.9 407.1">
 			<rect id="rect2398" x="228.1" y="27.3" class="st0" width="46" height="348.5" fill={color} />

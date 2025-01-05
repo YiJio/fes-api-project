@@ -1,0 +1,92 @@
+/************ TRANSFER STYLES ************/
+.c-transfer { display:flex; align-items:center; justify-content:center; padding:4px; width:20px; height:20px; border-radius:50%; background:var(--color-main-tertiary); font-size:10px; outline-offset:-2px; overflow:hidden; }
+/*.c-transfer { padding:0 6px; width:auto; height:20px; font-size:14px; font-weight:500; cursor:pointer; }*/
+
+.c-transfer-list,
+.c-transfer-stick { width:100%; display:flex; align-items:center; gap:4px; }
+
+/** component: transfer list
+  * what: container used to hold `c-transfer` elements
+  * keypoint: horizontal layout (default)
+  * used: default, line page small screen
+***/
+.c-transfer-list { margin-top:8px; }
+
+/** component: transfer stick
+  * what: container used to hold `c-transfer` elements
+  * keypoint: vertical layout
+  * used: line page large screen
+***/
+.c-transfer-stick { flex-direction:column; }
+
+.c-transfer-stick__line { margin:4px 0; width:1px; height:100px; background:var(--color-main-primary-hover); }
+
+/** component: transfer bubble
+  * what: container used to hold `c-transfer` elements
+  * keypoint: horizontal layout with a box-shadow
+  * used: station card
+***/
+.c-transfer-bubble { display:flex; gap:6px; padding:6px; background:var(--color-white); box-shadow:0 4px 8px 0 rgba(211,211,211,0.25); border-radius:16px; }
+
+.c-transfer-bubble__icon,
+.c-transfer-table__icon { display:flex; align-items:center; justify-content:center; }
+
+/** component: transfer table
+  * what: table containing transfers and their methods
+  * key: 
+  * used: station page
+**/
+.c-transfer-table { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-divider-light); }
+
+.c-transfer-table__row { display:flex; border-bottom:1px solid var(--color-divider-light); }
+.c-transfer-table__row:last-child { border:none; }
+
+.c-transfer-table__service { display:flex; align-items:flex-start; gap:2px; padding:8px; min-height:36px; border-right:1px solid var(--color-divider-light); }
+
+.c-transfer-table__icon { width:24px; height:24px; cursor:help; }
+
+.c-transfer-table__lines { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px; }
+
+.c-transfer-table__group { display:flex; border-radius:4px; background:var(--color-surface-light); }
+
+.c-transfer-table__cell { display:flex; flex-direction:column; }
+.c-transfer-table__cell:first-child .c-tooltip__content,
+.c-transfer-table__cell:last-child .c-tooltip__content { bottom:48px; }
+
+.c-transfer-table__piece { padding:2px; min-width:20px; display:flex; justify-content:center; font-size:14px; }
+.c-transfer-table__piece--first { height:40px; position:relative; border-top-left-radius:4px; border-bottom-left-radius:4px; line-height:1; }
+.c-transfer-table__piece--last { padding-left:0; padding-right:6px; height:40px; background:var(--color-main-primary); border-top-right-radius:4px; border-bottom-right-radius:4px; line-height:1; }
+.c-transfer-table__piece--method,
+.c-transfer-table__piece--direction { padding:0; padding-top:2px; height:20px; }
+.c-transfer-table__piece--slash { margin:0 -4px; padding:0; color:var(--color-divider-dark); cursor:default; transform:rotate(90deg); }
+
+.c-transfer-table__method { display:flex; }
+.c-transfer-table__method:last-child .c-transfer-table__piece--method,
+.c-transfer-table__method:last-child .c-transfer-table__piece--direction { padding:0; padding-bottom:2px; }
+
+/****** SCREEN SIZES ******/
+
+/** large screen size **/
+@media (max-width:1280px) {
+}
+
+/** regular screen size **/
+@media (max-width:1024px) {	
+}
+
+/** tablet size **/
+@media (max-width:768px) {
+}
+
+/** large smartphone size **/
+@media (max-width:600px) {
+	.c-transfer, .c-transfer--circle { height:24px; font-size:12px; }
+	.c-transfer--circle { width:24px; }
+}
+
+/** small smartphone size **/
+@media (max-width:480px) {
+}
+/**** END SCREEN SIZES ****/
+
+/********** END TRANSFER STYLES **********/

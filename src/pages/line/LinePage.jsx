@@ -1,8 +1,6 @@
 // packages
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Skeleton from 'react-loading-skeleton';
-import { RiLoader5Fill } from 'react-icons/ri';
 // css
 import './line.css';
 // hooks
@@ -11,22 +9,9 @@ import useDbData from '../../hooks/useDbData';
 import { fetchLineStations } from '../../utils/fetch';
 import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
-import { ControlsBox } from '../../components/ControlsBox';
-import { Route, RouteMobile } from './components/Route';
-
-const LinePageSkeleton = () => {
-	return (
-		<div className='line'>
-			<Skeleton className='line-title' count={1} height='56px' />
-			<div className='route'>
-				<Skeleton className='route-line' count={1} />
-				<div style={{ marginTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '100px' }}>
-					<RiLoader5Fill className='loading-spinner' strokeWidth={2} />
-				</div>
-			</div>
-		</div>
-	);
-}
+import ControlsBox from '../../components/controls/ControlsBox';
+import { Route, RouteMobile } from './components';
+import LinePageSkeleton from './LinePageSkeleton';
 
 const LinePage = () => {
 	// hooks
@@ -69,7 +54,7 @@ const LinePage = () => {
 			let index = lines.findIndex(l => l._id == lineId);
 			if (index === -1) { navigate('/not-found'); return; }
 			setDbLine(lines[index]);
-			document.title = `${lines[index].fullname.en} | Guangzhou Metro`;
+			document.title = `${lines[index].full_name.en} | Guangzhou Metro`;
 			fetch(index);
 		}
 	}, [lineId, lines]);

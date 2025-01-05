@@ -6,8 +6,8 @@ import { getStatusCssName } from '../../../utils/helper';
 // components
 import StationCode from '../../../components/StationCode';
 import { StationAddress, StationLocation } from '../../../components/StationLocation';
-import Tooltip from '../../../components/Tooltip';
-import { IconElevated, IconSurface, IconUnderground } from '../../../components/SvgStructure';
+import Tooltip from '../../../components/tooltip/Tooltip';
+import { IconElevated, IconSurface, IconUnderground } from '../../../components/icons/SvgStructure';
 
 export const StationBox = ({ stationData, lineColor }) => {
 	return (

@@ -2,6 +2,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RiEmotionUnhappyLine } from 'react-icons/ri';
+// css
+import './notfound.css';
 
 const NotFoundPage = () => {
 

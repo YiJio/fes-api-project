@@ -1,10 +1,10 @@
 // packages
 import React from 'react';
 // components
-import { StationTransferMethod } from '../../../components/StationTransfer';
-import Tooltip from '../../../components/Tooltip';
-import { IconCR, IconFMETRO, IconGF, IconGZMTR, IconPRDIR } from '../../../components/SvgService';
-import { IconMetro, IconTrain, IconTram } from '../../../components/SvgTransit';
+//import { StationTransferMethod } from '../../../components/transfer/Transfer';
+import Tooltip from '../../../components/tooltip/Tooltip';
+import { IconCR, IconFMETRO, IconGF, IconGZMTR, IconPRDIR } from '../../../components/icons/SvgService';
+import { IconMetro, IconTrain, IconTram } from '../../../components/icons/SvgTransit';
 
 // constants
 const SERVICES = ['cr', 'prdir', 'gzmtr', 'guangfometro', 'fmetro', 'gztram'];

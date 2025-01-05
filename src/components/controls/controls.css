@@ -1,0 +1,55 @@
+
+
+/************ CONTROLS STYLES ************/
+.c-key,
+.c-mouse { display:flex; align-items:center; justify-content:center; width:16px; background:var(--color-text-primary); box-shadow:0 4px 4px 0 rgba(0,0,0,0.25); }
+
+.c-key { height:16px; border-radius:4px; color:var(--color-white); font-size:12px; }
+.c-key--space { width:24px; height:12px; }
+.c-key--space:after { content:''; width:6px; height:2px; border-radius:2px; background:var(--color-white); }
+
+.c-mouse { align-items:flex-start; height:24px; border-radius:20px; }
+.c-mouse--left:after { content:''; margin-top:4px; width:4px; height:6px; border-left:4px solid var(--color-white); border-top-left-radius:4px; }
+.c-mouse--wheel:after { content:''; margin-top:8px; width:2px; height:4px; border-radius:2px; background:var(--color-white); animation:scroll 0.75s infinite alternate-reverse; }
+
+/**** CONTROLS BOX ****/
+.c-controls-box { position:fixed; right:8px; top:calc(50% - 104px); display:flex; flex-direction:column; gap:16px; cursor:pointer; z-index:999; }
+
+.c-controls-box__group,
+.c-controls-box__text,
+.c-controls-box__icon { display:flex; align-items:center; justify-content:flex-end; }
+
+.c-controls-box__text { width:0; overflow:hidden; transition:all 0.3s ease; transition-delay:calc(var(--order) * 0.05s); }
+.c-controls-box:hover .c-controls-box__text { padding-right:16px; width:280px; transition-delay:calc(var(--order) * 0.05s); }
+
+.c-controls-box__span { font-size:12px; text-shadow:-1px 1px 0 var(--color-white), 1px 1px 0 var(--color-white), 1px -1px 0 var(--color-white), -1px -1px 0 var(--color-white); white-space:nowrap; }
+
+.c-controls-box__icon { justify-content:center; width:24px; height:24px; }
+
+/****** SCREEN SIZES ******/
+
+/** large screen size **/
+@media (max-width:1280px) {
+
+}
+
+/** regular screen size **/
+@media (max-width:1024px) {	
+}
+
+/** tablet size **/
+@media (max-width:768px) {
+}
+
+/** large smartphone size **/
+@media (max-width:600px) {
+	.c-controls-box { display:none; }
+}
+
+/** small smartphone size **/
+@media (max-width:480px) {
+	
+}
+/**** END SCREEN SIZES ****/
+
+/********** END CONTROLS STYLES **********/

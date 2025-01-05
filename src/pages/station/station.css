@@ -7,7 +7,8 @@
 .station-content__item { margin-right:20px; width:70%; }
 .station-content__item:last-child { margin-right:0; width:50%; }
 .station-content__item--last { padding-left:20px; border-left:1px solid var(--color-divider-dark); }
-.station-description { margin:20px 0; padding:20px; padding-left:0; width:100%; border-top:1px solid var(--color-divider-light); color:var(--color-text-secondary); line-height:24px; text-indent:2em; text-align:justify; font-size:14px; }
+.station-description { margin:20px 0; padding:8px 20px 8px 0; width:100%; border-top:1px solid var(--color-divider-light); }
+.station-description p { color:var(--color-text-secondary); line-height:24px; text-indent:2em; text-align:justify; font-size:14px; }
 
 /****** IMAGES ******/
 .station-images { display:flex; gap:16px; margin-top:16px; }
@@ -129,7 +130,8 @@
 @media (max-width:768px) {
 	.station-content { display:flex; flex-direction:column-reverse; }
 	.station-content__item, .station-content__item:last-child { margin:0; padding:0 !important; width:100%; border:none; }
-	.station-description { margin:40px 0 20px; padding:40px 0; font-size:16px; line-height:1.75; }
+	.station-description { margin:40px 0 20px; padding:8px 40px 8px 0; }
+	.station-description p { font-size:16px; line-height:1.75; }
 	.station-images__viewport { height:320px; }
 	.station-images__image { height:280px; }
 	.station-images__caption { height:40px; }

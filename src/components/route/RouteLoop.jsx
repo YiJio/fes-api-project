@@ -1,12 +1,9 @@
 // packages
 import React, { useEffect, useRef, useState } from 'react';
-import { RiArrowGoBackFill, RiLoader5Fill, RiShuffleLine } from 'react-icons/ri';
+import { RiArrowGoBackFill, RiShuffleLine } from 'react-icons/ri';
 // utils
-import { getRouteLengths } from '../../../utils/helper';
-import { getContrastingTextColor, getLighterColor } from '../../../utils/color';
-// components
-import SvgRouteFork from '../../../components/icons/SvgRouteFork';
-import { RouteStation, RouteStationMobile } from './RouteStation';
+import { getRouteLengths } from '../../utils/helper';
+import { getLighterColor } from '../../utils/color';
 
 const RouteSkeleton = () => {
 	return (
@@ -16,7 +13,7 @@ const RouteSkeleton = () => {
 	);
 }
 
-const Route = ({ lineData, lineStations, numOfStations }) => {
+const RouteLoop = ({ lineData, lineStations, numOfStations }) => {
 	// states
 	const [ui_activeRoute, setUiActiveRoute] = useState('');
 	const [ui_activeCircle, setUiActiveCircle] = useState(-1);
@@ -26,6 +23,7 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	const routeRef = useRef(null);
 	const isScrollingRef = useRef(false);
 	// variables
+	console.log(lineData)
 	let lighterColor = getLighterColor(lineData?.color, 20);
 	let lightestColor = getLighterColor(lineData?.color, 50);
 
@@ -100,9 +98,9 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 	if (ui_isLoading) { return <RouteSkeleton />; }
 
 	return (
-		<div ref={routeRef} className='route'>
-			<div className='route__separator' style={{ background: lighterColor }} />
-			{ui_activeRoute === 'primary' && <div className='route__list'>
+		<div ref={routeRef} className='c-route c-route--loop'>
+			<div className='c-route__separator' style={{ background: lighterColor }} />
+			{/*<>{ui_activeRoute === 'primary' && <div className='route__list'>
 				{lineStations?.stations?.map((station, index) => (
 					<RouteStation key={station._id} lineData={lineData} stationData={station} numOfStations={numOfStations} lineBranches={lineStations?.branches} stationIndex={index} route={'primary'} activeRoute={ui_activeRoute} setActiveRoute={handleRouteChange} activeCircle={ui_activeCircle} setActiveCircle={setUiActiveCircle} isPopoverOpen={ui_isPopoverOpen} setIsPopoverOpen={setUiIsPopoverOpen} />
 				))}
@@ -123,48 +121,9 @@ const Route = ({ lineData, lineStations, numOfStations }) => {
 						))}
 					</div>
 				</div>}
-			</React.Fragment>))}
+						</React.Fragment>))}</>*/}
 		</div>
 	);
 }
 
-const RouteMobile = ({ lineData, lineStations }) => {
-	// variables
-	let lighterColor = getLighterColor(lineData?.color, 20);
-	let lightestColor = getLighterColor(lineData?.color, 50);
-
-	return (
-		<div className='route'>
-			<div className='route__separator' style={{ background: lighterColor }} />
-			<div className='route__list route__list--mobile'>
-				{lineStations?.stations?.map((station) => (<React.Fragment key={station._id}>
-					<RouteStationMobile lineData={lineData} stationData={station} />
-					{station.branches.length > 0 && <>
-						{lineStations?.branches?.filter((branch) => station.branches.includes(branch.code)).map((branch) => (<div key={branch.code} className='route-branch'>
-							<div className='route-branch__title'>
-								<div className='route-branch__line' style={{ background: lighterColor }} />
-								<div className='route-branch__name' style={{ background: lightestColor, color: getContrastingTextColor(lightestColor) }}>
-									<RiShuffleLine />
-									{branch.name.en}
-								</div>
-							</div>
-							<div className='route-branch__stations'>
-								<div className='route-branch__line' style={{ background: `linear-gradient(180deg, ${lightestColor} 50%, ${lighterColor} 100%)` }}>
-									<SvgRouteFork color={lighterColor} />
-								</div>
-								<div className='route__list route__list--mobile'>
-									{branch.stations?.map((station) => (
-										<RouteStationMobile key={station._id} lineData={lineData} stationData={station} />
-									))}
-								</div>
-							</div>
-						</div>))}
-					</>}
-				</React.Fragment>
-				))}
-			</div>
-		</div>
-	);
-}
-
-export { Route, RouteMobile };
+export default RouteLoop;

@@ -9,10 +9,9 @@ import useDbData from '../../../hooks/useDbData';
 import { getStatusCssName } from '../../../utils/helper';
 import { getColorWithAlpha, getContrastingTextColor, getLighterColor } from '../../../utils/color';
 // components
+import { TransferBubble } from '../../../components/transfer';
 import StationCode from '../../../components/StationCode';
 import { StationAddress } from '../../../components/StationLocation';
-import { StationTransfer } from '../../../components/StationTransfer';
-// assets
 
 const StationTipSkeleton = () => {
 	return (
@@ -112,17 +111,7 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 								<StationAddress address={db_station?.address} />
 							</div>
 							{db_station?.transfers.length !== 0 && (<div className='station-tip__row'>
-								<div className='station-tip__transfers transfer__list'>
-									<div className='transfer__item--circle' style={{ background: lineColor, color: getContrastingTextColor(lineColor), cursor: 'default' }}>
-										{lineNumber}
-									</div>
-									<span className='transfer__icon'>
-										<RiExchange2Line />
-									</span>
-									{db_station?.transfers.map((transfer, index) => (
-										<StationTransfer key={index} transfer={transfer} position='top' />
-									))}
-								</div>
+								<TransferBubble transfers={db_station?.transfers} lineNumber={lineNumber} lineColor={lineColor} />
 							</div>)}
 						</div>
 						<div className='station-tip__description'>{db_station?.description && db_station?.description}</div>

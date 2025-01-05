@@ -1,12 +1,25 @@
-# API Project
-* A continued project done in Week 6 (React) of the FES bootcamp.
-* Used React + Vite, deployed in Vercel.
-* Quick link: <a target="blank" href="https://fes-api-project-6.vercel.app/">API Project</a>.
+# Guangzhou Metro Sample (API Project)
+PREVIEW: [<a target="blank" href="https://fes-api-project-6.vercel.app/">link</a>]
+
+### Utilization
+* **Framework:** React + Vite
+* **Notable libraries used:** React Icons, React Loading Skeleton, React Markdown, React Tiny Popover
+* **Deployment:** Vercel
+
+*More info can be found in sample site's **credits** page.*
 
 ## Overview
-This project was done for the final API project for the FES Week 6 bootcamp. This is a continuation of the API project done in Week 4, but I chose to use another metro-related API this time. I used a public API that I created (links to <a href="https://github.com/YiJio/cantonprt/">repo</a> and <a href="https://cantonprtapi.com/">site</a>) to fetch services, lines, and stations data.
+This project is a SAMPLE using the Canton PRT API. This gives an idea of how to use the data in the API.
+
+### Notes
+This project was originally done for the final API project for the FES Week 6 bootcamp. This is a continuation of the API project done in Week 4, but I chose to use another metro-related API this time. I used a public API that I created (links to <a href="https://github.com/YiJio/cantonprt/">repo</a> and <a href="https://cantonprtapi.com/">site</a>) to fetch services, lines, and stations data.
 
 ## Changelog
+**[1.11] - 2025/01/04**
+* Updated README.
+* Updated line page route for loop lines.
+* Improved BEM convention.
+
 **[1.10] - 2024/12/06**
 * Station images lightbox.
 * Station navigation.
