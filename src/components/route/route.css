@@ -1,5 +1,5 @@
 /************ ROUTE STYLES ************/
-.c-route { position:relative; height:calc(100vh - 156px); position:relative; scroll-snap-type:y mandatory; display:flex; flex-direction:column; }
+.c-route { position:relative; height:100%;/*height:calc(100vh - 156px);*/ position:relative; scroll-snap-type:y mandatory; display:flex; flex-direction:column; }
 
 .c-route__separator { margin-top:24px; width:100%; height:12px; border-radius:8px; }
 
@@ -16,8 +16,8 @@
 .c-route__row--bottom { flex-direction:row-reverse; }
 
 .c-route__side { margin:20px 0; display:flex; flex-direction:column; justify-content:space-between; gap:16px; }
-.c-route__side--right { grid-column:-2/-1; align-items:flex-end; margin-right:-20px; }
-.c-route__side--left { align-items:flex-start; margin-left:-20px; }
+.c-route__side--right { grid-column:-2/-1; align-items:flex-end; margin-right:-24px; }
+.c-route__side--left { align-items:flex-start; margin-left:-24px; }
 
 /****** TRACK ******/
 .c-track { position:absolute; content:''; top:calc(50% - 6px); left:-12px; display:flex; justify-content:space-between; width:52px; height:12px; }
@@ -59,7 +59,6 @@
 .c-station.active .c-station__name { font-weight:700; }
 
 .c-station__item { position:relative; margin:6px 4px; width:28px; height:28px; }
-.c-station--mobile .c-station__item { margin:0; width:40px; height:auto; border-radius:0; overflow:hidden; }
 .c-station--mobile:first-child .c-station__item { border-top-left-radius:999px; border-top-right-radius:999px; }
 .c-station--mobile:last-child .c-station__item { border-bottom-left-radius:999px; border-bottom-right-radius:999px; }
 
@@ -91,10 +90,21 @@
 .c-branch__track { position:relative; width:40px; background:var(--color-main-tertiary); }
 /**** END BRANCH ****/
 
+/****** REWIND ******/
+.c-rewind { display:flex; justify-content:center; align-items:center; border:8px solid var(--color-main-secondary); border-left:none; border-right:none; background:var(--color-white); overflow:hidden; cursor:pointer; }
+.c-rewind--top { margin-bottom:16px; }
+.c-rewind--bottom { margin-top:16px; }
+
+.c-rewind__arrow { display:flex; align-items:center; justify-content:center; }
+
+.c-rewind__info { padding:8px; font-size:14px; font-weight:600; text-align:center; text-transform:uppercase; }
+/**** END REWIND ****/
+
 /** not children overrides **/
 .c-route__list--loop .c-track--first { left:-12px; width:52px; }
 .c-route__list--loop .c-track__direction { width:calc(50% - 14px); }
 
+.c-route__list--mobile .c-station__item { margin:0; width:40px; height:auto; border-radius:0; overflow:hidden; }
 .c-route__list--mobile .c-station__code { margin:0; background:var(--color-white); border:8px solid var(--color-main-primary); width:40px; height:40px; }
 .c-route__list--mobile .c-station__name { margin:0; padding:8px 0; align-items:flex-start; transform:none; width:100%; min-height:36px; line-height:1.25; font-size:20px; font-weight:700; white-space:normal; }
 .c-route__list--mobile .c-branch__name { width:70%; margin-top:20px; font-size:20px; line-height:1.25; }
@@ -114,6 +124,11 @@
 
 .c-route__side--right .c-track__loop-tl,
 .c-route__side--right .c-track__loop-tr { width:120px; height:12px; top:0; }
+
+.c-route__row--top .c-station:first-child .c-track,
+.c-route__row--top .c-station:last-child .c-track,
+.c-route__row--bottom .c-station:first-child .c-track,
+.c-route__row--bottom .c-station:last-child .c-track { left:-16px; width:60px; }
 
 .c-route__row--top .c-station:first-child .c-track { border-top-left-radius:8px; }
 .c-route__row--top .c-station:last-child .c-track { border-top-right-radius:8px; }

@@ -6,7 +6,7 @@ import './home.css';
 
 const HomePageSkeleton = () => {
 	return (
-		<div className='home'>
+		<>
 			<Skeleton className='nav' count={1} />
 			<div style={{ margin: '80px auto', width: '75%' }}>
 				<Skeleton count={1} style={{ marginBottom: '40px' }} height='40px' />
@@ -15,7 +15,7 @@ const HomePageSkeleton = () => {
 				</div>
 				<div><Skeleton count={1} /></div>
 			</div>
-		</div>
+		</>
 	);
 }
 

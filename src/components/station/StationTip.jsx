@@ -105,7 +105,7 @@ const StationTip = ({ stationId, lineNumber, lineColor }) => {
 							<div className='c-station-tip__heading'>
 								<div className='c-station-tip__title'>
 									<div className='c-station-tip__name'>{db_station?.name?.en}</div>
-									<div className={`status ${getStatusCssName(db_station?.status)}`}>{db_station?.status}</div>
+									<div className={`c-status ${getStatusCssName(db_station?.status)}`}>{db_station?.status}</div>
 								</div>
 								<StationCode code={db_station?.station_code} color={lineColor} status={db_station?.status} />
 							</div>

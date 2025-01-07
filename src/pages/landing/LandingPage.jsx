@@ -94,11 +94,11 @@ const LandingPage = () => {
 						<div className='row'>
 							<div ref={linesRef} className={'field' + (ui_isTypingLine ? ' active' : '')}>
 								<RiGitCommitFill />
-								<div className='input input--fake' onClick={() => setUiIsTypingLine((prev) => !prev)} >Search line</div>
-								{ui_isTypingLine && (<div className='selections'>
-									<div className='selections__list'>
+								<div className='c-input c-input--fake' onClick={() => setUiIsTypingLine((prev) => !prev)} >Search line</div>
+								{ui_isTypingLine && (<div className='c-selections'>
+									<div className='c-selections__list'>
 										{filteredLines.map((line) => (
-											<Link to={`/line/${line._id}`} className='selections__item' key={line._id}>{line.name.en}</Link>
+											<Link to={`/line/${line._id}`} className='c-selections__item' key={line._id}>{line.name.en}</Link>
 										))}
 									</div>
 								</div>)}
@@ -110,11 +110,11 @@ const LandingPage = () => {
 							<form onSubmit={handleSearchStation}>
 								<div ref={stationsRef} className='field'>
 									<RiMapPinFill />
-									<input className='input' type='text' value={query} placeholder='Search station' onChange={(e) => { setQuery(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
-									{query !== '' && ui_isTypingStation && (<div className='selections'>
-										<div className='selections__list'>
+									<input className='c-input' type='text' value={query} placeholder='Search station' onChange={(e) => { setQuery(e.target.value); setUiIsTypingStation(true) }} onFocus={() => setUiIsTypingStation(true)} />
+									{query !== '' && ui_isTypingStation && (<div className='c-selections'>
+										<div className='c-selections__list'>
 											{filteredStations.length > 0 && filteredStations.map((station) => (
-												<Link to={`/station/${station._id}`} className='selections__item' key={station._id}>
+												<Link to={`/station/${station._id}`} className='c-selections__item' key={station._id}>
 													{getHighlightedText(station.name.en, query)} (Line: {station.lines_served[0].toUpperCase().split('-')[2]})
 												</Link>
 											))}

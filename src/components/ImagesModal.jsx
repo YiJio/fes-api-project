@@ -67,27 +67,29 @@ const ImagesModal = ({ images, isOpen, setIsOpen, imageIndex, setImageIndex, }) 
 	}, [viewportRef.current, imageIndex, setImageIndex]);
 
 	return (
-		<div className={`modal ${isOpen ? 'active' : ''}`}>
-			<button className='modal__close' onClick={resetModal}><RiCloseFill strokeWidth='1px' /></button>
-			<div ref={modalRef} className='modal__content'>
-				<div className='modal__control' onClick={handlePrevModal}>
+		<div className={`c-modal ${isOpen ? 'active' : ''}`}>
+			<button className='c-modal__close' onClick={resetModal}><RiCloseFill strokeWidth='1px' /></button>
+			<div ref={modalRef} className='c-modal__content'>
+				<div className='c-modal__control' onClick={handlePrevModal}>
 					<RiArrowLeftSLine strokeWidth='1px' />
 				</div>
-				<div ref={viewportRef} className={`modal__viewport ${ui_isDraggingCss ? 'dragging' : 'drag'}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onTouchStart={handleMouseDown} onTouchMove={handleMouseMove} onTouchEnd={handleMouseUp}>
-					{images?.map((image, index) => (<div key={index} className={`modal__image ${imageIndex === index ? 'active' : ''}`}>
+				<div ref={viewportRef} className={`c-modal__viewport ${ui_isDraggingCss ? 'dragging' : 'drag'}`} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp} onTouchStart={handleMouseDown} onTouchMove={handleMouseMove} onTouchEnd={handleMouseUp}>
+					{images?.map((image, index) => (<div key={index} className={`c-modal__image${imageIndex === index ? ' active' : ''}`}>
 						<img src={image.image} alt={image.caption} />
-						<div className='modal__caption'>
-							<span>{image.caption}</span>
-						</div>
-						<div className='modal__caption modal__caption--mobile'>
-							<span>{image.caption}</span>
-						</div>						
+						{imageIndex === index && <>
+							<div className='c-modal__caption'>
+								<span>{image.caption}</span>
+							</div>
+							<div className='c-modal__caption c-modal__caption--mobile'>
+								<span>{image.caption}</span>
+							</div>
+						</>}
 					</div>))}
 				</div>
-				<div className='modal__control' onClick={handleNextModal}>
+				<div className='c-modal__control' onClick={handleNextModal}>
 					<RiArrowRightSLine strokeWidth='1px' />
 				</div>
-				<div className='modal__indicator'>{imageIndex + 1}/{images.length}</div>
+				<div className='c-modal__indicator'>{imageIndex + 1}/{images.length}</div>
 			</div>
 		</div>
 	);

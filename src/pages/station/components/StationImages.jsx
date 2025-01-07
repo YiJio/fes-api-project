@@ -9,15 +9,15 @@ const StationImagesPages = ({ windowWidth, images, openModal }) => {
 	let inc = windowWidth <= 1280 ? 1 : 2;
 	let output = [];
 	for (let i = 0; i < images.length; i += inc) {
-		output.push(<div key={i} className='station-images__page'>
-			<div className='station-images__wrapper'>
-				<div className='station-images__image' onClick={() => openModal(i)}><img src={images[i].image} /></div>
-				<div className='station-images__caption'>{images[i].caption}</div>
+		output.push(<div key={i} className='c-station-images__page'>
+			<div className='c-station-images__wrapper'>
+				<div className='c-station-images__image' onClick={() => openModal(i)}><img src={images[i].image} /></div>
+				<div className='c-station-images__caption'>{images[i].caption}</div>
 			</div>
-			{windowWidth > 1280 && i + 1 < images.length ? <div key={i + 1} className='station-images__wrapper'>
-				<div className='station-images__image' onClick={() => openModal(i + 1)}><img src={images[i + 1].image} /></div>
-				<div className='station-images__caption'>{images[i + 1].caption}</div>
-			</div> : windowWidth > 1280 ? <div className='station-images__wrapper'></div> : ''}
+			{windowWidth > 1280 && i + 1 < images.length ? <div key={i + 1} className='c-station-images__wrapper'>
+				<div className='c-station-images__image' onClick={() => openModal(i + 1)}><img src={images[i + 1].image} /></div>
+				<div className='c-station-images__caption'>{images[i + 1].caption}</div>
+			</div> : windowWidth > 1280 ? <div className='c-station-images__wrapper'></div> : ''}
 		</div>);
 	}
 	return output;
@@ -80,15 +80,15 @@ export const StationImages = ({ windowWidth, images }) => {
 
 	return (
 		<>
-			<div className='station-images'>
-				<div className='station-images__actions'>
-					<button className={`station-images__button ${ui_page === 0 ? 'none' : ''}`} onClick={handlePrevSlide}><RiArrowLeftSLine strokeWidth='1px' /></button>
+			<div className='c-station-images'>
+				<div className='c-station-images__actions'>
+					<button className={`c-station-images__button ${ui_page === 0 ? 'none' : ''}`} onClick={handlePrevSlide}><RiArrowLeftSLine strokeWidth='1px' /></button>
 				</div>
-				<div ref={scrollRef} className='station-images__viewport'>
+				<div ref={scrollRef} className='c-station-images__viewport'>
 					<StationImagesPages windowWidth={windowWidth} images={ui_imagesArray} openModal={openModal} />
 				</div>
-				<div className='station-images__actions'>
-					<button className={`station-images__button ${ui_page === ui_numOfPages ? 'none' : ''}`} onClick={handleNextSlide}><RiArrowRightSLine strokeWidth='1px' /></button>
+				<div className='c-station-images__actions'>
+					<button className={`c-station-images__button ${ui_page === ui_numOfPages ? 'none' : ''}`} onClick={handleNextSlide}><RiArrowRightSLine strokeWidth='1px' /></button>
 				</div>
 			</div>
 			<ImagesModal images={ui_imagesArray} isOpen={ui_isModalOpen} setIsOpen={setUiIsModalOpen} imageIndex={ui_imageIndex} setImageIndex={setUiImageIndex} />

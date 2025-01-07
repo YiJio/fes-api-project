@@ -2,4 +2,5 @@ export { default as Route } from './Route';
 export { default as RouteLoop } from './RouteLoop';
 export { default as RouteMobile } from './RouteMobile';
 export { RouteTrack, RouteTrackMobile } from './RouteTrack';
-export { RouteStation, RouteStationMobile } from './RouteStation';
+export { default as RouteStation } from './RouteStation';
+export { RouteStationMobile, RouteRewindMobile } from './RouteStationMobile';

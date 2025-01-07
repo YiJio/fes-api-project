@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 // constants
-const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
+const SHOW_SERVICES = ['gzmtr', 'guangfometro', 'fmetro'];
 
 const Nav = ({ currentPage, lines, stations }) => {
 	// hooks
@@ -32,12 +32,12 @@ const Nav = ({ currentPage, lines, stations }) => {
 	if(!lines || !stations) { return <>Loading...</>; }
 
 	return (
-		<nav className='nav'>
-			{currentPage !== 'home' && <Link to='/home' className='nav__item'>Home</Link>}
-			{currentPage !== 'credits' && <Link to='/credits' className='nav__item'>Credits</Link>}
-			{currentPage !== 'search' && <Link to='/search' className='nav__item'>Search</Link>}
-			<div className='nav__item' onClick={goToRandomLine}>Random line</div>
-			<div className='nav__item' onClick={goToRandomStation}>Random station</div>
+		<nav className='c-nav'>
+			{currentPage !== 'home' && <Link to='/home' className='c-nav__item'>Home</Link>}
+			{currentPage !== 'credits' && <Link to='/credits' className='c-nav__item'>Credits</Link>}
+			{currentPage !== 'search' && <Link to='/search' className='c-nav__item'>Search</Link>}
+			<div className='c-nav__item' onClick={goToRandomLine}>Random line</div>
+			<div className='c-nav__item' onClick={goToRandomStation}>Random station</div>
 		</nav>
 	);
 }

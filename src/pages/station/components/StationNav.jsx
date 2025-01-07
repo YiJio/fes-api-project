@@ -11,7 +11,7 @@ const StationNavName = ({ isDest, stationId }) => {
 
 	return (
 		<>
-			{isDest ? <span className='station-nav__dest'>To <Link to={`/station/${stationId}`}>{stationName}</Link></span> : <em>(towards <Link to={`/station/${stationId}`}>{stationName}</Link>)</em>}
+			{isDest ? <span className='c-station-nav__dest'>To <Link to={`/station/${stationId}`}>{stationName}</Link></span> : <em>(towards <Link to={`/station/${stationId}`}>{stationName}</Link>)</em>}
 		</>
 	);
 }
@@ -24,25 +24,25 @@ const StationNav = ({ lineColor, preceding, following }) => {
 	let fontColor = getContrastingTextColor(bgColor);
 
 	return (
-		<div className='station-nav'>
-			<div className='station-nav__group'>
+		<div className='c-station-nav'>
+			<div className='c-station-nav__group'>
 				{preceding?.map((p, index) => (
-					<div key={index} className='station-nav__item' style={{ background: bgColor, borderColor: borderColor, color: fontColor }}>
+					<div key={index} className='c-station-nav__item' style={{ background: bgColor, borderColor: borderColor, color: fontColor }}>
 						<StationNavName isDest={true} stationId={p._station_id} />
 						<StationNavName isDest={false} stationId={p._terminus_id} />
-						<div className='station-nav__distance'>
+						<div className='c-station-nav__distance'>
 							<span>Distance</span>
 							<span>{p.distance_km} km</span>
 						</div>
 					</div>
 				))}
 			</div>
-			<div className='station-nav__group'>
+			<div className='c-station-nav__group'>
 				{following?.map((p, index) => (
-					<div key={index} className='station-nav__item' style={{ background: bgColor, borderColor: borderColor, color: fontColor }}>
+					<div key={index} className='c-station-nav__item' style={{ background: bgColor, borderColor: borderColor, color: fontColor }}>
 						<StationNavName isDest={true} stationId={p._station_id} />
 						<StationNavName isDest={false} stationId={p._terminus_id} />
-						<div className='station-nav__distance'>
+						<div className='c-station-nav__distance'>
 							<span>Distance</span>
 							<span>{p.distance_km} km</span>
 						</div>

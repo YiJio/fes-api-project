@@ -71,7 +71,7 @@ const LinePage = () => {
 			{!ui_isMobile ? <>
 				{db_line.is_loop ? <RouteLoop lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} /> : <Route lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />}
 			</> : <>
-				<RouteMobile lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} />
+				<RouteMobile lineData={db_line} lineStations={db_lineStations} numOfStations={db_lineStations?.stations.length - 1} isLoop={db_line.is_loop} />
 			</>}
 		</>
 	);

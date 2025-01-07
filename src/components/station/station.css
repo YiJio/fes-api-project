@@ -12,7 +12,7 @@
 .c-station-tip__row { display:flex; }
 
 /** info **/
-.c-station-tip .status { position:absolute; top:-28px; margin:4px 0; box-shadow:0 2px 4px 0 rgba(0,0,0,0.25); font-size:10px; cursor:default; user-select:none; pointer-events:none; }
+.c-station-tip .c-status { position:absolute; top:-28px; margin:4px 0; box-shadow:0 2px 4px 0 rgba(0,0,0,0.25); font-size:10px; cursor:default; user-select:none; pointer-events:none; }
 .c-station-tip__intro { display:flex; flex-direction:column; gap:16px; }
 .c-station-tip__basic { display:flex; flex-direction:column; gap:8px; }
 .c-station-tip__heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
@@ -36,17 +36,14 @@
 
 /** large screen size **/
 @media (max-width:1280px) {
-
 }
 
 /** regular screen size **/
 @media (max-width:1024px) {
-	
 }
 
 /** tablet size **/
 @media (max-width:768px) {
-	
 }
 
 /** large smartphone size **/
@@ -56,7 +53,6 @@
 
 /** small smartphone size **/
 @media (max-width:480px) {
-	
 }
 /**** END SCREEN SIZES ****/
 

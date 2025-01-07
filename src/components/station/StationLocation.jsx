@@ -9,6 +9,7 @@ const StationLocation = ({ coordinate, isLon }) => {
 
 	return (
 		<span>
+			{console.log(coordinate)}
 			{deg}°{min}′{sec}″{dir}
 		</span>
 	);

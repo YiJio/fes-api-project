@@ -6,10 +6,10 @@ import Header from '../components/Header';
 
 const MainLayout = () => {
 	return (
-		<div className='wrapper'>
+		<div className='l-wrapper'>
 			<Header />
-			<main className='main'>
-				<div className='content'>
+			<main className='l-main'>
+				<div className='l-content'>
 					<Outlet />
 				</div>
 			</main>

@@ -9,8 +9,8 @@ import './route.css';
 import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
 import { StationTip } from '../station';
-import { TransferList, TransferStick } from '../transfer';
-import { RouteTrack, RouteTrackMobile } from './RouteTrack';
+import { TransferStick } from '../transfer';
+import { RouteTrack } from './RouteTrack';
 
 const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stationIndex, isSide = false, route, activeRoute, setActiveRoute, activeCircle, setActiveCircle, isPopoverOpen, setIsPopoverOpen }) => {
 	// variables
@@ -86,28 +86,4 @@ const RouteStation = ({ lineData, stationData, numOfStations, lineBranches, stat
 	);
 }
 
-const RouteStationMobile = ({ lineData, stationData }) => {
-	// variables
-	let isNio = stationData?.status !== 'in operation';
-	let lineColor = lineData?.color;
-	let lighterColor = getLighterColor(lineColor, 20);
-	let trackColor = isNio ? `repeating-linear-gradient(0deg, var(--color-main-secondary), var(--color-main-secondary) 6px, rgb(255,255,255) 6px, rgb(255,255,255) 10px)` : lighterColor;
-
-	return (
-		<div className='c-station c-station--mobile'>
-			<div className='c-station__item'>
-				<div className='c-station__code' style={{ borderColor: lineColor }}>
-					<span>{stationData?.sequence}</span>
-				</div>
-				<RouteTrackMobile status={stationData?.status} trackColor={trackColor} />
-			</div>
-			<div className='c-station__info'>
-				<Link to={`/station/${stationData._id}`} className='c-station__name'>{stationData.name.en}</Link>
-				<strong><RiExchange2Line strokeWidth={2} /> Transfers</strong>
-				{stationData.transfers.length !== 0 ? <TransferList transfers={stationData?.transfers} sourceService={lineData?._service_id} /> : <code>N/A</code>}
-			</div>
-		</div>
-	);
-}
-
-export { RouteStation, RouteStationMobile };
+export default RouteStation;

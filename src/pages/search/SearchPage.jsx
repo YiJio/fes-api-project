@@ -10,14 +10,8 @@ import useSearchFilter from '../../hooks/useSearchFilter';
 // components
 import Nav from '../../components/Nav';
 import { SearchCard, SearchCardSkeleton } from './components/SearchCard';
-
-// constants
-const STATUSES = [
-	{ name: 'In operation', short: 'io', },
-	{ name: 'Under construction', short: 'uc', },
-	{ name: 'Planning', short: 'p', },
-];
-const STRUCTURE_TYPES = ['Elevated', 'Surface', 'Underground'];
+// data
+import { STATUSES, STRUCTURE_TYPES } from '../../data';
 
 const SearchPage = () => {
 	// hooks
@@ -69,9 +63,7 @@ const SearchPage = () => {
 
 	useEffect(() => {
 		// must do this after stations are loaded
-		if (query !== '') {
-			document.title = `"${query}" | Guangzhou Metro`;
-		}
+		document.title = `"${query}" | Guangzhou Metro`;
 	}, [stations]);
 
 	/*useEffect(() => {
@@ -82,40 +74,40 @@ const SearchPage = () => {
 	if (!lines || !stations) { return <>Loading...</>; }
 
 	return (
-		<div className='search'>
+		<>
 			<Nav currentPage='search' lines={lines} stations={stations} />
 			<h2>Search station results for "{query}"</h2>
 			<input className='search-input' type='text' value={query} placeholder='Search station' onChange={handleQuery} />
-			<div className='search-options'>
-				<div className='search-options__group'>
-					<span className='search-options__label search-options__label--include'>Include</span>
-					<div className='search-options__items'>
-						<strong className='search-options__strong'>Status</strong>
+			<div className='c-filters'>
+				<div className='c-filters__group'>
+					<span className='c-filters__label c-filters__label--include'>Include</span>
+					<div className='c-filters__items'>
+						<strong className='c-filters__strong'>Status</strong>
 						{STATUSES.map((s) => (
-							<button key={s.short} className={inclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(true, 'status', s.name.toLowerCase())}>{s.name}</button>
+							<button key={s.short} className={inclusions?.status?.includes(s.name.toLowerCase()) ? `c-status c-status--${s.short}` : `c-status-border c-status-border--${s.short}`} onClick={() => handleFilters(true, 'status', s.name.toLowerCase())}>{s.name}</button>
 						))}
-						<strong className='search-options__strong'>Structure</strong>
+						<strong className='c-filters__strong'>Structure</strong>
 						{STRUCTURE_TYPES.map((structure) => (
-							<button key={structure} className={`search-options__button${inclusions?.structure_type?.includes(structure.toLowerCase()) ? ' active--include' : ''}`} onClick={() => handleFilters(true, 'structure_type', structure.toLowerCase())}>{structure}</button>
+							<button key={structure} className={`c-filters__button${inclusions?.structure_type?.includes(structure.toLowerCase()) ? ' active--include' : ''}`} onClick={() => handleFilters(true, 'structure_type', structure.toLowerCase())}>{structure}</button>
 						))}
 					</div>
 				</div>
-				<div className='search-options__group'>
-					<span className='search-options__label search-options__label--exclude'>Exclude</span>
-					<div className='search-options__items'>
-						<strong className='search-options__strong'>Status</strong>
+				<div className='c-filters__group'>
+					<span className='c-filters__label c-filters__label--exclude'>Exclude</span>
+					<div className='c-filters__items'>
+						<strong className='c-filters__strong'>Status</strong>
 						{STATUSES.map((s) => (
-							<button key={s.short} className={exclusions?.status?.includes(s.name.toLowerCase()) ? `status status--${s.short}` : `status__border status__border--${s.short}`} onClick={() => handleFilters(false, 'status', s.name.toLowerCase())}>{s.name}</button>
+							<button key={s.short} className={exclusions?.status?.includes(s.name.toLowerCase()) ? `c-status c-status--${s.short}` : `c-status-border c-status-border--${s.short}`} onClick={() => handleFilters(false, 'status', s.name.toLowerCase())}>{s.name}</button>
 						))}
-						<strong className='search-options__strong'>Structure</strong>
+						<strong className='c-filters__strong'>Structure</strong>
 						{STRUCTURE_TYPES.map((structure) => (
-							<button key={structure} className={`search-options__button${exclusions?.structure_type?.includes(structure.toLowerCase()) ? ' active--exclude' : ''}`} onClick={() => handleFilters(false, 'structure_type', structure.toLowerCase())}>{structure}</button>
+							<button key={structure} className={`c-filters__button${exclusions?.structure_type?.includes(structure.toLowerCase()) ? ' active--exclude' : ''}`} onClick={() => handleFilters(false, 'structure_type', structure.toLowerCase())}>{structure}</button>
 						))}
 					</div>
 				</div>
 			</div>
-			{filteredStations?.length > 0 && <div>{filteredStations?.length} results found</div>}
-			<div className='search__list'>
+			{filteredStations?.length > 0 && <p><b>{filteredStations?.length}</b> results found</p>}
+			<div className='l-grid l-grid--search'>
 				{ui_isLoading ? <>
 					<SearchCardSkeleton />
 					<SearchCardSkeleton />
@@ -138,7 +130,7 @@ const SearchPage = () => {
 						</div>)}
 				</>)}
 			</div>
-		</div>
+		</>
 	);
 }
 

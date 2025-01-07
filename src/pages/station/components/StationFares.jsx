@@ -81,16 +81,16 @@ export const StationFares = ({ lines, stations, stationData }) => {
 	}, [selectionsRef]);
 
 	return (
-		<div className='station-fares'>
-			<span className='station-fares__text'>From <b>{stationData.name.en}</b> to:</span>
-			<div className='station-fares__search'>
+		<div className='c-station-fares'>
+			<span className='c-station-fares__text'>From <b>{stationData.name.en}</b> to:</span>
+			<div className='c-station-fares__search'>
 				<div ref={selectionsRef} className='field'>
 					<RiMapPinFill />
-					<input className='input' type='text' value={query} placeholder='Search station' onChange={(e) => setQuery(e.target.value)} onFocus={() => setUiIsSelectionOpen(true)} />
-					{ui_isSelectionOpen && <div className={`selections ${filteredStations.length === 0 ? 'selections--empty' : ''}`}>
-						<div className='selections__list'>
+					<input className='c-input' type='text' value={query} placeholder='Search station' onChange={(e) => setQuery(e.target.value)} onFocus={() => setUiIsSelectionOpen(true)} />
+					{ui_isSelectionOpen && <div className={`c-selections ${filteredStations.length === 0 ? 'c-selections--empty' : ''}`}>
+						<div className='c-selections__list'>
 							{isStationDataReady && filteredStations.length > 0 && filteredStations.map((station) => (
-								<div className='selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)}</div>
+								<div className='c-selections__item' key={station._id} onClick={() => handleSetFare(station)}>{getHighlightedText(station.name.en, query)}</div>
 							))}
 							{isStationDataReady && filteredStations.length === 0 && <div className='empty'>No stations.</div>}
 						</div>
@@ -102,13 +102,13 @@ export const StationFares = ({ lines, stations, stationData }) => {
 				<RiLoader5Fill className='loading-spinner' strokeWidth={2} fontSize='20px' />
 				<span>Checking for fare data... (real-time data may take a while)</span>
 			</div> : <>
-				{db_fareData?.destination && <table className='station-fares__table'>
+				{db_fareData?.destination && <table className='c-station-fares__table'>
 					<thead>
 						<tr><th>Line(s)</th><th>Fare</th><th>Est. Time</th><th>Stops</th></tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>{db_fareData?.lines?.length > 0 ? <div className='station-fares__lines'>
+							<td>{db_fareData?.lines?.length > 0 ? <div className='c-station-fares__lines'>
 								{db_fareData?.lines.map((line) => (<StationFaresLineIcon lines={lines} lineId={line} />))}
 							</div> : ''}</td>
 							<td>￥{db_fareData.fare}</td>

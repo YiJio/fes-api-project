@@ -18,16 +18,16 @@ const Header = () => {
 	}
 
 	return (
-		<header className='header'>
-			<div className='header__wrapper'>
-				<Link to='/home' className='header__title'>
+		<header className='l-header'>
+			<div className='l-wrapper l-wrapper--header'>
+				<Link to='/home' className='c-title c-title--header'>
 					<IconGZMTR width='24px' height='24px' />
 					Guangzhou Metro
 				</Link>
-				<div className='header__search'>
-					<form onSubmit={handleSearchStation} className='header__search-field'>
-						<input className='header__search__input' type='text' value={ui_searchTerm} placeholder='Search a station...' onChange={(e) => setUiSearchTerm(e.target.value)} />
-						<button className='header__search__button'><RiSearchLine /></button>
+				<div className='c-search'>
+					<form onSubmit={handleSearchStation} className='c-search__field'>
+						<input className='c-search__input' type='text' value={ui_searchTerm} placeholder='Search a station...' onChange={(e) => setUiSearchTerm(e.target.value)} />
+						<button className='c-search__button'><RiSearchLine /></button>
 					</form>
 				</div>
 			</div>

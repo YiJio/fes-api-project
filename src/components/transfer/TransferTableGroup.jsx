@@ -16,16 +16,13 @@ import Tooltip from '../tooltip/Tooltip';
 import { METHOD_DIRECTIONS, SERVICES } from '../../data';
 import { TRANSFER_METHODS } from '../../dataWithJSX';
 
-function getNumberOrIcon(lineId, lineNumber, service, invert) {
+function getNumberOrIcon(lineNumber, service, invert) {
 	let size = '16px';
 	switch (service) {
 		case 'cr': return <IconCR color='#000000' width={size} height={size} invert={invert} />;
 		case 'prdir': return <IconPRDIR color='#000000' width={size} height={size} invert={invert} />;
-		case 'gztram': return <IconTram color='#ffffff' width={size} height={size} />;
-		case 'fmetro': {
-			if (lineId.split('-')[1] === 'tl') { return <IconTram color='#ffffff' width={size} height={size} invert={invert} />; }
-			return lineNumber;
-		}
+		case 'gztram':
+		case 'ftram': return <IconTram color='#ffffff' width={size} height={size} />;
 		default: return lineNumber;
 	}
 }
@@ -68,18 +65,10 @@ const TransferTableGroup = ({ transfer, sourceLine }) => {
 	let bgColor = isNio ? getLighterColor(color, 40) : color;
 	let fontColor = getContrastingTextColor(color);
 	let opacity = isNio ? '0.5' : '1';
-	let number = getNumberOrIcon(stationLine, stationLineNumber, transfer?._service_id, true);
+	let number = getNumberOrIcon(stationLineNumber, transfer?._service_id, true);
 	let methods = [];
-	methods[0] = transfer?.method.forward === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.forward.split(', ').map((method) => {
-		return getFromIndex(TRANSFER_METHODS, 'name', method);
-		//let index = TRANSFER_METHODS.findIndex((m) => m.name == method);;
-		//return TRANSFER_METHODS[index];
-	});
-	methods[1] = transfer?.method.reverse === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.reverse.split(', ').map((method) => {
-		return getFromIndex(TRANSFER_METHODS, 'name', method);
-		//let index = TRANSFER_METHODS.findIndex((m) => m.name == method);;
-		//return TRANSFER_METHODS[index];
-	});
+	methods[0] = transfer?.method.forward === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.forward.split(', ').map((method) => getFromIndex(TRANSFER_METHODS, 'name', method));
+	methods[1] = transfer?.method.reverse === '' ? [TRANSFER_METHODS[0]] : transfer?.method?.reverse.split(', ').map((method) => getFromIndex(TRANSFER_METHODS, 'name', method));
 	let tooltipText = <>{getTooltipText(stationLine, stationName, stationLineName, transfer?._service_id)}{isNio ? <><br /><small>(currently <b><i>not in operation</i></b> or is <b><i>under construction</i></b>)</small></> : ''}</>;
 
 	return (

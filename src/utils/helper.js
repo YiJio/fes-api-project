@@ -89,7 +89,7 @@ export function isServiceAccessible(lineId, service) {
 
 export function getStatusCssName(status) {
 	let temp = status.split(' ');
-	let name = 'status--';
+	let name = 'c-status--';
 	temp.forEach((word) => name += word[0]);
 	return name;
 }

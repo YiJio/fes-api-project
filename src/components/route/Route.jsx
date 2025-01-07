@@ -7,7 +7,7 @@ import './route.css';
 import { getRouteLengths } from '../../utils/helper';
 import { getContrastingTextColor, getLighterColor } from '../../utils/color';
 // components
-import { RouteStation } from './RouteStation';
+import RouteStation from './RouteStation';
 
 const RouteSkeleton = () => {
 	return (

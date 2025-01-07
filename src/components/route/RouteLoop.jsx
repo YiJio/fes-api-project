@@ -1,12 +1,13 @@
 // packages
 import React, { useEffect, useRef, useState } from 'react';
+import { RiLoader5Fill } from 'react-icons/ri';
 // css
 import './route.css';
 // utils
 import { getRouteLengths, getStationsSplit } from '../../utils/helper';
 import { getLighterColor } from '../../utils/color';
 // components
-import { RouteStation } from './RouteStation';
+import RouteStation from './RouteStation';
 
 const RouteSkeleton = () => {
 	return (

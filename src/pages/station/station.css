@@ -1,164 +1,154 @@
 /************ STATION PAGE STYLES ************/
-.station-title { margin-bottom:8px; font-size:28px; font-weight:500; }
+.c-station-title { margin-bottom:8px; font-size:28px; font-weight:500; }
 
 /** content **/
-.station-content { display:flex; margin-bottom:20px; }
-.station-content__item { margin-right:20px; width:70%; }
-.station-content__item:last-child { margin-right:0; width:50%; }
-.station-content__item--last { padding-left:20px; border-left:1px solid var(--color-divider-dark); }
-.station-description { margin:20px 0; padding:8px 20px 8px 0; width:100%; border-top:1px solid var(--color-divider-light); }
-.station-description p { color:var(--color-text-secondary); line-height:24px; text-indent:2em; text-align:justify; font-size:14px; }
+.c-station-content { display:flex; margin-bottom:20px; }
+.c-station-content__item { margin-right:20px; width:70%; }
+.c-station-content__item:last-child { margin-right:0; width:50%; }
+.c-station-content__item--last { padding-left:20px; border-left:1px solid var(--color-divider-dark); }
+.c-station-description { margin:20px 0; padding:8px 20px 8px 0; width:100%; border-top:1px solid var(--color-divider-light); }
+.c-station-description p { color:var(--color-text-secondary); line-height:24px; text-indent:2em; text-align:justify; font-size:14px; }
 
 /****** IMAGES ******/
-.station-images { display:flex; gap:16px; margin-top:16px; }
-.station-images__actions { display:flex; align-items:center; justify-content:center; }
-.station-images__button { width:40px; height:40px; border-radius:50%; background:var(--color-main-primary); font-size:24px; transition:all 0.3s ease; }
-.station-images__button:hover { background:var(--color-main-primary-hover); }
-.station-images__viewport { display:flex; overflow:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; max-width:calc(100% - 80px - 32px); width:100%; height:240px; }
-.station-images__page { flex:0 0 100%; display:flex; width:100%; scroll-snap-align:start; }
-.station-images__page img { width:100%; height:100%; object-fit:cover; border-radius:8px; }
-.station-images__wrapper { display:flex; flex-direction:column; width:100%; height:100%; }
-.station-images__image { width:100%; height:220px; padding:8px; overflow:hidden; cursor:pointer; opacity:0.85; transition:all 0.3s ease; }
-.station-images__image:hover { opacity:1; }
-.station-images__caption { height:20px; font-size:12px; text-align:center; }
+.c-station-images { display:flex; gap:16px; margin-top:16px; }
+.c-station-images__actions { display:flex; align-items:center; justify-content:center; }
+.c-station-images__button { width:40px; height:40px; border-radius:50%; background:var(--color-main-primary); font-size:24px; transition:all 0.3s ease; }
+.c-station-images__button:hover { background:var(--color-main-primary-hover); }
+.c-station-images__viewport { display:flex; overflow:hidden; scroll-snap-type:x mandatory; scroll-behavior:smooth; max-width:calc(100% - 80px - 32px); width:100%; height:240px; }
+.c-station-images__page { flex:0 0 100%; display:flex; width:100%; scroll-snap-align:start; }
+.c-station-images__page img { width:100%; height:100%; object-fit:cover; border-radius:8px; }
+.c-station-images__wrapper { display:flex; flex-direction:column; width:100%; height:100%; }
+.c-station-images__image { width:100%; height:220px; padding:8px; overflow:hidden; cursor:pointer; opacity:0.85; transition:all 0.3s ease; }
+.c-station-images__image:hover { opacity:1; }
+.c-station-images__caption { height:20px; font-size:12px; text-align:center; }
 /**** END IMAGES ****/
 
 /****** BOX ******/
-.station-box { display:flex; flex-direction:column; gap:16px; padding:16px !important; border:1px solid var(--color-divider-dark); font-size:14px; }
-.station-box strong { display:flex; gap:2px; margin-bottom:4px; text-transform:uppercase; font-size:12px; color:var(--color-text-tertiary); }
-.station-box strong svg { font-size:12px; }
-.station-box big { display:block; font-weight:700; }
-.station-box img { width:100%; }
-.station-box__basic { display:flex; align-items:center; gap:8px; }
-.station-box__basic svg { width:24px; height:24px; }
-.station-box__field {  }
+.c-station-box { display:flex; flex-direction:column; gap:16px; padding:16px !important; border:1px solid var(--color-divider-dark); font-size:14px; }
+.c-station-box strong { display:flex; gap:2px; margin-bottom:4px; text-transform:uppercase; font-size:12px; color:var(--color-text-tertiary); }
+.c-station-box strong svg { font-size:12px; }
+.c-station-box big { display:block; font-weight:700; }
+.c-station-box img { width:100%; }
+.c-station-box__basic { display:flex; align-items:center; gap:8px; }
+.c-station-box__basic svg { width:24px; height:24px; }
+.c-station-box__field {  }
 /**** END BOX ****/
 
 /****** NAVIGATION ******/
-.station-nav { width:90%; margin:0 auto; display:flex; gap:8px; font-size:12px; }
-.station-nav__group { width:50%; }
-.station-nav__item { padding:8px; border:1px dashed var(--color-main-secondary); border-top:none; background:var(--color-surface-light); }
-.station-nav__item a { color:inherit; }
-.station-nav__item em { margin-top:4px; display:block; text-align:center; }
-.station-nav__item em { font-size:10px; }
-.station-nav__distance { display:flex; justify-content:space-between; gap:4px; margin-top:4px; padding:0 4px; background:var(--color-white); color:var(--color-black); font-weight:500; font-size:10px; }
-.station-nav__distance > *:last-child { font-family:'JetBrains Mono', monospace; font-weight:600; font-size:11px; }
-.station-nav__dest { display:block; text-align:center; }
-.station-nav__dest a { font-weight:600; text-decoration:underline; }
+.c-station-nav { width:90%; margin:0 auto; display:flex; gap:8px; font-size:12px; }
+.c-station-nav__group { width:50%; }
+.c-station-nav__item { padding:8px; border:1px dashed var(--color-main-secondary); border-top:none; background:var(--color-surface-light); }
+.c-station-nav__item a { color:inherit; }
+.c-station-nav__item em { margin-top:4px; display:block; text-align:center; }
+.c-station-nav__item em { font-size:10px; }
+.c-station-nav__distance { display:flex; justify-content:space-between; gap:4px; margin-top:4px; padding:0 4px; background:var(--color-white); color:var(--color-black); font-weight:500; font-size:10px; }
+.c-station-nav__distance > *:last-child { font-family:'JetBrains Mono', monospace; font-weight:600; font-size:11px; }
+.c-station-nav__dest { display:block; text-align:center; }
+.c-station-nav__dest a { font-weight:600; text-decoration:underline; }
 /**** END NAVIGATION ****/
 
-/****** TRANSFERS ******/
-.station-transfers { margin-top:4px; display:flex; flex-direction:column; border:1px solid var(--color-divider-light); }
-.station-transfers__row { display:flex; border-bottom:1px solid var(--color-divider-light); }
-.station-transfers__icons, .station-transfers__lines { display:flex; align-items:center; }
-.station-transfers__icons { padding:8px; gap:2px; align-items:flex-start; min-height:36px; border-right:1px solid var(--color-divider-light); }
-.station-transfers__icon--service { display:flex; align-items:center; justify-content:center; width:24px; height:24px; cursor:help; }
-.station-transfers__row:last-child { border:none; }
-.station-transfers__lines { padding:8px; gap:8px; flex-wrap:wrap; }
-/**** END TRANSFERS ****/
-
 /****** FARES ******/
-.station-fares { display:flex; flex-direction:column; gap:8px; font-size:14px; }
-.station-fares__text {  }
-.station-fares__search { position:relative; }
-.station-fares__table { width:100%; }
-.station-fares__table th { padding:4px 0; background:var(--color-surface-light); color:var(--color-black); font-weight:600; }
-.station-fares__table td { padding:4px 0; text-align:center; }
-.station-fares__lines { display:flex; flex-wrap:wrap; justify-content:center; gap:4px; }
-.station-fares .line-icon { display:flex; align-items:center; justify-content:center; border-radius:50%; width:20px; height:20px; font-size:10px; }
+.c-station-fares { display:flex; flex-direction:column; gap:8px; font-size:14px; }
+.c-station-fares__text {  }
+.c-station-fares__search { position:relative; }
+.c-station-fares__table { width:100%; }
+.c-station-fares__table th { padding:4px 0; background:var(--color-surface-light); color:var(--color-black); font-weight:600; }
+.c-station-fares__table td { padding:4px 0; text-align:center; }
+.c-station-fares__lines { display:flex; flex-wrap:wrap; justify-content:center; gap:4px; }
+.c-station-fares .line-icon { display:flex; align-items:center; justify-content:center; border-radius:50%; width:20px; height:20px; font-size:10px; }
 
 /** form components **/
-.station-fares .field { width:100%; max-width:400px; height:40px; outline:1px solid var(--color-divider-light); background:var(--color-surface-light); }
-.station-fares .field:hover, .station-fares .field:focus-within { background:var(--color-white); }
-.station-fares .field svg { font-size:16px; }
-.station-fares .input { padding:8px 0; font-size:14px; }
-.station-fares .button { width:40px; height:40px; }
+.c-station-fares .field { width:100%; max-width:400px; height:40px; outline:1px solid var(--color-divider-light); background:var(--color-surface-light); }
+.c-station-fares .field:hover, .c-station-fares .field:focus-within { background:var(--color-white); }
+.c-station-fares .field svg { font-size:16px; }
+.c-station-fares .c-input { padding:8px 0; font-size:14px; }
+.c-station-fares .button { width:40px; height:40px; }
 
 /** selections**/
-.station-fares .selections { top:48px; width:100%; max-height:296px; height:auto; border:1px solid var(--color-divider-light); overflow:hidden; }
-.station-fares .selections--empty { height:48px !important; }
-.station-fares .selections__list { padding-right:8px; max-height:calc(296px - 16px); display:flex; flex-wrap:wrap; gap:8px; }
-.station-fares .selections__item { outline:1px solid var(--color-divider-light); outline-offset:-1px; }
-.station-fares .empty { justify-content:flex-start; gap:8px; }
+.c-station-fares .c-selections { top:48px; width:100%; max-height:296px; height:auto; border:1px solid var(--color-divider-light); overflow:hidden; }
+.c-station-fares .c-selections--empty { height:48px !important; }
+.c-station-fares .c-selections__list { padding-right:8px; max-height:calc(296px - 16px); display:flex; flex-wrap:wrap; gap:8px; }
+.c-station-fares .c-selections__item { outline:1px solid var(--color-divider-light); outline-offset:-1px; }
+.c-station-fares .empty { justify-content:flex-start; gap:8px; }
 /**** END FARES ****/
 
 /****** TIMETABLE ******/
-.station-hours { display:flex; font-size:14px; }
-.station-hours__label { padding:8px; background:var(--color-surface-dark); }
-.station-hours__time { display:flex; align-items:center; gap:4px; padding:4px 6px; background:var(--color-surface-light); }
+.c-station-hours { display:flex; font-size:14px; }
+.c-station-hours__label { padding:8px; background:var(--color-surface-dark); }
+.c-station-hours__time { display:flex; align-items:center; gap:4px; padding:4px 6px; background:var(--color-surface-light); }
 
 /** timings **/
-.station-timetable { margin:16px 0; width:100%; display:flex; flex-direction:column; gap:8px; font-size:14px; }
-.station-timetable .row { flex-direction:column; gap:8px; }
-.station-timetable .row a:hover { text-decoration:underline; }
-.station-timetable__line { display:flex; align-items:center; gap:4px; font-size:16px; font-weight:500; }
-.station-timetable__line a { color:inherit; }
-.station-timetable__item { display:flex; align-items:center; justify-content:space-between; padding:8px; background:var(--color-surface-light); }
-.station-timetable__dest { display:flex; gap:4px; color:var(--color-text-tertiary); }
-.station-timetable__dest a { color:var(--color-black); font-weight:500; }
-.station-timetable__times { display:flex; gap:16px; }
-.station-timetable__time { display:flex; gap:4px; color:var(--color-text-tertiary); }
-.station-timetable__time span { width:40px; font-weight:400; }
-.station-timetable__badge { display:flex; align-items:center; padding:0 4px; border-radius:2px; font-size:8px; text-transform:uppercase; color:var(--color-white); }
-.station-timetable__badge--first { background:var(--color-green-light); }
-.station-timetable__badge--last { background:var(--color-red-light); }
+.c-station-timetable { margin:16px 0; width:100%; display:flex; flex-direction:column; gap:16px; font-size:14px; }
+.c-station-timetable .l-row { flex-direction:column; gap:8px; }
+.c-station-timetable .l-row a:hover { text-decoration:underline; }
+.c-station-timetable__line { display:flex; align-items:center; gap:4px; font-size:16px; font-weight:500; }
+.c-station-timetable__line a { color:inherit; }
+.c-station-timetable__item { display:flex; align-items:center; justify-content:space-between; padding:8px; background:var(--color-surface-light); }
+.c-station-timetable__dest { display:flex; gap:4px; color:var(--color-text-tertiary); }
+.c-station-timetable__dest a { color:var(--color-black); font-weight:500; }
+.c-station-timetable__times { display:flex; gap:16px; }
+.c-station-timetable__time { display:flex; gap:4px; color:var(--color-text-tertiary); }
+.c-station-timetable__time span { width:40px; font-weight:400; }
+.c-station-timetable__badge { display:flex; align-items:center; padding:0 4px; border-radius:2px; font-size:8px; text-transform:uppercase; color:var(--color-white); }
+.c-station-timetable__badge--first { background:var(--color-green-light); }
+.c-station-timetable__badge--last { background:var(--color-red-light); }
 /**** END TIMETABLE ****/
 
 /****** SCREEN SIZES ******/
 
 /** large screen size **/
 @media (max-width:1280px) {
-	.station-images__viewport { height:300px; }
-	.station-images__image { height:280px; }
-	.station-hours { flex-direction:column; }
-	.station-hours__time { padding:8px; }
-	.station-timetable__item { flex-direction:column; align-items:stretch; gap:8px; }
-	.station-timetable__dest { padding-bottom:6px; width:100%; border-bottom:1px solid var(--color-divider-light); }
-	.station-timetable__times { width:100%; }
-	.station-timetable__time { width:50%; gap:8px; }
+	.c-station-images__viewport { height:300px; }
+	.c-station-images__image { height:280px; }
+	.c-station-hours { flex-direction:column; }
+	.c-station-hours__time { padding:8px; }
+	.c-station-timetable__item { flex-direction:column; align-items:stretch; gap:8px; }
+	.c-station-timetable__dest { padding-bottom:6px; width:100%; border-bottom:1px solid var(--color-divider-light); }
+	.c-station-timetable__times { width:100%; }
+	.c-station-timetable__time { width:50%; gap:8px; }
 }
 
 /** regular screen size **/
 @media (max-width:1024px) {
-	.station-content__item { width:50%; }
-	.station-images__viewport { height:260px; }
-	.station-images__image { height:240px; }
+	.c-station-content__item { width:50%; }
+	.c-station-images__viewport { height:260px; }
+	.c-station-images__image { height:240px; }
 }
 
 /** tablet size **/
 @media (max-width:768px) {
-	.station-content { display:flex; flex-direction:column-reverse; }
-	.station-content__item, .station-content__item:last-child { margin:0; padding:0 !important; width:100%; border:none; }
-	.station-description { margin:40px 0 20px; padding:8px 40px 8px 0; }
-	.station-description p { font-size:16px; line-height:1.75; }
-	.station-images__viewport { height:320px; }
-	.station-images__image { height:280px; }
-	.station-images__caption { height:40px; }
-	.station-box { padding:0 !important; gap:20px; border:none; font-size:16px; }
-	.station-box .station-code span { padding:2px 8px; font-size:16px; }
-	.station-box big { font-size:20px; }
-	.station-box strong { margin-bottom:8px; }
-	.station-box strong svg { font-size:14px; }
-	.station-box__basic svg { width:28px; height:28px; }
-	.station-nav { margin-top:40px; width:100%; flex-wrap:wrap; gap:16px; font-size:16px; }
-	.station-nav__group { width:auto; display:flex; flex-wrap:wrap; }
-	.station-nav__item { padding:16px; border-top-style:dashed; border-top-width:1px; }
-	.station-nav__item em, .station-nav__distance { font-size:12px; }
-	.station-nav__distance > *:last-child { font-size:14px; }
-	.station-fares { font-size:16px; }
-	.station-fares .input { font-size:16px; }
-	.station-hours { font-size:16px; }
-	.station-hours__label, .station-hours__time { padding:8px 12px; }
-	.station-timetable { gap:20px; font-size:16px; }
-	.station-timetable__line { font-size:20px; }
+	.c-station-content { display:flex; flex-direction:column-reverse; }
+	.c-station-content__item, .c-station-content__item:last-child { margin:0; padding:0 !important; width:100%; border:none; }
+	.c-station-description { margin:40px 0 20px; padding:8px 40px 8px 0; }
+	.c-station-description p { font-size:16px; line-height:1.75; }
+	.c-station-images__viewport { height:320px; }
+	.c-station-images__image { height:280px; }
+	.c-station-images__caption { height:40px; }
+	.c-station-box { padding:0 !important; gap:20px; border:none; font-size:16px; }
+	.c-station-box .c-station-code span { padding:2px 8px; font-size:16px; }
+	.c-station-box big { font-size:20px; }
+	.c-station-box strong { margin-bottom:8px; }
+	.c-station-box strong svg { font-size:14px; }
+	.c-station-box__basic svg { width:28px; height:28px; }
+	.c-station-nav { margin-top:40px; width:100%; flex-wrap:wrap; gap:16px; font-size:16px; }
+	.c-station-nav__group { width:auto; display:flex; flex-wrap:wrap; }
+	.c-station-nav__item { padding:16px; border-top-style:dashed; border-top-width:1px; }
+	.c-station-nav__item em, .c-station-nav__distance { font-size:12px; }
+	.c-station-nav__distance > *:last-child { font-size:14px; }
+	.c-station-fares { font-size:16px; }
+	.c-station-fares .c-input { font-size:16px; }
+	.c-station-hours { font-size:16px; }
+	.c-station-hours__label, .c-station-hours__time { padding:8px 12px; }
+	.c-station-timetable { gap:20px; font-size:16px; }
+	.c-station-timetable__line { font-size:20px; }
 }
 
 /** large smartphone size **/
 @media (max-width:600px) {
-	.station-images__viewport { height:240px; }
-	.station-images__image { height:200px; }
-	.station-fares .field { max-width:100%; }
-	.station-fares .input { width:100%; }
+	.c-station-images__viewport { height:240px; }
+	.c-station-images__image { height:200px; }
+	.c-station-fares .field { max-width:100%; }
+	.c-station-fares .c-input { width:100%; }
 }
 
 /** small smartphone size **/

@@ -9,6 +9,7 @@ import './station.css';
 import useDbData from '../../hooks/useDbData';
 // components
 import { IconMetro, IconTrain, IconTram } from '../../components/icons/SvgTransit';
+import IconService from '../../components/IconService';
 import { StationBox, StationImages, StationNav, StationTabs, StationTime } from './components';
 import StationPageSkeleton from './StationPageSkeleton';
 
@@ -77,38 +78,42 @@ const StationPage = () => {
 	if (!lines || !stations || ui_isLoading) { return <StationPageSkeleton />; }
 
 	return (
-		<div className='station'>
-			<h1 className='station-title'>{db_station?.name.en}</h1>
+		<>
+			<h1 className='c-title c-title--station'>
+				{db_station?.name.en}
+				<IconService service={db_station?._service_id} offset={8} />
+				{(db_station?._operator_id && db_station?._service_id !== db_station?._operator_id) && <IconService service={db_station?._operator_id} isOperator />}
+			</h1>
 			{ui_windowWidth <= 768 && <StationImages windowWidth={ui_windowWidth} images={db_station?.image} />}
-			<div className='station-content'>
-				<div className='station-content__item'>
-					<div className='station-description'>
+			<div className='c-station-content'>
+				<div className='c-station-content__item'>
+					<div className='c-station-description'>
 						<ReactMarkdown children={db_station?.description} />
 					</div>
 					<StationTabs lines={lines} stations={stations} stationData={db_station} lineData={db_line} />
 				</div>
-				<div className='station-content__item'>
+				<div className='c-station-content__item'>
 					<StationBox stationData={db_station} lineColor={ui_color} />
 					<StationNav stations={stations} lineColor={ui_color} preceding={db_station?.navigation?.preceding} following={db_station?.navigation?.following} />
 				</div>
 			</div>
-			<div className='station-content'>
-				{ui_windowWidth > 768 && <div className='station-content__item'>
+			<div className='c-station-content'>
+				{ui_windowWidth > 768 && <div className='c-station-content__item'>
 					<h2>Views</h2>
 					<StationImages windowWidth={ui_windowWidth} images={db_station?.image} />
 				</div>}
-				<div className='station-content__item station-content__item--last'>
+				<div className='c-station-content__item c-station-content__item--last'>
 					<h2>Times</h2>
-					<div className='station-hours'>
-						<b className='station-hours__label'>Operational hours</b>
-						<div className='station-hours__time'>
+					<div className='c-station-hours'>
+						<b className='c-station-hours__label'>Operational hours</b>
+						<div className='c-station-hours__time'>
 							<RiTimeLine strokeWidth={0.5} />
-							<span>{db_station?.operational_hours?.opening} - {db_station?.operational_hours?.closing[0] === '0' ? <>{db_station?.operational_hours?.closing}<sup>+1</sup></> : <>{db_station?.operational_hours?.closing}</>}</span>
+							<span>{db_station?.operational_hours?.opening} – {db_station?.operational_hours?.closing[0] === '0' ? <>{db_station?.operational_hours?.closing}<sup>+1</sup></> : <>{db_station?.operational_hours?.closing}</>}</span>
 						</div>
 					</div>
-					<div className='station-timetable'>
-						{db_timings?.map((timing, index) => (<div key={index} className='row'>
-							<div className='station-timetable__line' style={{ color: timing.color }}>
+					<div className='c-station-timetable'>
+						{db_timings?.sort((a, b) => a.lineName.localeCompare(b.lineName, 'en', { numeric: true })).map((timing, index) => (<div key={index} className='l-row'>
+							<div className='c-station-timetable__line' style={{ color: timing.color }}>
 								{(timing.service === 'cr' || timing.service === 'prdir') && <IconTrain width='20px' height='16px' color={timing.color} />}
 								{(timing.service === 'gzmtr' || timing.service === 'guangfometro' || timing.service === 'fmetro') && <IconMetro width='20px' height='16px' color={timing.color} />}
 								{timing.service === 'gztram' && <IconTram width='20px' height='16px' color={timing.color} />}
@@ -121,7 +126,7 @@ const StationPage = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 

@@ -5,7 +5,7 @@ import { sortByStationNameAndLineName } from '../utils/helper';
 
 const useSearchFilter = (lines, stations, sort = 1, options = {}) => {
 	// constants
-	const SHOW_SERVICES = ['gzmtr', 'guangfometro'];
+	const SHOW_SERVICES = ['gzmtr', 'guangfometro', 'fmetro'];
 	// states
 	const [query, setQuery] = useState('');
 	const [inclusions, setInclusions] = useState(options.initialInclusions || {});
